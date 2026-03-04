@@ -74,10 +74,10 @@
         <a href="{{{html_url}}}" class="detail-action detail-action--primary">&#128214; Read Ebook</a>
         {{/has_html}}
         {{#has_pdf}}
-        <a href="{{{pdf_url}}}" class="detail-action detail-action--download" target="_blank">&#128229; Download Ebook</a>
+        <a href="{{{pdf_url}}}" class="detail-action detail-action--download" download>&#128229; Download PDF</a>
         {{/has_pdf}}
         {{^has_pdf}}
-        <span class="detail-action detail-action--disabled">&#128196; PDF Not Generated</span>
+        <button class="detail-action detail-action--secondary" onclick="alert('Run: ebook render {{slug}} --format=pdf\n\nOr use the Makefile:\nmake render ebook={{slug}} format=pdf')">&#128196; Generate PDF</button>
         {{/has_pdf}}
         <button class="detail-action detail-action--danger" onclick="deleteEbook('{{slug}}', '{{title}}')" title="Delete this ebook">&#128465; Delete</button>
       </div>

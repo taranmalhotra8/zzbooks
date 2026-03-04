@@ -104,10 +104,10 @@
 
           <div class="dash-card-actions">
             {{#has_pdf}}
-            <a href="{{{pdf_url}}}" class="dash-card-action dash-card-action--download" target="_blank">&#128229; Download</a>
+            <a href="{{{pdf_url}}}" class="dash-card-action dash-card-action--download" target="_blank" download>&#128229; Download PDF</a>
             {{/has_pdf}}
             {{^has_pdf}}
-            <span class="dash-card-action dash-card-action--disabled">&#128229; Coming Soon</span>
+            <a href="{{{detail_url}}}" class="dash-card-action dash-card-action--secondary" title="Generate PDF from ebook">&#128229; Generate PDF</a>
             {{/has_pdf}}
             {{#has_blog}}
             <a href="{{{blog_url}}}" class="dash-card-action dash-card-action--secondary">&#128221; Blog</a>

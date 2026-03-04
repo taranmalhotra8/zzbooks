@@ -1,0 +1,229 @@
+chapter_id: 02-stop-weekend-waste
+density_level: standard
+word_target:
+  - 1200
+  - 1800
+sections:
+  - id: opening
+    heading: ""
+    word_target: 180
+    visual: null
+    notes: "Open with the industry data hook about cloud spending growth and
+      migration cost overruns. Start with the $723.4 billion public cloud
+      spending figure from Flosum, then pivot to the $100 billion+ in unplanned
+      migration cost overruns from Future Processing. Make the connection that a
+      significant portion of this waste comes from non-production environments
+      running 24/7 when they only need to be active during business hours. This
+      sets up the chapter's thesis: environment scheduling automation can
+      capture substantial savings immediately. Do NOT use a fictional story -
+      use hard industry data."
+  - id: the_weekend_bleeding_problem
+    heading: The Weekend Bleeding Problem
+    word_target: 220
+    visual:
+      type: d2
+      template: before-after-optimization
+      purpose: Visualize the cost difference between always-on vs scheduled
+        non-production environments
+      style: simple
+      image_prompt: Two side-by-side cloud infrastructure diagrams. Left shows servers
+        running 24/7 with red indicators showing wasted compute capacity nights
+        and weekends. Right shows servers with scheduling automation that powers
+        down during off-hours, with green indicators showing cost savings.
+        Simple, clean enterprise style.
+    notes: "Define 'weekend bleeding' as the phenomenon where development, staging,
+      and test environments run continuously (often at full production capacity)
+      even though they're only actively used during business hours. Explain that
+      these non-production environments typically cost 30-50% of total cloud
+      spend but deliver far less business value per dollar. Include specific
+      example: a typical enterprise with $500K monthly cloud spend has
+      $150K-$250K in non-production environments, of which 60-70% is waste
+      during nights/weekends/holidays. Reference the pattern: Non-Production
+      Environment Scheduling can achieve up to 70% reduction in these costs."
+  - id: quantifying_compute_waste
+    heading: Quantifying Your Compute Waste
+    word_target: 280
+    visual:
+      type: table
+      purpose: Provide cost modeling formulas and example calculations
+      style: comparison
+    notes: "This is the 'methodology' section - provide readers with concrete
+      formulas to calculate their own waste. Include a spreadsheet-style cost
+      model: (Instance Count × Instance Cost/Hour × Hours Wasted Per Week × 52
+      weeks). Provide a table comparing typical dev/staging environments: dev
+      (40 hours active), staging (60 hours active), QA (variable). Include the
+      hidden cost factors that blow budgets: data transfer fees during idle
+      times, storage attached to stopped instances, lingering NAT gateways. Show
+      how even 'small' wastes add up: 10 idle m5.xlarge instances over weekends
+      = $1,840/month wasted. This section establishes the business case for
+      scheduling automation."
+  - id: scheduling_architecture
+    heading: Environment Scheduling Architecture
+    word_target: 300
+    visual:
+      type: code
+      language: yaml
+      purpose: Show actual scheduling configuration example
+      style: simple
+    notes: "Provide a concrete configuration example (not a 100+ line script)
+      showing how to implement environment scheduling. Use AWS Instance
+      Scheduler or similar approach with YAML config. Show the key components:
+      tagging strategy (Environment=dev/staging/qa, Schedule=business-hours),
+      schedule definitions (timezone, off-hours start/stop), and exception
+      handling (maintenance windows). Include 2-3 different scheduling policies:
+      strict 9-5, extended business hours, and maintenance windows. Reference
+      the D2 diagram from earlier section conceptually. Make this practical and
+      actionable - a team could implement based on this configuration."
+  - id: optimization_combo
+    heading: Combining Scheduling with Reserved Instances
+    word_target: 250
+    visual:
+      type: table
+      purpose: Compare savings scenarios and show when to use scheduling vs RI/SP
+      style: comparison
+    notes: "Explain how environment scheduling complements (not replaces) Reserved
+      Instance and Savings Plan optimization. Create a decision framework: Use
+      scheduling for variable, dev/test workloads (the 70% savings pattern). Use
+      RIs/Savings Plans for baseline, always-on production workloads (30-60%
+      discount pattern). Show a combined scenario: if you have 100 instances,
+      schedule 70 of them (non-prod) and buy RIs for the 30 that must run 24/7
+      (prod). Include a comparison table showing which environments respond best
+      to which optimization type. Warn about the hidden cost: RIs for
+      environments that get scheduled still charge during 'stopped' state in
+      some cases - this is a common mistake."
+  - id: savings_calculator
+    heading: Calculate Your 30-Day ROI
+    word_target: 120
+    visual:
+      type: ojs
+      template: roi-calculator
+      purpose: Interactive calculator for readers to model their own savings scenario
+      style: minimal
+    notes: "This is the mandatory OJS interactive section - placed here in the most
+      data-heavy section. Use the roi-calculator template. Allow readers to
+      input: current monthly non-production cloud spend, percentage of
+      environments that could be scheduled, current utilization rate, and
+      implementation effort. Output: estimated monthly savings, 30-day ROI, and
+      payback period. This makes the chapter immediately actionable - readers
+      can calculate their own 'weekend bleeding' costs. Keep the explanatory
+      text brief so the calculator is the focus."
+  - id: implementation_timeline
+    heading: The 30-Day Implementation Path
+    word_target: 200
+    visual:
+      type: d2
+      template: finops-workflow
+      purpose: Show the step-by-step workflow for implementing environment scheduling
+      style: timeline
+    notes: "Provide a phased implementation timeline that aligns with the chapter
+      title's '30 days' promise. Week 1: Tag and categorize all non-production
+      environments (inventory phase). Week 2: Implement scheduling on
+      lowest-risk environment type (dev). Week 3: Extend to staging and QA,
+      refine schedules based on usage patterns. Week 4: Optimize schedules,
+      implement RI/Savings Plan combo for baseline, measure and document
+      savings. Include specific milestones and success metrics. Reference the
+      product zopcloud briefly as a tool that can assist with workload
+      assessment and spend tracking during this process - but do not pitch it
+      heavily. Emphasize that scheduling is 'low effort' per the pattern
+      classification."
+  - id: summary
+    heading: "Summary: Capturing the Low-Hanging Fruit"
+    word_target: 180
+    visual: null
+    notes: "Synthesize the key takeaways: (1) Non-production environments represent
+      30-50% of cloud spend with 60-70% waste potential, (2) Environment
+      scheduling delivers up to 70% savings on compute costs with low
+      implementation effort, (3) Combining scheduling with RI/Savings Plan
+      optimization creates compound savings, (4) The methodology and formulas
+      provided enable immediate quantification of your own waste. Reiterate the
+      30-day ROI timeline from the chapter title. End with a forward-looking
+      statement about how this foundational optimization enables more
+      sophisticated cloud cost management. Do not include new information - this
+      is a synthesis only."
+content_seeds:
+  opening_hook: Worldwide public cloud spending reached $723.4 billion with 21.5%
+    year-over-year growth in 2024. Yet 75% of cloud migrations exceed their
+    budgets, with over a quarter of enterprises experiencing cost overruns
+    surpassing 20%. This isn't just a migration problem — it's a persistent
+    operational challenge. The $100 billion+ in unplanned migration expenditures
+    over three years tells only half the story. The other half is the steady,
+    invisible bleed from non-production environments running 24/7 when they
+    could be sleeping — costing enterprises millions annually in compute waste
+    that requires no migration expertise to fix.
+  key_claims:
+    - Non-production environments represent 30-50% of total cloud spend but
+      contain 60-70% waste during off-hours
+    - Environment scheduling automation can reduce non-production compute costs
+      by up to 70% with low implementation effort
+    - The ROI from scheduling automation typically pays for itself within 30
+      days of implementation
+    - Combining scheduling with Reserved Instances creates compound savings vs.
+      using either approach alone
+  patterns:
+    - pattern: Non-Production Environment Scheduling
+      savings: Up to 70% reduction in non-production compute costs
+      effort: Low
+    - pattern: Reserved Instance and Savings Plan Optimization
+      savings: 30-60% discount vs on-demand pricing
+      effort: Medium
+    - pattern: ARM-Based Instance Migration (Graviton)
+      savings: 20-40% compute cost reduction
+      effort: Low
+    - pattern: Kubernetes Right-Sizing
+      savings: 30-50% reduction in Kubernetes cluster costs
+      effort: Medium
+  configs:
+    - name: AWS Instance Scheduler Configuration
+      type: yaml
+      snippet: |-
+        scheduler:
+          timezone: America/New_York
+          default: business-hours
+          
+        periods:
+          business-hours:
+            description: "Mon-Fri 8AM-6PM ET"
+            weekdays: [1,2,3,4,5]
+            start: "08:00"
+            end: "18:00"
+          
+          weekend-shutdown:
+            description: "Sat-Sun full shutdown"
+            weekends: [6,0]
+            
+          maintenance-window:
+            description: "Weekly maintenance Tue 2AM-4AM"
+            weekdays: [2]
+            start: "02:00"
+            end: "04:00"
+
+        tagging:
+          required_tags:
+            - Environment
+            - Schedule
+          environment_types:
+            - dev
+            - staging
+            - qa
+            - development
+            - test
+  product_tie_in: zopcloud provides migration planning tools with automated cost
+    modeling, workload assessment, and spend tracking across source and target
+    environments. During the implementation phase described in this chapter,
+    zopcloud can assist with workload assessment to identify which environments
+    are candidates for scheduling automation, and provide spend tracking to
+    measure the actual savings achieved. The cost modeling capabilities
+    complement the quantification methodology presented here, enabling teams to
+    model their savings scenarios before implementation.
+heal_augmentation: >-
+  CRITICAL: Every claim MUST include a specific number (dollar amount,
+  percentage, or quantity). Replace ALL vague phrases like 'significant
+  savings', 'many organizations', 'should consider' with concrete data. Example:
+  instead of 'significant cost reduction' → '$18,400/month savings (67%
+  reduction)'.
+
+
+  IMPORTANT: Include at least 2 production-ready code blocks in this chapter.
+  Use proper language tags (```python, ```yaml, ```hcl, etc.). Code must be
+  copy-pasteable with real imports and error handling.
+heal_iteration: 3

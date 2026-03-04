@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{seo_title}}</title>
+  <meta name="description" content="{{meta_description}}">
+  <meta name="theme-color" content="#0891b2">
+  <meta name="color-scheme" content="light">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{chapter_title}}">
+  <meta property="og:description" content="{{meta_description}}">
+  <meta property="og:type" content="article">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{chapter_title}}">
+  <meta name="twitter:description" content="{{meta_description}}">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      {{#css_vars}}
+      {{name}}: {{value}};
+      {{/css_vars}}
+    }
+  </style>
+</head>
+<body>
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <header class="blog-header" id="blog-header">
+    <div class="container">
+      <div class="header-left">
+        <a href="{{dashboard_url}}" class="nav-back">&larr; Dashboard</a>
+        <span class="nav-divider">/</span>
+        <a href="{{index_url}}" class="nav-back">Blog</a>
+      </div>
+      <nav class="blog-nav">
+        <span class="nav-series">{{ebook_title}}</span>
+        <button onclick="window.print()" class="blog-download-btn" title="Save as PDF">&#128196; Save as PDF</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="blog-main">
+    <article class="blog-article">
+      <div class="container">
+        <div class="article-meta">
+          <span class="meta-reading-time">{{reading_time}} min read</span>
+          <span class="meta-separator">&middot;</span>
+          <span class="meta-series">From: <em>{{ebook_title}}</em></span>
+        </div>
+
+        <h1 class="article-title">{{chapter_title}}</h1>
+
+        {{#ebook_subtitle}}
+        <p class="article-subtitle">{{ebook_subtitle}}</p>
+        {{/ebook_subtitle}}
+
+        <div class="article-body">
+          {{{article_html}}}
+        </div>
+      </div>
+    </article>
+
+    <!-- Article Navigation -->
+    <nav class="article-nav">
+      <div class="container">
+        <div class="article-nav-inner">
+          {{#has_prev}}
+          <a href="{{prev_url}}" class="article-nav-link article-nav-prev">
+            <span class="article-nav-label">&larr; Previous</span>
+            <span class="article-nav-title">{{prev_title}}</span>
+          </a>
+          {{/has_prev}}
+          {{^has_prev}}
+          <div class="article-nav-placeholder"></div>
+          {{/has_prev}}
+
+          {{#has_next}}
+          <a href="{{next_url}}" class="article-nav-link article-nav-next">
+            <span class="article-nav-label">Next &rarr;</span>
+            <span class="article-nav-title">{{next_title}}</span>
+          </a>
+          {{/has_next}}
+          {{^has_next}}
+          <div class="article-nav-placeholder"></div>
+          {{/has_next}}
+        </div>
+      </div>
+    </nav>
+
+    <!-- CTA Banner -->
+    <section class="blog-cta">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2>Read the full guide</h2>
+            <p>This post is one chapter from <strong>{{ebook_title}}</strong>. Download the complete ebook for all chapters, interactive calculators, and production-ready code examples.</p>
+          </div>
+          <button class="cta-button" onclick="openLeadModal()">{{#pdf_url}}Download Free Ebook{{/pdf_url}}{{^pdf_url}}Get Early Access{{/pdf_url}}</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══ Lead Capture Modal ═══ -->
+  <div class="lead-modal-overlay" id="lead-modal" style="display: none;">
+    <div class="lead-modal">
+      <button class="lead-modal-close" onclick="closeLeadModal()">&times;</button>
+      <div class="lead-modal-header">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #0891b2;">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="lead-modal-title">Download Free Ebook</h3>
+        <p class="lead-modal-subtitle">{{ebook_title}}</p>
+      </div>
+      <form class="lead-modal-form" id="lead-form" onsubmit="return submitLeadForm(event)">
+        <div class="lead-modal-field">
+          <label for="lead-name">Full Name <span class="field-required">*</span></label>
+          <input type="text" id="lead-name" name="name" placeholder="John Doe" required>
+          <span class="field-error" id="name-error"></span>
+        </div>
+        <div class="lead-modal-field">
+          <label for="lead-email">Work Email <span class="field-required">*</span></label>
+          <input type="email" id="lead-email" name="email" placeholder="john@company.com" required>
+          <span class="field-error" id="email-error"></span>
+        </div>
+        <div class="lead-modal-field">
+          <label for="lead-org">Organization <span class="field-required">*</span></label>
+          <input type="text" id="lead-org" name="organization" placeholder="Acme Corp" required>
+          <span class="field-error" id="org-error"></span>
+        </div>
+        <button type="submit" class="lead-modal-submit" id="lead-submit-btn">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="margin-right:6px;flex-shrink:0">
+            <path d="M10 3v10m0 0l-3.5-3.5M10 13l3.5-3.5M4 15h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Get Free PDF
+        </button>
+      </form>
+      <div class="lead-modal-success" id="lead-success" style="display: none;">
+        <div class="lead-modal-success-icon">&#10003;</div>
+        <p id="lead-success-msg">{{#pdf_url}}Your PDF is opening now. Redirecting to the ebook page...{{/pdf_url}}{{^pdf_url}}Thank you! We'll be in touch when the full ebook is ready.{{/pdf_url}}</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="blog-footer">
+    <div class="container">
+      <p>&copy; {{year}} <a href="{{{company_website}}}">{{company_name}}</a>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Reading progress bar
+    var progressBar = document.getElementById('reading-progress');
+    var article = document.querySelector('.blog-article');
+    function updateProgress() {
+      if (!article) return;
+      var rect = article.getBoundingClientRect();
+      var articleTop = rect.top + window.scrollY;
+      var articleHeight = rect.height;
+      var scrolled = window.scrollY - articleTop;
+      var progress = Math.min(Math.max(scrolled / (articleHeight - window.innerHeight), 0), 1);
+      progressBar.style.width = (progress * 100) + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    // Header shadow on scroll
+    var header = document.getElementById('blog-header');
+    window.addEventListener('scroll', function() {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // ── Lead Capture Modal ──
+    var pdfUrl = '{{{pdf_url}}}';
+    var ebookTitle = '{{ebook_title}}';
+    var dashboardUrl = '{{{dashboard_url}}}';
+
+    function openLeadModal() {
+      document.getElementById('lead-form').style.display = '';
+      document.getElementById('lead-success').style.display = 'none';
+      document.getElementById('lead-submit-btn').disabled = false;
+      clearErrors();
+      document.getElementById('lead-modal').style.display = 'flex';
+    }
+
+    function closeLeadModal() {
+      document.getElementById('lead-modal').style.display = 'none';
+    }
+
+    function clearErrors() {
+      document.getElementById('name-error').textContent = '';
+      document.getElementById('email-error').textContent = '';
+      document.getElementById('org-error').textContent = '';
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function submitLeadForm(e) {
+      e.preventDefault();
+      clearErrors();
+
+      var name = document.getElementById('lead-name').value.trim();
+      var email = document.getElementById('lead-email').value.trim();
+      var org = document.getElementById('lead-org').value.trim();
+      var valid = true;
+
+      if (!name) {
+        document.getElementById('name-error').textContent = 'Full name is required';
+        valid = false;
+      }
+      if (!email) {
+        document.getElementById('email-error').textContent = 'Email address is required';
+        valid = false;
+      } else if (!isValidEmail(email)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address';
+        valid = false;
+      }
+      if (!org) {
+        document.getElementById('org-error').textContent = 'Organization name is required';
+        valid = false;
+      }
+
+      if (!valid) return false;
+
+      var btn = document.getElementById('lead-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      var leadData = {
+        name: name,
+        email: email,
+        organization: org,
+        ebook: ebookTitle
+      };
+
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadData)
+      }).catch(function() {
+        try {
+          var leads = JSON.parse(localStorage.getItem('zopdev-leads') || '[]');
+          leadData.timestamp = new Date().toISOString();
+          leads.push(leadData);
+          localStorage.setItem('zopdev-leads', JSON.stringify(leads));
+        } catch(ex) {}
+      }).finally(function() {
+        document.getElementById('lead-form').style.display = 'none';
+        document.getElementById('lead-success').style.display = 'block';
+
+        if (pdfUrl) {
+          window.open(pdfUrl, '_blank');
+          setTimeout(function() {
+            closeLeadModal();
+            if (dashboardUrl) {
+              window.location.href = dashboardUrl;
+            }
+          }, 2500);
+        } else {
+          setTimeout(function() {
+            closeLeadModal();
+          }, 2000);
+        }
+      });
+
+      return false;
+    }
+
+    // Close modal on overlay click or Escape
+    document.getElementById('lead-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeLeadModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLeadModal();
+    });
+  </script>
+</body>
+</html>

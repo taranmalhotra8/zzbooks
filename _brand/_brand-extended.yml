@@ -1,0 +1,108 @@
+# Zopdev Extended Brand Configuration
+# Company identity, products, target audiences, and messaging guidelines.
+# Used by landing page and social generators alongside _brand.yml.
+
+company:
+  name: "Zopdev"
+  tagline: "Cloud Engineering Excellence"
+  website: "https://zop.dev"
+  social:
+    linkedin: "https://linkedin.com/company/zopdev"
+    twitter: "https://twitter.com/zopdev"
+    github: "https://github.com/zopdev"
+
+products:
+  - id: "zopnight"
+    name: "ZopNight"
+    tagline: "Cloud cost governance on autopilot"
+    description: "Cloud cost governance and optimization platform with policy-driven recommendations, idle resource scheduling, right-sizing, and event readiness for traffic and load prediction"
+    url: "https://zopnight.com"
+    features:
+      - "Policy-driven cost optimization recommendations"
+      - "Scheduler to shut down idle resources"
+      - "Right-sizing recommendations"
+      - "Event readiness for traffic and load prediction"
+      - "Multi-cloud cost governance"
+  - id: "zopcloud"
+    name: "ZopCloud"
+    description: "Cloud migration and modernization services"
+    url: "https://zopcloud.com"
+  - id: "zopday"
+    name: "ZopDay"
+    tagline: "Ship faster on Kubernetes"
+    description: "Kubernetes-based Internal Developer Platform that helps teams spin up clusters and microservices fast in a secure golden path manner"
+    url: "https://zopday.com"
+    features:
+      - "Cluster provisioning and lifecycle management"
+      - "Microservice scaffolding with golden paths"
+      - "Secure-by-default infrastructure templates"
+      - "Self-service developer portal"
+      - "GitOps-native deployment workflows"
+
+default_icps:
+  - id: "devops-engineer"
+    title: "DevOps Engineer"
+    seniority: "Mid-Senior"
+    pain_points:
+      - "Cloud costs spiraling out of control"
+      - "No visibility into who is spending what"
+      - "Manual cost reporting eats engineering time"
+    goals:
+      - "Reduce cloud spend by 30%"
+      - "Implement automated cost controls"
+      - "Build self-service cost dashboards"
+
+  - id: "cto"
+    title: "CTO / Engineering Leader"
+    seniority: "Executive"
+    pain_points:
+      - "Board asking hard questions about cloud ROI"
+      - "Teams don't understand cost impact of decisions"
+      - "No framework for balancing speed vs cost"
+    goals:
+      - "Build cost-aware engineering culture"
+      - "Demonstrate cloud value to business stakeholders"
+      - "Establish FinOps practice across the org"
+
+  - id: "finops-practitioner"
+    title: "FinOps Practitioner"
+    seniority: "Mid-Senior"
+    pain_points:
+      - "Lack of engineering buy-in for cost optimization"
+      - "Fragmented tooling across cloud providers"
+      - "Difficulty attributing costs to business outcomes"
+    goals:
+      - "Centralize cloud financial management"
+      - "Drive cross-functional cost accountability"
+      - "Implement showback and chargeback models"
+
+tone:
+  voice: "Technical, authoritative, practical"
+  principles:
+    - "Lead with real-world scenarios, not theory"
+    - "Show production-ready code, not pseudocode"
+    - "Quantify impact with real numbers"
+    - "Be opinionated about best practices"
+  avoid:
+    - "Marketing fluff and buzzwords"
+    - "Generic advice without specifics"
+    - "Hedging language (might, could, perhaps)"
+    - "Unnecessary jargon without explanation"
+
+authors:
+  - id: "zopdev-team"
+    name: "Zopdev Team"
+    title: "Cloud Engineering"
+    bio: "The Zopdev engineering team specializes in cloud-native infrastructure, FinOps automation, and developer experience."
+    avatar_url: "/assets/authors/zopdev-team.png"
+    social:
+      linkedin: "https://linkedin.com/company/zopdev"
+      github: "https://github.com/zopdev"
+
+default_ctas:
+  primary:
+    text: "Download Free PDF"
+    style: "prominent"
+  secondary:
+    text: "View Online"
+    style: "outline"

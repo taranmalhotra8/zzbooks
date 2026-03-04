@@ -1,0 +1,46 @@
+---
+subtitle: "A Practical Guide to Cloud Financial Management"
+---
+
+# The FinOps Playbook {.unnumbered}
+
+## Preface {.unnumbered}
+
+Cloud computing has transformed how organizations build and deliver software. But with the flexibility and power of the cloud comes a new challenge: managing costs at scale.
+
+This book is a practical guide for engineering leaders, DevOps teams, and finance professionals who want to take control of their cloud spending without sacrificing velocity or innovation.
+
+## Who This Book Is For {.unnumbered}
+
+- **Engineering leaders** who want to build cost-aware teams
+- **DevOps/Platform engineers** responsible for cloud infrastructure
+- **Finance teams** who need to understand and forecast cloud costs
+- **FinOps practitioners** looking for actionable strategies
+
+## How to Read This Book {.unnumbered}
+
+Each chapter is designed to be self-contained. You can read cover-to-cover or jump to the topics most relevant to your role:
+
+| Chapters | Best For |
+|----------|----------|
+| 1–2 | Everyone — foundational concepts |
+| 3–4 | FinOps practitioners and finance teams |
+| 5–6 | Engineers and platform teams |
+| 7 | Leadership and change management |
+| 8 | Anyone looking for real-world examples |
+
+## Conventions Used {.unnumbered}
+
+Throughout this book, you'll find:
+
+::: {.callout-tip}
+**Tips** highlight best practices and quick wins.
+:::
+
+::: {.callout-note}
+**Notes** provide additional context or caveats.
+:::
+
+::: {.callout-warning}
+**Warnings** flag common mistakes to avoid.
+:::

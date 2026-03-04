@@ -1,0 +1,8 @@
+# Topic configuration for outline generation.
+# Run: make pipeline ebook=terraform-cloud-costs
+
+topic: "Terraform Cloud Cost Optimization"
+audience: "Platform engineers and SREs managing $20K-$200K/month in multi-cloud infrastructure via Terraform"
+chapter_count: "3"
+depth: "production-ready"
+angle: "incident-driven"

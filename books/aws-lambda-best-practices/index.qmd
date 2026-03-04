@@ -1,0 +1,56 @@
+---
+subtitle: "A Practitioner's Guide to Building Production-Ready Serverless Functions"
+---
+
+# AWS Lambda Cost and Performance Optimization {.unnumbered}
+
+## Preface {.unnumbered}
+
+From understanding why Lambda optimization matters to implementing battle-tested patterns that reduce costs by 40% and eliminate cold starts.
+
+The landscape is evolving rapidly. AWS Lambda processes over 1.5 million monthly active customers with tens of trillions of invocations. Meanwhile, Capital One achieved up to 90% cost savings by migrating applications to AWS Lambda. These numbers underscore a clear mandate: organizations that master these practices gain a measurable competitive edge.
+
+This book takes you from the business case for lambda optimization through to event-driven design and error handling. Every chapter delivers actionable strategies, production-ready code, and real-world patterns you can apply immediately — no theory without practice, no recommendations without evidence.
+
+Whether you are building your first production workload or optimizing systems that serve millions of requests, this book provides a structured path from foundational concepts to advanced implementation patterns.
+
+## Who This Book Is For {.unnumbered}
+
+- **Engineering leaders** who need to make informed technical decisions and drive organizational outcomes
+- **DevOps and platform engineers** responsible for infrastructure, tooling, and operational excellence
+- **Practitioners** looking for hands-on strategies, production-ready code, and actionable frameworks
+- **Technical decision-makers** evaluating approaches, tools, and architectural trade-offs
+
+## How to Read This Book {.unnumbered}
+
+Each chapter is designed to be self-contained. You can read cover-to-cover or jump to the topics most relevant to your role:
+
+| Chapters | Best For |
+|----------|----------|
+| 1 | Everyone — foundational concepts |
+| 2–4 | Practitioners and technical teams |
+| 5 | Advanced users and decision-makers |
+
+## What You Will Learn {.unnumbered}
+
+1. **The Business Case for Lambda Optimization** — Explore the massive scale of AWS Lambda adoption and the real-world impact of optimization. Learn why DevOps teams prioritize Lambda efficiency, including Capital One's 90% cost savings and Square Enix's ability to handle 30x traffic spikes.
+2. **Eliminating Cold Starts with Provisioned Concurrency** — Master cold start mitigation strategies by implementing Provisioned Concurrency. Learn when to pre-initialize function environments, how to configure appropriate concurrency levels, and how to balance warm function costs against latency-sensitive requirements.
+3. **Memory, SDK, and Environment Reuse** — Apply three interconnected optimization patterns: right-sizing memory using AWS Lambda Power Tuning, implementing modular SDK usage with AWS SDK v3, and structuring code to leverage execution environment reuse for database connections and cached resources.
+4. **Event-Driven Design and Error Handling** — Design resilient Lambda architectures using event-driven patterns with S3, DynamoDB Streams, and EventBridge. Implement proper Dead Letter Queue configuration and build retry logic with exponential backoff and jitter to handle transient failures without causing thundering herd problems.
+5. **Building Your Lambda Optimization Practice** — Synthesize all patterns into a cohesive optimization practice. Learn the implementation sequence, establish monitoring with CloudWatch and Lambda Insights, and create a continuous improvement workflow for ongoing Lambda efficiency as your workloads evolve.
+
+## Conventions Used {.unnumbered}
+
+Throughout this book, you will find:
+
+::: {.callout-tip}
+**Tips** highlight best practices and quick wins you can implement today.
+:::
+
+::: {.callout-note}
+**Notes** provide additional context, caveats, or links to further reading.
+:::
+
+::: {.callout-warning}
+**Warnings** flag common mistakes and anti-patterns to avoid in production.
+:::

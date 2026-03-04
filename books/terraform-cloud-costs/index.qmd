@@ -1,0 +1,18 @@
+---
+subtitle: "Infrastructure-as-Code Strategies for Reducing Cloud Spend"
+---
+
+# Terraform Cloud Cost Control {.unnumbered}
+
+## Preface {.unnumbered}
+
+Terraform Cloud pricing looks simple on the surface — free for small teams, pay-per-resource beyond that. But when your infrastructure-as-code practice scales across multiple environments, workspaces, and teams, costs can escalate from dollars to thousands per month with surprising speed.
+
+This guide breaks down exactly how Terraform Cloud costs accumulate, where the hidden multipliers live, and what strategies reduce your bill by 40-70% without compromising your IaC workflow.
+
+## Who This Book Is For {.unnumbered}
+
+- **DevOps engineers** managing Terraform Cloud workspaces at scale
+- **Platform teams** building self-service IaC platforms for their organization
+- **Engineering managers** evaluating Terraform Cloud vs. alternatives
+- **FinOps practitioners** tracking and optimizing IaC platform costs

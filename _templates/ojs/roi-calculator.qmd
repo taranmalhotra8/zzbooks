@@ -1,0 +1,219 @@
+---
+title: "ROI Calculator"
+format:
+  html:
+    code-fold: true
+  pdf:
+    keep-tex: false
+  epub: default
+---
+
+<!-- ROI Calculator Template
+     Calculate return on investment over time.
+
+     Usage: Copy this template into your chapter .qmd file, then customize
+     the investment categories, savings formulas, and time horizon.
+
+     HTML: Interactive sliders with reactive chart and summary.
+     PDF/EPUB: Static fallback table showing default ROI projection.
+-->
+
+::: {.callout-note}
+## ROI Calculator
+Model your return on investment by adjusting implementation costs and expected savings.
+:::
+
+```{ojs}
+//| echo: false
+
+// --- Investment Inputs ---
+
+viewof implementationCost = Inputs.range([5000, 500000], {
+  value: 50000,
+  step: 5000,
+  label: "Implementation cost ($)"
+})
+
+viewof monthlyToolingCost = Inputs.range([0, 10000], {
+  value: 2000,
+  step: 100,
+  label: "Monthly tooling cost ($)"
+})
+
+viewof teamHoursPerMonth = Inputs.range([10, 200], {
+  value: 40,
+  step: 5,
+  label: "Team hours/month saved"
+})
+
+viewof hourlyRate = Inputs.range([50, 300], {
+  value: 125,
+  step: 5,
+  label: "Blended hourly rate ($)"
+})
+
+viewof monthlySavings = Inputs.range([1000, 100000], {
+  value: 15000,
+  step: 1000,
+  label: "Monthly direct savings ($)"
+})
+
+viewof timeHorizonMonths = Inputs.range([6, 60], {
+  value: 36,
+  step: 6,
+  label: "Time horizon (months)"
+})
+```
+
+```{ojs}
+//| echo: false
+
+// --- ROI Calculations ---
+
+laborSavings = teamHoursPerMonth * hourlyRate
+
+monthlyNetBenefit = monthlySavings + laborSavings - monthlyToolingCost
+
+projections = {
+  const rows = [];
+  let cumInvestment = implementationCost;
+  let cumSavings = 0;
+  for (let m = 1; m <= timeHorizonMonths; m++) {
+    cumInvestment += monthlyToolingCost;
+    cumSavings += monthlySavings + laborSavings;
+    const cumNet = cumSavings - cumInvestment;
+    rows.push({
+      month: m,
+      cumInvestment,
+      cumSavings,
+      cumNet,
+      roi: cumInvestment > 0 ? ((cumSavings - cumInvestment) / cumInvestment * 100) : 0
+    });
+  }
+  return rows;
+}
+
+breakEvenMonth = {
+  const found = projections.find(p => p.cumNet >= 0);
+  return found ? found.month : null;
+}
+```
+
+```{ojs}
+//| echo: false
+
+// --- Summary Output ---
+
+fmt = d3.format("$,.0f")
+pctFmt = d3.format(",.0f")
+
+finalRow = projections[projections.length - 1]
+
+html`<div class="ojs-calculator">
+  <div class="ojs-summary-grid">
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(finalRow.cumSavings - finalRow.cumInvestment)}</span>
+      <span class="ojs-metric-label">Net benefit (${timeHorizonMonths} months)</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${pctFmt(finalRow.roi)}%</span>
+      <span class="ojs-metric-label">Return on investment</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${breakEvenMonth ? breakEvenMonth + " months" : "Not reached"}</span>
+      <span class="ojs-metric-label">Break-even point</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(monthlyNetBenefit)}</span>
+      <span class="ojs-metric-label">Monthly net benefit</span>
+    </div>
+  </div>
+</div>`
+```
+
+```{ojs}
+//| echo: false
+
+// --- ROI Projection Chart ---
+
+Plot.plot({
+  title: "Cumulative ROI Projection",
+  width: 700,
+  height: 350,
+  y: { label: "Amount ($)", grid: true, tickFormat: "$,.0f" },
+  x: { label: "Month" },
+  color: { legend: true },
+  marks: [
+    Plot.line(projections, { x: "month", y: "cumSavings", stroke: "#00C48C", strokeWidth: 2, tip: true }),
+    Plot.line(projections, { x: "month", y: "cumInvestment", stroke: "#FF6B6B", strokeWidth: 2, tip: true }),
+    Plot.line(projections, { x: "month", y: "cumNet", stroke: "#0052FF", strokeWidth: 2.5, tip: true }),
+    Plot.ruleY([0], { stroke: "#94A3B8", strokeDasharray: "4,4" }),
+    breakEvenMonth ? Plot.dot([projections[breakEvenMonth - 1]], {
+      x: "month", y: "cumNet", fill: "#0052FF", r: 6
+    }) : null
+  ].filter(Boolean)
+})
+```
+
+```{ojs}
+//| echo: false
+
+// --- Monthly Breakdown Table ---
+
+milestones = [6, 12, 24, 36].filter(m => m <= timeHorizonMonths).map(m => projections[m - 1])
+
+html`<div class="ojs-calculator">
+  <table class="ojs-results-table">
+    <thead>
+      <tr>
+        <th>Milestone</th>
+        <th>Cumulative Investment</th>
+        <th>Cumulative Savings</th>
+        <th>Net Benefit</th>
+        <th>ROI</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${milestones.map(p => html`<tr>
+        <td>Month ${p.month}</td>
+        <td>${fmt(p.cumInvestment)}</td>
+        <td>${fmt(p.cumSavings)}</td>
+        <td class="${p.cumNet >= 0 ? 'ojs-positive' : 'ojs-negative'}">${fmt(p.cumNet)}</td>
+        <td>${pctFmt(p.roi)}%</td>
+      </tr>`)}
+    </tbody>
+  </table>
+</div>`
+```
+
+::: {.content-visible when-format="pdf"}
+**ROI Projection (Default Scenario)**
+
+Investment: $50,000 implementation + $2,000/month tooling.
+Savings: $15,000/month direct + $5,000/month labor (40 hrs at $125/hr).
+
+| Milestone | Investment | Savings | Net Benefit | ROI |
+|-----------|-----------|---------|------------|-----|
+| Month 6   | $62,000   | $120,000 | $58,000   | 94% |
+| Month 12  | $74,000   | $240,000 | $166,000  | 224% |
+| Month 24  | $98,000   | $480,000 | $382,000  | 390% |
+| Month 36  | $122,000  | $720,000 | $598,000  | 490% |
+
+**Break-even: ~3 months.** Adjust values in the interactive HTML version.
+:::
+
+::: {.content-visible when-format="epub"}
+**ROI Projection (Default Scenario)**
+
+Investment: $50,000 implementation + $2,000/month tooling.
+Savings: $15,000/month direct + $5,000/month labor (40 hrs at $125/hr).
+
+| Milestone | Investment | Savings | Net Benefit | ROI |
+|-----------|-----------|---------|------------|-----|
+| Month 6   | $62,000   | $120,000 | $58,000   | 94% |
+| Month 12  | $74,000   | $240,000 | $166,000  | 224% |
+| Month 24  | $98,000   | $480,000 | $382,000  | 390% |
+| Month 36  | $122,000  | $720,000 | $598,000  | 490% |
+
+**Break-even: ~3 months.** Adjust values in the interactive HTML version.
+:::

@@ -1,0 +1,62 @@
+project:
+  type: book
+  output-dir: ../../_output/books/finops-playbook
+
+book:
+  title: "The FinOps Playbook"
+  subtitle: "A Practical Guide to Cloud Financial Management"
+  author: "Zopdev Team"
+  date: "2026-04-15"
+  chapters:
+    - index.qmd
+    - chapters/01-intro.qmd
+    - chapters/02-cloud-cost-fundamentals.qmd
+    - chapters/03-finops-framework.qmd
+    - chapters/04-cost-allocation.qmd
+    - chapters/05-optimization-strategies.qmd
+    - chapters/06-tooling-automation.qmd
+    - chapters/07-culture-adoption.qmd
+    - chapters/08-case-studies.qmd
+
+filters:
+  - d2
+
+d2:
+  layout: elk
+  theme: NeutralDefault
+  pad: 20
+
+format:
+  html:
+    theme:
+      light: [cosmo, brand, ../../_themes/zopdev-book.scss]
+      dark: [darkly, brand, ../../_themes/zopdev-book.scss]
+    grid:
+      sidebar-width: 260px
+      body-width: 800px
+      margin-width: 280px
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-link: true
+    code-copy: true
+    code-overflow: wrap
+    include-after-body:
+      - text: |
+          <div class="reading-progress"></div>
+          <script>window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;if(h>0)document.querySelector('.reading-progress').style.width=(window.scrollY/h*100)+'%';});</script>
+      - file: ../../_themes/lightbox.html
+      - file: ../../_themes/diagram-sizing.html
+  pdf:
+    documentclass: book
+    classoption: [oneside, 11pt]
+    pdf-engine: xelatex
+    include-in-header: ../../_themes/preamble.tex
+    toc: true
+    number-sections: true
+    colorlinks: true
+    keep-tex: false
+  epub:
+    css: ../../_themes/zopdev-epub.css
+    toc: true
+    number-sections: true

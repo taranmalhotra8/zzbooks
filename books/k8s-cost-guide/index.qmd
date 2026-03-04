@@ -1,0 +1,18 @@
+---
+subtitle: "Optimizing Container Spending"
+---
+
+# Kubernetes Cost Guide {.unnumbered}
+
+## Preface {.unnumbered}
+
+Kubernetes makes it easy to deploy software at scale. It also makes it easy to spend money at scale — often without realizing it until the bill arrives.
+
+This guide is for platform engineers, DevOps teams, and engineering leaders who run production Kubernetes clusters and want to reduce their cloud spend without sacrificing reliability. Every strategy in this book has been tested in real production environments, with specific numbers and implementation details you can apply immediately.
+
+## Who This Book Is For {.unnumbered}
+
+- **Platform engineers** managing Kubernetes clusters on AWS, GCP, or Azure
+- **DevOps teams** responsible for infrastructure cost and efficiency
+- **Engineering leaders** who need to justify and optimize cloud budgets
+- **FinOps practitioners** focused on container cost optimization

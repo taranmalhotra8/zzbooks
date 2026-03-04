@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{company_name}} — Technical Ebook Library</title>
+  <meta name="description" content="Free technical ebooks by {{company_name}}. Production-ready guides for cloud cost optimization, platform engineering, and DevOps.">
+  <meta property="og:title" content="{{company_name}} Ebook Library">
+  <meta property="og:description" content="Free technical ebooks for cloud-native teams.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hub-header">
+    <div class="hub-container">
+      <div class="hub-brand">{{company_name}}</div>
+      <h1 class="hub-title">Technical Ebook Library</h1>
+      <p class="hub-subtitle">Production-ready guides for cloud-native engineering teams</p>
+      <div class="hub-search">
+        <input type="text" id="search-input" placeholder="Search ebooks by title, topic, or tag..." aria-label="Search ebooks">
+      </div>
+      <div class="hub-tags" id="tag-filters">
+        <button class="tag-btn active" data-tag="all">All</button>
+        {{#tags}}
+        <button class="tag-btn" data-tag="{{.}}">{{.}}</button>
+        {{/tags}}
+      </div>
+    </div>
+  </header>
+
+  <main class="hub-container">
+    <div class="hub-grid" id="ebook-grid">
+      {{#ebooks}}
+      <article class="book-card" data-tags="{{tags}}" data-title="{{title}}" data-topic="{{topic}}">
+        <div class="book-card-header">
+          <span class="book-card-badge">{{chapter_count}} chapters</span>
+          {{#status}}
+          <span class="book-card-status book-card-status--{{status}}">{{status}}</span>
+          {{/status}}
+        </div>
+        <h2 class="book-card-title">{{title}}</h2>
+        <p class="book-card-topic">{{topic}}</p>
+        <p class="book-card-audience">{{audience}}</p>
+        <div class="book-card-tags">
+          {{#tag_list}}
+          <span class="book-tag">{{.}}</span>
+          {{/tag_list}}
+        </div>
+        <div class="book-card-footer">
+          {{#html_url}}
+          <a href="{{html_url}}" class="book-card-link">Read Online →</a>
+          {{/html_url}}
+          {{#landing_url}}
+          <a href="{{landing_url}}" class="book-card-link book-card-link--secondary">Landing Page</a>
+          {{/landing_url}}
+        </div>
+      </article>
+      {{/ebooks}}
+    </div>
+
+    <div class="hub-empty" id="no-results" style="display: none;">
+      <p>No ebooks match your search. Try a different keyword.</p>
+    </div>
+  </main>
+
+  <footer class="hub-footer">
+    <div class="hub-container">
+      <p>© {{year}} {{company_name}} — Built with the Zopdev Ebook Engine</p>
+    </div>
+  </footer>
+
+  <script>
+    // Client-side search and tag filtering
+    const searchInput = document.getElementById('search-input');
+    const grid = document.getElementById('ebook-grid');
+    const cards = grid.querySelectorAll('.book-card');
+    const noResults = document.getElementById('no-results');
+    const tagButtons = document.querySelectorAll('.tag-btn');
+
+    let activeTag = 'all';
+
+    function filterCards() {
+      const query = searchInput.value.toLowerCase().trim();
+      let visible = 0;
+
+      cards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const topic = card.dataset.topic.toLowerCase();
+        const tags = card.dataset.tags.toLowerCase();
+
+        const matchesSearch = !query || title.includes(query) || topic.includes(query) || tags.includes(query);
+        const matchesTag = activeTag === 'all' || tags.includes(activeTag.toLowerCase());
+
+        const show = matchesSearch && matchesTag;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      noResults.style.display = visible === 0 ? '' : 'none';
+    }
+
+    searchInput.addEventListener('input', filterCards);
+
+    tagButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tagButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTag = btn.dataset.tag;
+        filterCards();
+      });
+    });
+  </script>
+</body>
+</html>

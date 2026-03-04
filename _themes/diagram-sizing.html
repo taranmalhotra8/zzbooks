@@ -1,0 +1,39 @@
+<script>
+// Smart D2 diagram sizing based on aspect ratio
+// Wide diagrams get a fixed height with horizontal scroll.
+// Normal/tall diagrams constrain to content width naturally.
+document.addEventListener('DOMContentLoaded', function() {
+  var imgs = document.querySelectorAll('#quarto-content img[src^="data:image/svg"]');
+  imgs.forEach(function(img) {
+    function resize() {
+      var w = img.naturalWidth;
+      var h = img.naturalHeight;
+      if (!w || !h) return;
+      var ratio = w / h;
+
+      if (ratio > 2.5) {
+        // Wide diagram: render at a readable height, let it scroll horizontally
+        // Calculate width needed for target height of 300px
+        var targetH = Math.min(350, Math.max(250, h * 8));
+        var targetW = targetH * ratio;
+        img.style.width = targetW + 'px';
+        img.style.height = targetH + 'px';
+        img.style.maxWidth = 'none';
+        img.setAttribute('data-diagram-wide', '');
+      } else if (ratio < 0.5) {
+        // Tall diagram: constrain width, let height flow
+        img.style.maxWidth = '80%';
+        img.style.height = 'auto';
+        img.setAttribute('data-diagram-tall', '');
+      }
+      // Normal ratio diagrams: default CSS handles fine
+    }
+
+    if (img.complete && img.naturalWidth) {
+      resize();
+    } else {
+      img.addEventListener('load', resize);
+    }
+  });
+});
+</script>

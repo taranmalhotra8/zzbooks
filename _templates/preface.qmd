@@ -1,0 +1,9 @@
+## Preface {.unnumbered}
+
+The modern cloud is no longer just an infrastructure challenge; it is a financial one. As organizations scale, the disconnect between engineering speed and financial accountability creates a "visibility gap" that traditional procurement models cannot bridge.
+
+This book follows the **FinOps Playbook** pattern — a framework designed to move beyond simple cost-cutting and toward "Unit Economics" in the cloud. We focus on the Inform, Optimize, and Operate phases to ensure that every dollar spent on infrastructure is an investment in business growth, not just an operational leakage.
+
+In the following chapters, we will deconstruct the complexities of {{topic}} through this lens, providing actionable blueprints for visibility, right-sizing, and cultural alignment.
+
+<!-- TODO: Add specific book-level dedication or context -->

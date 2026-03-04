@@ -1,0 +1,172 @@
+chapter_id: 04-architectural-cost-control
+density_level: standard
+word_target:
+  - 1200
+  - 1800
+sections:
+  - id: opening
+    heading: ""
+    word_target: 150
+    visual: null
+    notes: "Open with the $723.4B worldwide public cloud spending figure and 21.5%
+      YoY growth. Immediately pivot to the crisis: 75% of migrations exceed
+      budgets, with 20%+ cost overruns. State the core thesis: without strategic
+      data tiering and cloud-native patterns, enterprises bleed $100B+ in
+      unplanned migration costs over three years. This is NOT a story — use the
+      Flosum and Future Processing data directly. Establish that this chapter
+      provides architectural patterns and cost governance frameworks to prevent
+      budget explosion. Target tone: authoritative, data-first, no fluff."
+  - id: the_migration_cost_crisis
+    heading: "The Migration Cost Crisis: Why Budgets Break"
+    word_target: 200
+    visual: null
+    notes: "Deep dive into Future Processing research. Break down: what drives the
+      75% budget overrun rate? Identify top 3 culprits (underestimated data
+      transfer, hidden egress fees, underprovisioned migration tooling).
+      Quantify: $100B+ in unplanned expenditures globally over 3 years. Frame
+      this as a governance problem, not a technology problem. Introduce the
+      concept that cloud-native patterns aren't just technical decisions —
+      they're cost control mechanisms. This section sets stakes for why the
+      patterns in later sections matter."
+  - id: automated_data_tiering
+    heading: "Automated Data Tiering: The 60-80% Storage Leverage Point"
+    word_target: 250
+    visual:
+      type: d2
+      template: data-pipeline
+      purpose: Show data flow through lifecycle tiers (hot → warm → cold → archive)
+        with automated transition rules
+      style: flowchart
+    notes: "Explain automated data tiering mechanics: lifecycle policies, object
+      storage classes (S3 Intelligent-Tiering, Glacier, Azure Cool/Garchive),
+      transition triggers. Reference the 60-80% storage cost reduction pattern.
+      Include a comparison table: object storage providers and their tiering
+      options with approximate cost per GB. Discuss implementation approach:
+      inventory analysis, classification schema, policy automation. Address
+      common failure modes: over-tiering (performance hits), under-tiering
+      (missed savings). This is the highest ROI pattern — position it first."
+  - id: cloud_native_refactoring
+    heading: "Lift-and-Shift to Cloud-Native Refactoring: The 40-60% Operational Play"
+    word_target: 250
+    visual: null
+    notes: "Distinguish lift-and-shift (fast, expensive long-term) from cloud-native
+      refactoring (slower, cheaper long-term). Present the 40-60% operational
+      cost reduction over 2-3 years pattern. Include a decision framework: when
+      to refactor vs. re-architect vs. replatform. Discuss managed services
+      (RDS, Lambda, Azure Functions, Cloud Run) vs. self-managed (EC2, VMs).
+      Build the cost-benefit analysis framework: calculate TCO comparison over 3
+      years. Introduce the hidden cost of technical debt in lift-and-shift
+      migrations. Reference Kubernetes Right-Sizing (30-50% cluster cost
+      reduction) as a related pattern."
+  - id: managed_services_analysis
+    heading: Managed Services Cost-Benefit Analysis Framework
+    word_target: 200
+    visual:
+      type: table
+      template: comparison
+      purpose: Compare managed vs. self-managed options across cost dimensions
+      style: comparison-table
+    notes: "Create a decision matrix comparing managed services (RDS, ElastiCache,
+      Cloud SQL, etc.) against self-managed (EC2 + MySQL, Redis on VM). Columns:
+      upfront migration cost, ongoing operational cost, team effort, scaling
+      overhead, vendor lock-in risk. Include the 30-60% Reserved
+      Instance/Savings Plan optimization pattern in this context — show how
+      commitment-based pricing changes the managed vs. self-managed calculus.
+      Provide a spreadsheet-ready formula template for TCO calculation."
+  - id: right_sizing_calculator
+    heading: "Cost Optimization Calculator: Model Your Savings"
+    word_target: 150
+    visual:
+      type: ojs
+      template: cost-comparison-calculator
+      purpose: Let readers input their current spend across compute, storage, and
+        non-prod environments to see projected savings from tiering,
+        right-sizing, and reservation optimization
+      language: javascript
+    notes: "This is the REQUIRED OJS calculator section — place in the most
+      data-heavy section. Create a calculator that takes: monthly compute spend,
+      storage spend, % non-prod environments, current utilization rate. Outputs:
+      projected savings from (1) automated data tiering, (2) non-prod
+      environment scheduling (70% savings), (3) reserved instance optimization
+      (30-60% discount), (4) Kubernetes right-sizing (30-50% reduction). Show
+      cumulative annual savings. Use realistic AWS/Azure/GCP pricing baselines
+      for defaults."
+  - id: architectural_cost_governance
+    heading: Long-Term Architectural Cost Governance
+    word_target: 200
+    visual:
+      type: code
+      language: yaml
+      template: null
+      purpose: Show sample cost governance policy as infrastructure-as-code (e.g.,
+        budget alerts, tag enforcement, lifecycle policy templates)
+      style: config-snippet
+    notes: "Discuss ongoing governance: budget alerts, tag enforcement, regular
+      right-sizing reviews, quarterly committed spend reviews. Provide a code
+      config snippet (under 50 lines) showing a sample budget alert policy or
+      tagging enforcement rule. Reference the 13% of companies with projects 3+
+      quarters behind schedule — governance prevents timeline slippage which
+      drives costs. Discuss the role of zopcloud-style tools in continuous spend
+      tracking during and after migration. Emphasize that cost governance is a
+      process, not a one-time setup."
+  - id: summary
+    heading: "Summary: Building Cost-Informed Architectures"
+    word_target: 100
+    visual: null
+    notes: "Recap the four key concepts: (1) automated data tiering delivers 60-80%
+      storage savings, (2) cloud-native refactoring delivers 40-60% operational
+      savings over 2-3 years, (3) managed services require careful cost-benefit
+      analysis with TCO modeling, (4) long-term governance prevents budget
+      creep. Reiterate the $100B+ in unplanned migration costs — frame these
+      patterns as the solution. End with the imperative: cost architecture must
+      be designed into migrations, not added after. No new content —
+      synthesize."
+content_seeds:
+  opening_hook: Worldwide public cloud spending reached $723.4 billion in 2024
+    with 21.5% year-over-year growth — but 75% of cloud migrations exceed their
+    budgets, with over a quarter of enterprises experiencing cost overruns
+    surpassing 20%. Collectively, these migration cost overruns amount to more
+    than $100 billion in unplanned expenditures globally over a three-year span.
+  key_claims:
+    - Automated data tiering delivers 60-80% storage cost reduction for
+      qualifying data — the highest ROI pattern in cloud cost optimization
+    - Lift-and-shift to cloud-native refactoring yields 40-60% operational cost
+      reduction over 2-3 years but requires higher upfront investment
+    - Managed services trade operational overhead for vendor lock-in — TCO
+      analysis must factor in committed use discounts
+    - Long-term cost governance through budget alerts, tag enforcement, and
+      quarterly reviews prevents the 20%+ budget overruns that plague 75% of
+      migrations
+    - The $100B+ in unplanned migration costs is preventable through
+      architectural patterns designed for cost control from day one
+  patterns:
+    - "Non-Production Environment Scheduling: Up to 70% reduction in
+      non-production compute costs savings, Low effort"
+    - "ARM-Based Instance Migration (Graviton): 20-40% compute cost reduction
+      savings, Low effort"
+    - "Reserved Instance and Savings Plan Optimization: 30-60% discount vs
+      on-demand pricing savings, Medium effort"
+    - "Kubernetes Right-Sizing: 30-50% reduction in Kubernetes cluster costs
+      savings, Medium effort"
+    - "Lift-and-Shift to Cloud-Native Refactoring: 40-60% operational cost
+      reduction over 2-3 years savings, High effort"
+    - "Automated Data Tiering: 60-80% storage cost reduction for qualifying data
+      savings, Low effort"
+  configs:
+    - Sample budget alert policy configuration (under 50 lines YAML) for cost
+      governance
+    - Infrastructure-as-code template for lifecycle policy enforcement
+    - TCO calculation spreadsheet formulas comparing managed vs. self-managed
+      options
+heal_augmentation: >-
+  CRITICAL: Every claim MUST include a specific number (dollar amount,
+  percentage, or quantity). Replace ALL vague phrases like 'significant
+  savings', 'many organizations', 'should consider' with concrete data. Example:
+  instead of 'significant cost reduction' → '$18,400/month savings (67%
+  reduction)'.
+
+
+  IMPORTANT: Include at least 2 production-ready code blocks in this chapter.
+  Use proper language tags (```python, ```yaml, ```hcl, etc.). Code must be
+  copy-pasteable with real imports and error handling.
+heal_iteration: 3

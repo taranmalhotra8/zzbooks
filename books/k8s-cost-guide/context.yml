@@ -1,0 +1,43 @@
+# Author-provided context for the K8s Cost Guide
+# This file provides product-specific information and editorial direction
+# that the pipeline can't research on its own.
+
+product_relevance:
+  product: zopnight
+  how_it_helps: "Automates Kubernetes cost optimization with namespace-level visibility, VPA-driven right-sizing recommendations, and spot node management"
+  key_features:
+    - "Namespace-level cost attribution dashboards"
+    - "VPA recommendation mode with safety guardrails"
+    - "Spot node interruption handling and fallback"
+    - "Resource request audit and drift detection"
+  differentiators:
+    - "Zero-config cost attribution — works out of the box with any K8s cluster"
+    - "30-day recommendation stabilization before auto-apply"
+    - "Pod disruption budget-aware spot management"
+
+# Real customer outcomes (anonymized)
+customer_stories:
+  - industry: "e-commerce"
+    cluster_size: "120 nodes across 3 clusters"
+    before: "$89,000/month"
+    after: "$52,000/month"
+    timeline: "6 weeks"
+  - industry: "fintech"
+    cluster_size: "45 nodes, single cluster"
+    before: "$34,000/month"
+    after: "$21,000/month"
+    timeline: "4 weeks"
+
+editorial_direction:
+  tone: "authoritative guide, not tutorial"
+  avoid:
+    - "Fictional stories with made-up characters"
+    - "Long code scripts (100+ lines)"
+    - "Generic advice without specific numbers"
+    - "Marketing language or product pitches"
+  emphasize:
+    - "Industry benchmarks with citations"
+    - "Decision frameworks (when to use what)"
+    - "Short config examples readers can copy"
+    - "Tables for comparison and data presentation"
+  code_policy: "config-only"  # only show YAML/HCL configs, not scripts

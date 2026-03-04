@@ -1,0 +1,20 @@
+# Brand overrides for {{title}}
+# Only fields specified here override the brand defaults.
+# See CONTRIBUTING.md for override guidelines.
+
+# target_icps:
+#   - "devops-engineer"
+
+# colors:
+#   primary: "#0e7490"
+
+# tone:
+#   voice: "Technical, authoritative, practical"
+
+# featured_products:
+#   - "zopnight"
+
+# ctas:
+#   primary:
+#     text: "Download Free PDF"
+#     style: "prominent"

@@ -1,0 +1,44 @@
+---
+title: "What Comes Next"
+---
+
+## Key Takeaways
+
+- **GitOps is the standard**: 60% of Kubernetes clusters use ArgoCD, with 97% in production. This is not experimental — it is operational infrastructure.
+- **Self-healing eliminates drift**: Automated sync with self-heal reduces configuration drift detection to near-zero, recovering hours of weekly manual reconciliation.
+- **ApplicationSets scale deployments**: Template-based generation cuts configuration code 70-80% and eliminates copy-paste errors across environments.
+- **Multi-cluster from one pane**: Hub-and-spoke architecture centralizes control while maintaining blast-radius isolation through Projects and RBAC.
+- **Progressive delivery reduces risk**: Canary deployments with Argo Rollouts let you validate changes against real traffic before full rollout.
+- **Security through architecture**: Pull-based GitOps removes credentials from CI pipelines and makes every change auditable through Git history.
+
+## Recommended Next Steps
+
+::: {.callout-tip}
+## Start Small, Scale Fast
+
+1. **Deploy ArgoCD on a staging cluster this week** — Use the Application CRD from Chapter 2 to manage one real service via GitOps
+2. **Enable self-heal on non-production first** — Validate automated sync behavior before applying to production workloads
+3. **Measure your baseline** — Track deployment frequency, drift incidents, and mean time to recovery before and after GitOps adoption
+4. **Expand with ApplicationSets** — Once the pattern is proven, template your deployments across environments using the patterns from Chapter 5
+5. **Share results with leadership** — Quantify the operational overhead reduction (typically 40-60%) to build organizational momentum
+:::
+
+## Resources
+
+| Resource | Link |
+|----------|------|
+| ArgoCD Documentation | [argo-cd.readthedocs.io](https://argo-cd.readthedocs.io) |
+| CNCF GitOps Working Group | [opengitops.dev](https://opengitops.dev) |
+| Argo Rollouts | [argoproj.github.io/rollouts](https://argoproj.github.io/rollouts) |
+| Zopdev Platform | [zopdev.com](https://zopdev.com) |
+| Zopdev GitHub | [github.com/zopdev](https://github.com/zopdev) |
+
+## About Zopdev
+
+Zopdev builds tools that help engineering teams ship faster, spend less, and operate with confidence. Our platform provides cost visibility, infrastructure management, and deployment automation for cloud-native teams.
+
+---
+
+*Thank you for reading **GitOps with ArgoCD**. We hope the patterns, configurations, and strategies in this book help your team deploy with confidence, scale without overhead, and build infrastructure that heals itself.*
+
+*— The Zopdev Team*

@@ -1,0 +1,79 @@
+# Per-ebook metadata for Terraform Cloud Cost Control
+# Supplements calendar.yml with ebook-specific detail.
+
+meta:
+  slug: "terraform-cloud-costs"
+  title: "Terraform Cloud Cost Control"
+  subtitle: "Infrastructure-as-Code Strategies for Reducing Cloud Spend"
+  version: "0.1.0"
+  authors: ["zopdev-team"]
+
+chapters:
+  - id: "01-the-20k-monthly-surprise"
+    title: "The $20K Monthly Surprise: How Resource Sprawl Broke Our Budget"
+    summary: "How unmanaged Terraform state and resource sprawl silently inflates cloud bills — and the incident-driven playbook to stop it."
+    difficulty: beginner
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Understand how resource sprawl accumulates in Terraform-managed infrastructure"
+      - "Learn to audit Terraform state for orphaned and over-provisioned resources"
+      - "Implement tagging enforcement to prevent future cost surprises"
+    key_takeaways:
+      - "Orphaned resources from failed deploys cost an average $3,200/month undetected"
+      - "Terraform state drift is the #1 cause of unexpected cloud cost spikes"
+      - "Automated state audits catch 85% of waste within the first run"
+    tags: [terraform, cost-visibility, resource-sprawl, state-management]
+    prerequisites: []
+
+  - id: "02-environment-strategies"
+    title: "Taming Terraform Costs: Ephemeral Environments and Policy Guardrails"
+    summary: "Stop paying for idle dev/staging environments 24/7. Implement ephemeral workspaces and Sentinel policies that enforce cost boundaries before apply."
+    difficulty: intermediate
+    reading_time_minutes: 7
+    learning_objectives:
+      - "Design ephemeral environment workflows that destroy resources after use"
+      - "Write Sentinel policies to enforce instance size and region restrictions"
+      - "Implement workspace cost isolation for multi-team environments"
+    key_takeaways:
+      - "Ephemeral environments reduce non-production costs by 60-70%"
+      - "Sentinel cost policies block over-budget applies before they reach cloud"
+      - "Workspace isolation enables accurate per-team cost attribution"
+    tags: [terraform, ephemeral-environments, sentinel, policy-as-code]
+    prerequisites: ["01-the-20k-monthly-surprise"]
+
+  - id: "03-enterprise-automation"
+    title: "Enterprise Cost Optimization: Automation, Estimation, and Continuous Guardrails"
+    summary: "Automate cost estimation in CI/CD, enforce budget gates in pipelines, and build continuous guardrails that scale with your infrastructure."
+    difficulty: advanced
+    reading_time_minutes: 8
+    learning_objectives:
+      - "Integrate Infracost into CI/CD pipelines for per-PR cost estimates"
+      - "Build automated rollback triggers when cost thresholds are breached"
+      - "Scale cost governance across 50+ Terraform workspaces"
+    key_takeaways:
+      - "Infracost CI integration reduces cost surprises by 73% in the first quarter"
+      - "Automated rollback policies prevent runaway spend from misconfigured applies"
+      - "Centralized policy libraries enable consistent guardrails across all workspaces"
+    tags: [terraform, ci-cd, infracost, automation, enterprise]
+    prerequisites: ["02-environment-strategies"]
+
+social:
+  linkedin_carousel:
+    slides:
+      - heading: "Terraform Cloud Cost Control"
+        body: "Stop resource sprawl from silently inflating your cloud bill. A production-ready playbook by Zopdev."
+      - heading: "The $20K Surprise"
+        body: "Orphaned Terraform resources from failed deploys cost teams $3,200/month on average — undetected for months"
+      - heading: "Ephemeral Environments = 60-70% Savings"
+        body: "Destroy dev and staging environments after use. Sentinel policies enforce it before every apply."
+      - heading: "Get the Full Guide"
+        body: "Free download at zopdev.com — includes production Terraform modules and Sentinel policies"
+
+  instagram_posts:
+    quotes:
+      - text: "Terraform doesn't have a sprawl problem. It has a visibility problem. Fix that first."
+        attribution: "Zopdev Team"
+
+  og_image:
+    title: "Terraform Cloud Cost Control"
+    subtitle: "Infrastructure-as-Code Strategies for Reducing Cloud Spend"

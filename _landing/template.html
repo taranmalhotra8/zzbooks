@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{company_name}} — Free Technical Ebooks</title>
+  <meta name="description" content="Download free technical ebooks and guides by {{company_name}}. Production-ready guides for cloud-native engineering teams.">
+  <meta name="theme-color" content="#0891b2">
+  <meta name="color-scheme" content="light">
+
+  <meta property="og:title" content="{{company_name}} — Free Technical Ebooks">
+  <meta property="og:description" content="Download free technical ebooks for cloud-native engineering teams.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="header-nav">
+        <div class="logo">
+          <a href="{{{home_url}}}">
+            <img src="logo.svg" alt="{{company_name}}" width="120" height="32">
+          </a>
+        </div>
+        <div class="header-links">
+          <a href="{{{home_url}}}" class="header-link">Home</a>
+          <a href="{{{company_website}}}" class="header-link" target="_blank">Website</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-text-center">
+          <h1>Free Technical Ebooks</h1>
+          <p class="subtitle">Production-ready guides for cloud-native engineering teams. No email required — instant download.</p>
+          <div class="hero-stats-row">
+            <div class="hero-stat-item">
+              <span class="hero-stat-num">{{ebook_count}}</span>
+              <span class="hero-stat-lbl">Ebooks</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-num">{{total_chapters}}</span>
+              <span class="hero-stat-lbl">Chapters</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-num">Free</span>
+              <span class="hero-stat-lbl">PDF Download</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ebooks-section">
+      <div class="container">
+        <div class="ebook-grid">
+          {{#ebooks}}
+          <div class="ebook-card animate-on-scroll">
+            <div class="ebook-card-header" style="background: {{gradient}};">
+              <span class="ebook-card-icon">{{icon}}</span>
+              <span class="ebook-card-chapters">{{chapter_count}} chapters</span>
+            </div>
+            <div class="ebook-card-body">
+              <h2 class="ebook-card-title">{{title}}</h2>
+              {{#subtitle}}<p class="ebook-card-subtitle">{{subtitle}}</p>{{/subtitle}}
+              {{#has_tags}}
+              <div class="ebook-card-tags">
+                {{#tag_items}}
+                <span class="ebook-tag">{{.}}</span>
+                {{/tag_items}}
+              </div>
+              {{/has_tags}}
+              <div class="ebook-card-actions">
+                {{#has_pdf}}
+                <button class="btn-download" data-pdf="{{{pdf_url}}}" data-title="{{title}}" onclick="openLeadModal(this)">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="margin-right:6px;flex-shrink:0">
+                    <path d="M10 3v10m0 0l-3.5-3.5M10 13l3.5-3.5M4 15h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Download Free Ebook
+                </button>
+                {{/has_pdf}}
+                {{^has_pdf}}
+                <span class="btn-coming-soon">Coming Soon</span>
+                {{/has_pdf}}
+              </div>
+            </div>
+          </div>
+          {{/ebooks}}
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-bottom">
+      <div class="container">
+        <h2>Want to explore all ebooks?</h2>
+        <p>Browse the full collection with chapter details, blog posts, and social assets.</p>
+        <a href="{{{dashboard_url}}}" class="btn-secondary-cta">Browse Ebook Dashboard</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══ Lead Capture Modal ═══ -->
+  <div class="lead-modal-overlay" id="lead-modal" style="display: none;">
+    <div class="lead-modal">
+      <button class="lead-modal-close" onclick="closeLeadModal()">&times;</button>
+      <div class="lead-modal-header">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color: #0891b2;">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="lead-modal-title">Download Free Ebook</h3>
+        <p class="lead-modal-subtitle" id="lead-modal-ebook"></p>
+      </div>
+      <form class="lead-modal-form" id="lead-form" onsubmit="return submitLeadForm(event)">
+        <div class="lead-modal-field">
+          <label for="lead-name">Full Name <span class="field-required">*</span></label>
+          <input type="text" id="lead-name" name="name" placeholder="John Doe" required>
+          <span class="field-error" id="name-error"></span>
+        </div>
+        <div class="lead-modal-field">
+          <label for="lead-email">Work Email <span class="field-required">*</span></label>
+          <input type="email" id="lead-email" name="email" placeholder="john@company.com" required>
+          <span class="field-error" id="email-error"></span>
+        </div>
+        <div class="lead-modal-field">
+          <label for="lead-org">Organization <span class="field-required">*</span></label>
+          <input type="text" id="lead-org" name="organization" placeholder="Acme Corp" required>
+          <span class="field-error" id="org-error"></span>
+        </div>
+        <button type="submit" class="lead-modal-submit" id="lead-submit-btn">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="margin-right:6px;flex-shrink:0">
+            <path d="M10 3v10m0 0l-3.5-3.5M10 13l3.5-3.5M4 15h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Get Free PDF
+        </button>
+      </form>
+      <div class="lead-modal-success" id="lead-success" style="display: none;">
+        <div class="lead-modal-success-icon">&#10003;</div>
+        <p>Your PDF is opening now. Redirecting to the ebook page...</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <!-- Top Section -->
+      <div class="footer-top">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg width="28" height="32" viewBox="0 0 36 41" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ft-zg" x1="0" x2="1" y1="0.795" y2="0.205"><stop offset="0" stop-color="rgb(0,184,215)"/><stop offset="1" stop-color="rgb(0,147,180)"/></linearGradient></defs><path d="M14.99.775C16.748-.258 18.914-.258 20.67.775l12.149 7.147c1.758 1.033 2.841 2.945 2.841 5.011v14.292c0 2.066-1.083 3.977-2.841 5.011L20.67 39.382c-1.757 1.034-3.924 1.034-5.68 0L2.841 32.236C1.083 31.202 0 29.291 0 27.225V12.933C0 10.867 1.083 8.955 2.841 7.922Z" fill="url(#ft-zg)"/><path d="M6.67 21.559l.333.578-4.374 2.579C1.462 25.404 0 24.549 0 23.174V8.436c0-.637.336-1.225.878-1.542L12.239.24C13.406-.443 14.864.412 14.864 1.782v4.509h-.662V1.782c0-.854-.905-1.39-1.633-.966L1.211 7.47C.873 7.669.665 8.037.665 8.436v14.738c0 .854.908 1.39 1.634.963l4.374-2.579Z" fill="rgb(138,245,253)" transform="translate(4 3.8)"/><path d="M0 23.182V8.436c0-.637.336-1.225.878-1.542L12.239.24C13.406-.443 14.864.412 14.864 1.782v14.746c0 .637-.337 1.225-.878 1.542L2.628 24.724C1.461 25.407.003 24.552.003 23.182Zm.665 0c0 .854.905 1.39 1.633.962l11.358-6.653c.338-.199.546-.567.546-.963V1.784c0-.854-.905-1.391-1.629-.963L1.211 7.475C.873 7.674.665 8.042.665 8.438Z" fill="rgb(0,235,251)" transform="translate(10.4 7.06)"/><path d="M0 22.849V8.103c0-.518.272-.996.712-1.255L12.07.194c.946-.554 2.129.143 2.129 1.254v14.745c0 .518-.272.996-.712 1.253L2.129 24.1C1.183 24.654 0 23.958 0 22.847Z" fill="#fff" transform="translate(17.12 11.73)"/><path d="M2.081 10.378c-.513.353-1.037.442-1.445.183-.803-.511-.851-2.178-.113-3.723.429-.897 1.032-1.558 1.617-1.85-.234-.762-.101-1.894.412-2.965C3.292.478 4.54-.361 5.344.149c.342.218.546.646.612 1.184.58-.488 1.197-.646 1.663-.349.245.155.42.42.524.758.466-.275.93-.325 1.3-.089.8.512.851 2.181.112 3.723-.407.851-.97 1.487-1.525 1.803L2.076 10.391Z" fill="rgb(0,147,180)" transform="translate(19.48 19.77)"/></svg>
+            <span class="footer-logo-text">Zop<span class="footer-logo-dot">.Dev</span></span>
+          </div>
+          <p class="footer-tagline">Unlock Peak Cloud Performance</p>
+          <div class="footer-certs">
+            <svg class="footer-cert-icon" width="36" height="36" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="none" stroke="#3b82f6" stroke-width="1.5"/><text x="20" y="15" text-anchor="middle" font-size="6" font-weight="700" fill="#3b82f6" font-family="Inter,sans-serif">ISO</text><text x="20" y="23" text-anchor="middle" font-size="5.5" font-weight="600" fill="#3b82f6" font-family="Inter,sans-serif">27001</text><text x="20" y="31" text-anchor="middle" font-size="4" fill="#64748b" font-family="Inter,sans-serif">Certified</text></svg>
+            <svg class="footer-cert-icon" width="36" height="36" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="none" stroke="#3b82f6" stroke-width="1.5"/><text x="20" y="14" text-anchor="middle" font-size="5" font-weight="700" fill="#3b82f6" font-family="Inter,sans-serif">AICPA</text><text x="20" y="22" text-anchor="middle" font-size="6" font-weight="700" fill="#3b82f6" font-family="Inter,sans-serif">SOC</text><text x="20" y="31" text-anchor="middle" font-size="4" fill="#64748b" font-family="Inter,sans-serif">Certified</text></svg>
+          </div>
+        </div>
+
+        <!-- Product Column -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Product</h4>
+          <a href="https://zop.dev/zopnight" class="footer-link" target="_blank">ZopNight</a>
+          <a href="https://zop.dev/zopday" class="footer-link" target="_blank">ZopDay</a>
+        </div>
+
+        <!-- Resources Column -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Resources</h4>
+          <a href="https://zop.dev/integration" class="footer-link" target="_blank">Integration</a>
+          <a href="https://zop.dev/resources/blogs" class="footer-link" target="_blank">Blog</a>
+          <a href="https://zop.dev/resources/docs" class="footer-link" target="_blank">Docs</a>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="footer-divider"></div>
+
+      <!-- Bottom Section -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <div class="footer-socials">
+            <a href="https://www.linkedin.com/company/zopdev/" target="_blank" aria-label="LinkedIn" class="footer-social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.47 2H3.53A1.45 1.45 0 002 3.47v17.06A1.45 1.45 0 003.47 22h17.06A1.45 1.45 0 0022 20.53V3.47A1.45 1.45 0 0020.47 2zM8.09 18.74h-3v-9h3v9zM6.59 8.48a1.56 1.56 0 110-3.12 1.56 1.56 0 010 3.12zM18.91 18.74h-3v-4.26c0-1.08-.02-2.47-1.5-2.47-1.51 0-1.74 1.18-1.74 2.39v4.34h-3v-9h2.89v1.23h.04a3.16 3.16 0 012.85-1.56c3.05 0 3.61 2 3.61 4.61v4.72z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/zop.dev" target="_blank" aria-label="Instagram" class="footer-social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.44.41.61.24 1.05.52 1.51.98.46.46.74.9.98 1.51.17.47.36 1.27.41 2.44.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.41 2.44-.24.61-.52 1.05-.98 1.51-.46.46-.9.74-1.51.98-.47.17-1.27.36-2.44.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.44-.41a4.07 4.07 0 01-1.51-.98 4.07 4.07 0 01-.98-1.51c-.17-.47-.36-1.27-.41-2.44C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.24-1.97.41-2.44.24-.61.52-1.05.98-1.51a4.07 4.07 0 011.51-.98c.47-.17 1.27-.36 2.44-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.71-2.12 1.37A5.89 5.89 0 00.63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.71 1.46 1.37 2.12a5.89 5.89 0 002.14 1.39c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.89 5.89 0 002.12-1.37 5.89 5.89 0 001.39-2.14c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.89 5.89 0 00-1.37-2.12A5.89 5.89 0 0019.86.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+            </a>
+            <a href="https://x.com/zopdev" target="_blank" aria-label="X" class="footer-social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@zopdev" target="_blank" aria-label="YouTube" class="footer-social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 00.5 6.19 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.84.55 9.38.55 9.38.55s7.54 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+            </a>
+            <a href="https://open.spotify.com/show/5qhlfm38VBBQE8GLuEd4hM" target="_blank" aria-label="Spotify" class="footer-social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.24.48.72.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.98-1.38-.48.12-.96-.12-1.08-.6-.12-.48.12-.96.6-1.08 4.38-1.32 9.78-.66 13.5 1.62.36.24.54.78.22 1.14zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.3c-.6.18-1.14-.18-1.32-.72-.18-.6.18-1.14.72-1.32 4.26-1.26 11.28-1.02 15.72 1.56.54.3.72 1.02.42 1.56-.3.42-.96.6-1.5.3l-.12-.06z"/></svg>
+            </a>
+          </div>
+          <p class="footer-copyright">Copyright &copy; Zopdev Technology PVT.LTD. All rights reserved</p>
+        </div>
+        <div class="footer-bottom-right">
+          <a href="https://zop.dev/legal/refund-policy" target="_blank" class="footer-legal-link">Refund policy</a>
+          <span class="footer-legal-sep">|</span>
+          <a href="https://zop.dev/legal/website-terms-of-service" target="_blank" class="footer-legal-link">Terms of Service</a>
+          <span class="footer-legal-sep">|</span>
+          <a href="https://zop.dev/legal/privacy-policy" target="_blank" class="footer-legal-link">Privacy policy</a>
+        </div>
+      </div>
+
+      <!-- Watermark -->
+      <div class="footer-watermark">
+        <span class="footer-watermark-bg">ZopDev</span>
+        <p class="footer-watermark-text">&copy; 2026 Zopdev. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header shadow on scroll
+    var header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Scroll animations
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el) { observer.observe(el); });
+
+    // ── Lead Capture Modal ──
+    var currentPdfUrl = '';
+    var currentEbookTitle = '';
+
+    function openLeadModal(btn) {
+      currentPdfUrl = btn.getAttribute('data-pdf');
+      currentEbookTitle = btn.getAttribute('data-title');
+      document.getElementById('lead-modal-ebook').textContent = currentEbookTitle;
+      document.getElementById('lead-form').style.display = '';
+      document.getElementById('lead-success').style.display = 'none';
+      document.getElementById('lead-submit-btn').disabled = false;
+      clearErrors();
+      document.getElementById('lead-modal').style.display = 'flex';
+    }
+
+    function closeLeadModal() {
+      document.getElementById('lead-modal').style.display = 'none';
+      currentPdfUrl = '';
+      currentEbookTitle = '';
+    }
+
+    function clearErrors() {
+      document.getElementById('name-error').textContent = '';
+      document.getElementById('email-error').textContent = '';
+      document.getElementById('org-error').textContent = '';
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function submitLeadForm(e) {
+      e.preventDefault();
+      clearErrors();
+
+      var name = document.getElementById('lead-name').value.trim();
+      var email = document.getElementById('lead-email').value.trim();
+      var org = document.getElementById('lead-org').value.trim();
+      var valid = true;
+
+      if (!name) {
+        document.getElementById('name-error').textContent = 'Full name is required';
+        valid = false;
+      }
+      if (!email) {
+        document.getElementById('email-error').textContent = 'Email address is required';
+        valid = false;
+      } else if (!isValidEmail(email)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address';
+        valid = false;
+      }
+      if (!org) {
+        document.getElementById('org-error').textContent = 'Organization name is required';
+        valid = false;
+      }
+
+      if (!valid) return false;
+
+      var btn = document.getElementById('lead-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      var leadData = {
+        name: name,
+        email: email,
+        organization: org,
+        ebook: currentEbookTitle
+      };
+
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadData)
+      }).catch(function() {
+        try {
+          var leads = JSON.parse(localStorage.getItem('zopdev-leads') || '[]');
+          leadData.timestamp = new Date().toISOString();
+          leads.push(leadData);
+          localStorage.setItem('zopdev-leads', JSON.stringify(leads));
+        } catch(ex) {}
+      }).finally(function() {
+        document.getElementById('lead-form').style.display = 'none';
+        document.getElementById('lead-success').style.display = 'block';
+
+        if (currentPdfUrl) {
+          window.open(currentPdfUrl, '_blank');
+        }
+
+        setTimeout(function() {
+          closeLeadModal();
+        }, 2500);
+      });
+
+      return false;
+    }
+
+    // Close modal on overlay click or Escape
+    document.getElementById('lead-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeLeadModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLeadModal();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+---
+title: "Case Studies"
+---
+
+Theory is valuable, but real-world examples bring FinOps to life. This chapter presents three case studies that illustrate how organizations at different stages and scales have applied FinOps practices to achieve measurable outcomes. Each case study describes the starting situation, the approach taken, and the results achieved. We conclude with cross-cutting lessons learned.
+
+## Case Study 1 — SaaS Startup Reduces Cloud Spend by 40%
+
+### The Situation
+
+A B2B SaaS startup with 150 employees was spending $180,000 per month on AWS — roughly 25% of total operating costs. The company had grown rapidly over two years, and cloud infrastructure had evolved organically without centralized oversight. There was no tagging strategy, no reserved instances, and no visibility into which products or teams were driving costs.
+
+The engineering team consisted of eight small squads, each deploying independently to shared AWS accounts. Resource provisioning was done through a mix of Terraform and manual console actions. The finance team received a single monthly AWS bill and allocated the entire amount as a general engineering expense.
+
+### The Approach
+
+The company hired a FinOps-minded platform engineer and formed a virtual FinOps team with representatives from engineering and finance. Their approach followed the Inform-Optimize-Operate lifecycle:
+
+**Inform (Months 1-2):** The team implemented a tagging strategy with four mandatory tags (team, product, environment, cost-center) and enforced it through Terraform modules and AWS Service Control Policies. They set up the AWS Cost and Usage Report with Athena queries and built a Grafana dashboard showing cost by team, product, and environment. Within six weeks, they achieved 85% tag coverage.
+
+**Optimize (Months 2-4):** Armed with visibility, the team identified three major savings opportunities. First, development and staging environments were running 24/7 on instances sized for production traffic. Implementing scheduled scaling (shutting down dev environments overnight and on weekends) saved $22,000/month. Second, production compute instances were over-provisioned by an average of 3x. A systematic right-sizing effort reduced compute costs by $28,000/month. Third, the company purchased one-year convertible reserved instances for stable production workloads, saving an additional $18,000/month.
+
+**Operate (Months 4-6):** The team implemented automated cost anomaly alerts in Slack, integrated Infracost into the CI/CD pipeline for cost estimation on pull requests, and established monthly cost review meetings.
+
+### The Results
+
+Within six months, monthly cloud spend dropped from $180,000 to $108,000 — a 40% reduction. The savings of $864,000 annualized represented a significant improvement to the company's burn rate. Equally important, the company now had the visibility and processes to manage costs proactively as it continued to grow.
+
+::: {.callout-tip}
+Start with the highest-impact, lowest-effort optimizations. This startup achieved 60% of its total savings from just two actions: scheduled scaling of non-production environments and right-sizing production instances.
+:::
+
+## Case Study 2 — Enterprise Cloud Migration
+
+### The Situation
+
+A financial services company with 5,000 employees was midway through a multi-year migration from on-premises data centers to AWS and Azure. Cloud spend had reached $3.2 million per month and was growing 15% quarter-over-quarter. The CTO was under pressure from the CFO to demonstrate that the cloud migration was delivering the promised total cost of ownership (TCO) improvements.
+
+The company had a centralized cloud platform team managing shared infrastructure, and application teams were responsible for their own services. Tagging was inconsistent, with different conventions across AWS and Azure. Reserved instance purchases were made ad hoc by individual teams, resulting in fragmented commitments with low utilization.
+
+### The Approach
+
+The company established a dedicated FinOps team of four people reporting to the VP of Engineering, with a dotted line to the CFO's office. Their approach prioritized standardization and governance:
+
+**Standardization (Months 1-3):** The team defined a unified tagging taxonomy that worked across both AWS and Azure. They built automated tagging enforcement using Terraform modules, CI/CD pipeline checks, and cloud-native policy services. A retroactive tagging campaign brought existing resources to 75% compliance, with a target of 90% within six months.
+
+**Centralized Commitments (Months 2-4):** The team centralized all reserved instance and savings plan purchases under the FinOps team, replacing the fragmented approach where individual application teams made independent purchases. They built a commitment management model that optimized for 85% utilization across the portfolio and reviewed it monthly.
+
+**Showback Implementation (Months 3-6):** Using a combination of CloudHealth for multi-cloud normalization and custom dashboards in Looker, the team implemented showback reports for every application team. Monthly reports showed each team their cloud costs, trends, and benchmarks against similar teams. The FinOps team held monthly office hours to help teams interpret their reports and identify optimization opportunities.
+
+**Architecture Reviews (Months 4-8):** The FinOps team partnered with the cloud platform team to conduct architecture reviews of the top 20 most expensive services. These reviews identified opportunities for serverless migration, caching improvements, and data transfer optimization that collectively reduced costs by $400,000/month.
+
+### The Results
+
+Over eight months, the FinOps program reduced the growth rate of cloud spending from 15% to 3% quarter-over-quarter, even as the migration continued to move workloads to the cloud. Absolute savings reached $600,000/month through commitment optimization, right-sizing, and architectural improvements. The showback program drove behavioral change, with several application teams proactively optimizing their services after seeing their cost reports.
+
+The CTO was able to demonstrate to the board that cloud TCO was tracking below the original on-premises costs, validating the migration business case.
+
+## Case Study 3 — Multi-Cloud Optimization
+
+### The Situation
+
+A media and entertainment company operated across all three major cloud providers: AWS for core infrastructure, GCP for data analytics and machine learning, and Azure for enterprise applications and Microsoft integrations. Total cloud spend was $1.8 million per month, split roughly 50% AWS, 30% GCP, and 20% Azure.
+
+Each cloud provider was managed by a different team with different tools, processes, and reporting standards. The CFO had no unified view of total cloud costs and could not answer basic questions about cost efficiency or workload placement.
+
+### The Approach
+
+The company deployed a multi-cloud FinOps platform (Apptio Cloudability) to aggregate billing data across all three providers. The platform provided normalized cost views, cross-cloud benchmarking, and unified tagging compliance reports.
+
+**Unified Visibility (Months 1-2):** For the first time, leadership had a single dashboard showing total cloud spend across all providers, broken down by business unit, product, and environment. This immediately revealed that the data analytics pipeline on GCP was 3x more expensive than expected due to inefficient BigQuery usage patterns.
+
+**Cross-Cloud Workload Placement (Months 2-4):** The FinOps team analyzed workload placement and identified several services that were running on the wrong provider from a cost perspective. A batch processing pipeline originally deployed on Azure was migrated to GCP, where preemptible VMs and BigQuery integration reduced costs by 45%. An ML training workload was moved from on-demand instances on AWS to spot instances on a mix of AWS and GCP, reducing training costs by 60%.
+
+**Provider-Specific Optimization (Months 3-6):** With unified visibility providing prioritization, the team ran provider-specific optimization campaigns. On AWS, they centralized commitment management and achieved 92% utilization on reserved instances. On GCP, they optimized BigQuery by implementing partitioning, clustering, and slot-based pricing. On Azure, they right-sized virtual machines and implemented auto-shutdown for development environments.
+
+### The Results
+
+Total monthly cloud spend decreased from $1.8 million to $1.35 million — a 25% reduction. The BigQuery optimization alone saved $120,000/month by reducing query costs through better data organization and workload management. Cross-cloud workload placement decisions saved an additional $90,000/month.
+
+More importantly, the company established a unified FinOps practice that transcended individual cloud providers. Decisions about workload placement now included cost as a primary consideration alongside performance and reliability.
+
+## Lessons Learned
+
+Across all three case studies and the broader universe of FinOps implementations, several patterns emerge consistently:
+
+### Start with Visibility
+
+Every successful FinOps program begins with visibility. You cannot optimize what you cannot see, and you cannot drive accountability without attribution. Invest in tagging, billing data pipelines, and dashboards before launching optimization initiatives.
+
+### Quick Wins Build Momentum
+
+Early, visible savings build organizational support and credibility for the FinOps program. Right-sizing, scheduled scaling, and commitment optimization are reliable sources of quick wins that can fund more ambitious initiatives.
+
+### Culture Trumps Tools
+
+The organizations that achieve the most sustainable results are those that embed cost awareness into their engineering culture. Tools and automation are enablers, but behavioral change is the ultimate driver of long-term efficiency.
+
+### FinOps Is Never Done
+
+Cloud environments are dynamic. New services are adopted, workloads change, pricing models evolve, and teams grow. FinOps is a continuous practice that requires ongoing attention, regular reviews, and iterative improvement. Organizations that treat FinOps as a one-time project find that their savings erode over time.
+
+::: {.callout-note}
+The case studies in this chapter represent composite examples informed by common industry patterns. Specific details have been adjusted to illustrate key FinOps principles and outcomes.
+:::
+
+## Summary
+
+These case studies demonstrate that FinOps delivers measurable results across organizations of different sizes, industries, and cloud maturity levels. A SaaS startup achieved 40% savings through basic visibility and optimization. An enterprise managed cloud migration costs through governance and centralized commitment management. A multi-cloud organization gained unified visibility and optimized workload placement across providers. The common threads are clear: start with visibility, pursue quick wins, invest in culture, and treat FinOps as a continuous practice.

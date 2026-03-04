@@ -1,0 +1,108 @@
+# Per-ebook metadata for The Platform Engineering Playbook
+
+meta:
+  slug: "platform-engineering"
+  title: "The Platform Engineering Playbook"
+  subtitle: "Building Internal Developer Platforms That Actually Ship"
+  version: "0.1.0"
+  authors: ["zopdev-team"]
+
+chapters:
+  - id: "01-from-devops-to-platform-engineering"
+    title: "From DevOps to Platform Engineering"
+    summary: "Why platform engineering emerged, what separates it from DevOps, and the $4M problem of developer cognitive overload."
+    difficulty: beginner
+    reading_time_minutes: 5
+    learning_objectives:
+      - "Understand why DevOps at scale breaks down above 200 engineers"
+      - "Define the Internal Developer Platform and its core capabilities"
+      - "Calculate the ROI of a platform team using DORA metrics"
+    key_takeaways:
+      - "Platform teams reduce mean time to first deployment from 4 weeks to 4 hours"
+      - "Cognitive load from tool sprawl costs 30% of engineer productivity"
+    tags: [introduction, devops, platform-engineering, idp, dora-metrics]
+
+  - id: "02-designing-the-golden-path"
+    title: "Designing the Golden Path"
+    summary: "How to design opinionated-but-not-mandatory paths that 80% of developers adopt without coercion."
+    difficulty: intermediate
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Define golden paths vs. paved roads vs. guardrails"
+      - "Design a service template covering CI/CD, observability, and secrets in one scaffold"
+      - "Measure golden path adoption rate as a platform health metric"
+    key_takeaways:
+      - "Spotify's golden path reduced service creation from 2 weeks to 1 day"
+      - "Voluntary adoption above 70% signals genuine value, not mandate compliance"
+    tags: [golden-path, service-templates, scaffolding, developer-experience]
+    prerequisites: ["01-from-devops-to-platform-engineering"]
+
+  - id: "03-self-service-infrastructure"
+    title: "Self-Service Infrastructure: The Platform API"
+    summary: "Building the infrastructure abstraction layer — Terraform modules, Backstage software catalog, environment-as-a-service."
+    difficulty: intermediate
+    reading_time_minutes: 7
+    learning_objectives:
+      - "Design a platform API that hides cloud complexity behind environment abstractions"
+      - "Implement Backstage software catalog with cost and ownership data"
+      - "Build environment-as-a-service with ephemeral preview environments"
+    key_takeaways:
+      - "Self-service infra reduces ops ticket volume by 40-60% in year one"
+      - "Preview environments cut QA cycle time from 3 days to 45 minutes"
+    tags: [backstage, self-service, terraform, platform-api, environments]
+    prerequisites: ["02-designing-the-golden-path"]
+
+  - id: "04-security-and-compliance-by-default"
+    title: "Security and Compliance by Default"
+    summary: "Embedding policy-as-code, secrets management, and compliance guardrails so developers can't accidentally do the wrong thing."
+    difficulty: advanced
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Implement OPA/Gatekeeper policies as platform guardrails"
+      - "Build a secrets management workflow developers actually use"
+      - "Automate SOC 2 evidence collection through platform telemetry"
+    key_takeaways:
+      - "Policy-as-code reduces security review cycles from 2 weeks to 2 hours"
+      - "Vault adoption jumps from 30% to 95% when surfaced through the platform UI"
+    tags: [security, opa, gatekeeper, vault, compliance, policy-as-code]
+    prerequisites: ["03-self-service-infrastructure"]
+
+  - id: "05-measuring-platform-success"
+    title: "Measuring Platform Success"
+    summary: "The metrics, dashboards, and ROI framework that justify platform investment and guide roadmap decisions."
+    difficulty: intermediate
+    reading_time_minutes: 5
+    learning_objectives:
+      - "Implement DORA metrics collection from platform telemetry"
+      - "Build a platform ROI model that speaks to CFOs"
+      - "Define platform SLOs and run platform postmortems"
+    key_takeaways:
+      - "Teams on mature platforms deploy 208x more frequently (DORA State of DevOps 2023)"
+      - "Every $1 in platform engineering returns $4.50 in developer productivity"
+    tags: [metrics, dora, platform-roi, slos, developer-productivity]
+    prerequisites: ["01-from-devops-to-platform-engineering"]
+
+social:
+  linkedin_carousel:
+    slides:
+      - heading: "The Platform Engineering Playbook"
+        body: "How high-performing teams build Internal Developer Platforms that actually ship, by Zopdev"
+      - heading: "The $4M Cognitive Load Problem"
+        body: "Developer tool sprawl costs 30% of productivity. Platform engineering is the fix."
+      - heading: "The Golden Path"
+        body: "Spotify reduced service creation from 2 weeks to 1 day with opinionated-but-optional defaults"
+      - heading: "208x Deployment Frequency"
+        body: "DORA 2023: teams with mature platforms deploy 208x more often than low performers"
+      - heading: "Get the Full Playbook"
+        body: "Download free at zopdev.com"
+
+  instagram_posts:
+    quotes:
+      - text: "Platform engineering is not about building a better CI/CD pipeline. It's about building a product for your internal customers."
+        attribution: "Zopdev Team"
+      - text: "Every hour a developer spends fighting infrastructure is an hour not spent on the product your customers pay for."
+        attribution: "Zopdev Team"
+
+  og_image:
+    title: "The Platform Engineering Playbook"
+    subtitle: "Building Internal Developer Platforms That Actually Ship"

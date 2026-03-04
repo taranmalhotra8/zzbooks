@@ -1,0 +1,66 @@
+---
+title: "Introduction to FinOps"
+---
+
+The shift to cloud computing fundamentally changed how organizations consume and pay for technology. Instead of large upfront capital expenditures for physical servers, teams now provision resources on-demand with variable, usage-based pricing. This flexibility is powerful — but it comes with a new set of challenges.
+
+## The Cloud Cost Problem
+
+Organizations of all sizes are discovering that cloud costs can spiral quickly. A 2025 survey by the FinOps Foundation found that:
+
+- **30% or more** of cloud spend is wasted on average
+- **60% of organizations** cite cost management as their top cloud challenge
+- **Only 25%** have mature practices for cloud financial management
+
+The root causes are predictable: over-provisioned resources, forgotten dev/test environments, underutilized reserved capacity, and a lack of visibility into who is spending what.
+
+## What Is FinOps?
+
+FinOps — short for "Cloud Financial Operations" — is a cultural practice and operational framework that brings financial accountability to cloud spending. It unites engineering, finance, and business teams around a shared goal: maximizing the business value of cloud investment.
+
+::: {.callout-note}
+FinOps is not about cutting costs at all costs. It's about making *informed* decisions about cloud spending based on business value.
+:::
+
+The FinOps Foundation defines three core principles:
+
+1. **Teams need to collaborate** — Engineering, finance, and business must work together
+2. **Everyone takes ownership** — Cloud spending decisions are decentralized
+3. **A centralized team drives FinOps** — A dedicated FinOps function provides the tools, data, and best practices
+
+## The FinOps Lifecycle
+
+At its core, FinOps follows a continuous lifecycle:
+
+```{d2}
+//| label: fig-finops-lifecycle
+//| fig-cap: "The FinOps Lifecycle: a continuous loop of Inform, Optimize, and Operate"
+//| file: diagrams/finops-lifecycle.d2
+```
+
+- **Inform**: Gain visibility into cloud usage and costs. Allocate spending to teams and products.
+- **Optimize**: Identify and act on opportunities to reduce waste and improve efficiency.
+- **Operate**: Continuously monitor, govern, and refine cloud financial practices.
+
+## Why This Matters Now
+
+As cloud adoption accelerates, the financial impact compounds. Organizations running multi-million dollar cloud estates can save hundreds of thousands — or millions — per year with mature FinOps practices.
+
+But cost savings are only part of the story. FinOps also enables:
+
+- **Faster decision-making** through real-time cost data
+- **Better forecasting** for budgeting and planning
+- **Engineering velocity** by removing cost as a bottleneck
+- **Unit economics** that connect cloud spend to business outcomes
+
+## What You'll Learn
+
+In the chapters ahead, we'll cover:
+
+1. **Cloud cost fundamentals** — How cloud pricing works and where the complexity lies
+2. **The FinOps framework** — A structured approach to cloud financial management
+3. **Cost allocation** — Tagging, showback, and chargeback strategies
+4. **Optimization** — Right-sizing, reservations, spot instances, and architectural patterns
+5. **Tooling** — Building automated cost management pipelines
+6. **Culture** — Driving adoption and building FinOps into your engineering DNA
+7. **Case studies** — Real-world examples and measurable outcomes

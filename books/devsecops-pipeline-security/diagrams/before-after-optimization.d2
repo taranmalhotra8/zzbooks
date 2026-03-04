@@ -1,0 +1,118 @@
+# Before/After Optimization
+# Purpose: Show impact of cost optimization side-by-side
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #ef4444 danger)
+
+direction: right
+
+before_state: BEFORE OPTIMIZATION {
+  style.fill: "#fef2f2"
+  style.stroke: "#ef4444"
+  style.stroke-width: 2
+
+  problem_desc: |md
+    ## The Situation
+    - No resource scheduling
+    - Over-provisioned instances
+    - 24/7 non-prod environments
+    - Zero RI coverage
+  |
+
+  architecture: Infrastructure {
+    dev: Dev Environment\n24/7 runtime {
+      style.fill: "#ffffff"
+      instances: m5.2xlarge x 20
+      cost: \$5,530/mo
+    }
+
+    staging: Staging Environment\n24/7 runtime {
+      style.fill: "#ffffff"
+      instances: m5.2xlarge x 15
+      cost: \$4,147/mo
+    }
+
+    prod: Production\nOn-demand instances {
+      style.fill: "#ffffff"
+      instances: m5.xlarge x 40
+      cost: \$5,606/mo
+    }
+
+    dev -> staging -> prod
+  }
+
+  total_before: Monthly Cost: \$15,283 {
+    shape: text
+    style.font-size: 20
+    style.bold: true
+    style.font-color: "#ef4444"
+  }
+
+  problem_desc -> architecture -> total_before
+}
+
+after_state: AFTER OPTIMIZATION {
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+
+  solution_desc: |md
+    ## The Changes
+    - Scheduled dev/staging (12h/day, weekdays)
+    - Right-sized all instances
+    - Production: 70% RI coverage
+    - Spot instances for batch jobs
+  |
+
+  architecture: Infrastructure {
+    dev: Dev Environment\n60h/week runtime {
+      style.fill: "#ffffff"
+      instances: m5.large x 20
+      cost: \$1,108/mo
+    }
+
+    staging: Staging Environment\n60h/week runtime {
+      style.fill: "#ffffff"
+      instances: m5.large x 15
+      cost: \$831/mo
+    }
+
+    prod: Production\n70% RI, 30% On-Demand {
+      style.fill: "#ffffff"
+      instances: m5.large x 40
+      cost: \$2,246/mo
+    }
+
+    dev -> staging -> prod
+  }
+
+  total_after: Monthly Cost: \$4,185 {
+    shape: text
+    style.font-size: 20
+    style.bold: true
+    style.font-color: "#16a34a"
+  }
+
+  solution_desc -> architecture -> total_after
+}
+
+transformation: Transformation {
+  style.stroke: "#0891b2"
+  style.stroke-width: 3
+  style.stroke-dash: 5
+}
+
+before_state -> transformation -> after_state
+
+savings_impact: |md
+  ## Impact
+  **Monthly Savings:** \$11,098 (73% reduction)
+  **Annual Savings:** \$133,176
+  **Implementation Time:** 2 weeks
+  **ROI:** 2,664%
+| {
+  shape: rectangle
+  style.fill: "#0891b2"
+  style.font-color: "#ffffff"
+  style.shadow: true
+}
+
+after_state -> savings_impact

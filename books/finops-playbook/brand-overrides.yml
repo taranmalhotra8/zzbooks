@@ -1,0 +1,33 @@
+# Brand overrides for The FinOps Playbook
+# Targets DevOps Engineers with a slightly more technical tone.
+# Only fields specified here override the brand defaults.
+
+target_icps:
+  - "devops-engineer"
+  - "finops-practitioner"
+
+colors:
+  primary: "#0e7490"  # Darker cyan for technical audience (brand default: #0891b2)
+
+tone:
+  voice: "Deeply technical, code-heavy, field-tested"
+  depth: "production-ready implementations"
+
+featured_products:
+  - "zopnight"
+
+ctas:
+  primary:
+    text: "Download the FinOps Playbook"
+    style: "prominent"
+  secondary:
+    text: "Try ZopNight Free"
+    url: "https://zopnight.com"
+    style: "outline"
+
+landing:
+  form_fields:
+    - "name"
+    - "email"
+    - "company"
+    - "cloud_spend_monthly"

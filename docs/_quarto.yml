@@ -1,0 +1,187 @@
+project:
+  type: book
+  output-dir: _site
+
+book:
+  title: "The FinOps Playbook"
+  subtitle: "A Practical Guide to Cloud Financial Management"
+  author: "Zopdev Engineering"
+  date: today
+  cover-image: assets/cover-premium.png
+  favicon: assets/favicon.png
+  
+  repo-url: https://github.com/zopdev/technical-library
+  repo-actions: [edit, issue]
+  
+  chapters:
+    - index.qmd
+    - part: "Foundation"
+      chapters:
+        - chapters/01-intro-to-finops.qmd
+        - chapters/02-cloud-cost-fundamentals.qmd
+    - part: "Framework"
+      chapters:
+        - chapters/03-finops-lifecycle.qmd
+        - chapters/04-cost-allocation.qmd
+    - part: "Optimization"
+      chapters:
+        - chapters/05-optimization-strategies.qmd
+        - chapters/06-tooling-automation.qmd
+    - part: "Culture"
+      chapters:
+        - chapters/07-culture-adoption.qmd
+    - part: "Practice"
+      chapters:
+        - chapters/08-case-studies.qmd
+  
+  appendices:
+    - chapters/99-glossary.qmd
+
+format:
+  html:
+    theme: 
+      - cosmo
+      - styles/custom-zopdev.scss
+    css: 
+      - styles/premium-layout.css
+      - styles/code-blocks.css
+    
+    # Typography & Readability
+    mainfont: "Inter"
+    monofont: "JetBrains Mono"
+    fontsize: 1.0625rem
+    linestretch: 1.7
+    
+    # Code Display
+    code-copy: true
+    code-overflow: wrap
+    code-line-numbers: false
+    highlight-style: github
+    
+    # Navigation
+    toc: true
+    toc-depth: 3
+    toc-title: "On This Page"
+    number-sections: true
+    number-depth: 3
+    
+    # Layout
+    grid:
+      sidebar-width: 280px
+      body-width: 900px
+      margin-width: 300px
+      gutter-width: 1.5rem
+    
+    # Features
+    search: true
+    citations-hover: true
+    footnotes-hover: true
+    
+    # Metadata
+    date-format: "MMMM D, YYYY"
+    
+    # External Links
+    link-external-newwindow: true
+    link-external-icon: true
+    
+  pdf:
+    documentclass: report
+    classoption: [oneside, 11pt]
+    geometry:
+      - top=1in
+      - bottom=1in
+      - left=1.25in
+      - right=1.25in
+      - paperwidth=8.5in
+      - paperheight=11in
+    
+    pdf-engine: xelatex
+    
+    # Typography
+    mainfont: "Inter"
+    monofont: "JetBrains Mono"
+    fontsize: 11pt
+    linestretch: 1.5
+    
+    # Colors
+    colorlinks: true
+    linkcolor: ZopBlue
+    urlcolor: ZopBlue
+    
+    # Layout
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    
+    # Custom LaTeX
+    include-in-header:
+      text: |
+        \usepackage{tcolorbox}
+        \usepackage{fontspec}
+        \usepackage{fancyhdr}
+        \usepackage{graphicx}
+        
+        % Zopdev Brand Colors
+        \definecolor{ZopBlue}{HTML}{0052FF}
+        \definecolor{ZopDarkBlue}{HTML}{002D8E}
+        \definecolor{ZopGreen}{HTML}{00C48C}
+        \definecolor{ZopOrange}{HTML}{FFB020}
+        \definecolor{ZopRed}{HTML}{FF6B6B}
+        \definecolor{ZopGray}{HTML}{1a1a1a}
+        
+        % Headers/Footers
+        \pagestyle{fancy}
+        \fancyhf{}
+        \fancyhead[L]{\small\textcolor{ZopGray}{FinOps Playbook}}
+        \fancyhead[R]{\small\textcolor{ZopGray}{\leftmark}}
+        \fancyfoot[C]{\small\textcolor{ZopGray}{\thepage}}
+        \renewcommand{\headrulewidth}{0.5pt}
+        \renewcommand{\footrulewidth}{0pt}
+        
+        % Custom boxes for callouts
+        \newtcolorbox{tipbox}{
+          colback=green!5!white,
+          colframe=ZopGreen,
+          leftrule=5pt,
+          arc=3pt,
+          boxrule=0pt,
+          left=10pt,
+          right=10pt,
+          top=10pt,
+          bottom=10pt
+        }
+        
+        \newtcolorbox{notebox}{
+          colback=blue!5!white,
+          colframe=ZopBlue,
+          leftrule=5pt,
+          arc=3pt,
+          boxrule=0pt,
+          left=10pt,
+          right=10pt,
+          top=10pt,
+          bottom=10pt
+        }
+        
+        \newtcolorbox{warningbox}{
+          colback=orange!5!white,
+          colframe=ZopOrange,
+          leftrule=5pt,
+          arc=3pt,
+          boxrule=0pt,
+          left=10pt,
+          right=10pt,
+          top=10pt,
+          bottom=10pt
+        }
+
+# Execution options
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+
+# Bibliography (if needed)
+bibliography: references.bib
+csl: ieee.csl

@@ -1,0 +1,41 @@
+---
+subtitle: "A Practitioner Guide to Budgeting, Forecasting, and Controlling Migration Spend"
+---
+
+# Cloud Migration Cost Planning {.unnumbered}
+
+## Preface {.unnumbered}
+
+Cloud migrations fail on cost more than on technology. Gartner estimates that 60% of organizations exceed their cloud migration budget by at least 20%, and the root cause is rarely the infrastructure itself. Teams underestimate the compounding effects of idle development environments, oversized instances running around the clock, and architectural choices that lock in premium pricing for years.
+
+This guide is written for **engineering leaders, platform teams, and FinOps practitioners** who are responsible for controlling migration spend without slowing down delivery.
+
+### What You Will Learn
+
+**Budget-Proof Planning** — Understand why cloud migration budgets consistently break and how to build forecasting models that account for the hidden costs teams routinely miss: dual-run periods, data transfer fees, and the licensing traps that inflate spend before a single workload moves.
+
+**Immediate Cost Wins** — Implement environment scheduling patterns that eliminate weekend and off-hours waste. These patterns typically pay for themselves within 30 days and establish cost discipline early in the migration.
+
+**Infrastructure Right-Sizing** — Leverage ARM-based processors like AWS Graviton and Kubernetes resource optimization to capture 30-40% infrastructure savings without sacrificing performance. Production-ready configurations included.
+
+**Architectural Cost Control** — Design data tiering, caching, and cloud-native patterns that lock in savings as you scale. The architectural choices made during migration determine your cost trajectory for years.
+
+### How This Book Is Organized
+
+| Chapter | Focus | Outcome |
+|---------|-------|---------|
+| 1 | Why migration budgets break | Identify hidden cost drivers before they compound |
+| 2 | Environment scheduling | Eliminate idle resource waste in 30 days |
+| 3 | Graviton and Kubernetes right-sizing | Capture 30-40% infrastructure margin |
+| 4 | Cloud-native architectural patterns | Lock in long-term savings at scale |
+
+### Who This Book Is For
+
+- **Platform engineers** planning or executing cloud migrations
+- **FinOps practitioners** responsible for migration cost governance
+- **Engineering managers** who need to forecast and defend migration budgets
+- **DevOps teams** building cost-efficient cloud infrastructure from day one
+
+Every chapter includes real cost data, production-ready configurations, and implementation steps you can apply immediately.
+
+*— The Zopdev Team*

@@ -1,0 +1,48 @@
+# Per-ebook metadata for {{title}}
+# Supplements calendar.yml with ebook-specific detail.
+
+meta:
+  slug: "{{slug}}"
+  title: "{{title}}"
+  subtitle: "{{subtitle}}"
+  version: "0.1.0"
+  authors: ["zopdev-team"]       # References author IDs from _brand-extended.yml
+
+chapters:
+  - id: "01-intro"
+    title: "Introduction"
+    summary: ""
+    # difficulty: beginner        # beginner | intermediate | advanced
+    # reading_time_minutes: 5     # Estimated reading time
+    # learning_objectives:        # What the reader will learn
+    #   - "Understand the core concepts"
+    #   - "Learn the key terminology"
+    # key_takeaways:              # Key points to remember
+    #   - "Main insight from this chapter"
+    # tags: [introduction]        # Topic tags
+    # prerequisites: []           # Chapter IDs that should be read first
+
+social:
+  # Social assets are auto-populated from chapter plan files at generation time.
+  # The generate.ts script reads key_claims from *.plan.yml files and replaces
+  # placeholder slides/quotes with real ebook content. You can also manually
+  # set specific content below — non-placeholder text will be preserved.
+  linkedin_carousel:
+    slides:
+      - heading: "{{title}}"
+        body: "A comprehensive guide by Zopdev"
+      - heading: "Key Takeaway #1"
+        body: "Auto-populated from chapter key claims"
+      - heading: "Key Takeaway #2"
+        body: "Auto-populated from chapter key claims"
+      - heading: "Get the Full Guide"
+        body: "Download now at zopdev.com"
+
+  instagram_posts:
+    quotes:
+      - text: "Auto-populated from chapter key claims"
+        attribution: "Zopdev Team"
+
+  og_image:
+    title: "{{title}}"
+    subtitle: "{{subtitle}}"

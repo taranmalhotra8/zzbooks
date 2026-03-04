@@ -1,0 +1,94 @@
+# Karpenter Node Provisioning Architecture
+# Purpose: Show how Karpenter replaces Cluster Autoscaler with event-driven node provisioning
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #fbbf24 warning, #ef4444 danger)
+
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+scheduler: Kubernetes Scheduler {
+  shape: rectangle
+  style.fill: "#ecfeff"
+  style.stroke: "#0891b2"
+  style.stroke-width: 2
+  style.border-radius: 8
+
+  desc: |md
+    Pod scheduling decisions
+    Detects Unschedulable pods
+  |
+}
+
+karpenter: Karpenter Controller {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 3
+  style.border-radius: 8
+
+  provisioner: NodePool Rules {
+    shape: rectangle
+    style.fill: "#ffffff"
+    desc: |md
+      Instance families allowed
+      Spot vs on-demand mix
+      Consolidation policy
+    |
+  }
+
+  disruption: Disruption Controller {
+    shape: rectangle
+    style.fill: "#ffffff"
+    desc: |md
+      Bin-packs underused nodes
+      Replaces expensive instances
+      Drains within budget window
+    |
+  }
+}
+
+cloud: Cloud Provider API {
+  shape: rectangle
+  style.fill: "#fffbeb"
+  style.stroke: "#fbbf24"
+  style.stroke-width: 2
+  style.border-radius: 8
+
+  desc: |md
+    Launches cheapest matching
+    instance in <90s
+  |
+}
+
+savings: Cost Impact {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.border-radius: 8
+
+  label: |md
+    40–60% node cost reduction
+    Spot interruption handled
+    automatically
+  |
+}
+
+scheduler -> karpenter.provisioner: Unschedulable pod event {
+  style.stroke: "#ef4444"
+}
+karpenter.provisioner -> cloud: Provision cheapest node {
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+}
+karpenter.disruption -> cloud: Consolidate/replace nodes {
+  style.stroke: "#fbbf24"
+  style.stroke-dash: 3
+}
+cloud -> savings: Right-sized capacity {
+  style.stroke: "#16a34a"
+}

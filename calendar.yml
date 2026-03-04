@@ -1,0 +1,180 @@
+# Zopdev Ebook Content Calendar
+# This file is the source of truth for all ebook projects.
+
+ebooks:
+  - slug: finops-playbook
+    title: "The FinOps Playbook"
+    subtitle: "A Practical Guide to Cloud Financial Management"
+    authors:
+      - "Zopdev Team"
+    status: in-progress          # draft | in-progress | review | published | archived
+    scheduled_publish: 2026-04-15
+    tags: [finops, cloud, cost-optimization, devops]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+    landing:
+      headline: "Master Cloud Financial Operations"
+      description: "Learn practical strategies to optimize cloud costs, implement FinOps practices, and build a culture of financial accountability across your engineering teams."
+      cta_text: "Download Free PDF"
+      form_action: "#"  # TODO: replace with real webhook URL when ready
+
+  - slug: k8s-cost-guide
+    title: "Kubernetes Cost Guide"
+    subtitle: "Optimizing Container Spending"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    tags: [kubernetes, cost-optimization, containers, finops]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+    landing:
+      headline: "Take Control of Kubernetes Costs"
+      description: "Learn practical strategies to optimize Kubernetes spending, right-size workloads, and implement FinOps practices for container environments."
+      cta_text: "Download Free PDF"
+      form_action: "#"  # TODO: replace with real webhook URL when ready
+
+  - slug: platform-engineering
+    title: "The Platform Engineering Playbook"
+    subtitle: "Building Internal Developer Platforms That Actually Ship"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    scheduled_publish: 2026-05-15
+    tags: [platform-engineering, idp, developer-experience, devops, backstage]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+    landing:
+      headline: "Build Developer Platforms That Engineers Actually Use"
+      description: "Learn how platform engineering teams design, build, and operate Internal Developer Platforms — from golden paths and self-service infra to measuring developer productivity and platform ROI."
+      cta_text: "Download Free PDF"
+      form_action: "#"
+
+  - slug: cloud-migration-costs
+    title: "Cloud Migration Cost Catastrophe"
+    subtitle: "How to Plan, Budget, and Control Cloud Migration Costs Before Your CFO Fires You"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    scheduled_publish: 2026-06-01
+    tags: [cloud-migration, cost-planning, finops, zopcloud]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+    landing:
+      headline: "Stop Your Cloud Migration From Bleeding Budget"
+      description: "75% of cloud migrations exceed budget. Learn the incident-driven framework for planning, budgeting, and controlling migration costs — with production-ready patterns that deliver ROI in 30 days."
+      cta_text: "Download Free PDF"
+      form_action: "#"
+
+  - slug: terraform-cloud-costs
+    title: "Terraform Cloud Cost Control"
+    subtitle: "Infrastructure-as-Code Strategies for Reducing Cloud Spend"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    tags: [terraform, cost-optimization, infrastructure-as-code, finops]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+    landing:
+      headline: "Cut Cloud Costs with Better Terraform"
+      description: "Stop over-provisioning with every deploy. Learn infrastructure-as-code strategies to right-size resources, prevent cost drift, and build cost-aware Terraform workflows."
+      cta_text: "Download Free PDF"
+      form_action: "#"
+
+  - slug: gitops-with-argocd
+    title: "GitOps with ArgoCD"
+    subtitle: "A Practical Guide to GitOps with ArgoCD"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    tags: [gitops, argocd, kubernetes, continuous-delivery]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+    landing:
+      headline: "Master GitOps with ArgoCD"
+      description: "Learn how to deploy, manage, and scale Kubernetes applications using GitOps principles with ArgoCD — from your first Application CRD to multi-cluster management with self-healing policies."
+      cta_text: "Download Free Ebook"
+      form_action: "#"
+
+  - slug: aws-lambda-best-practices
+    title: "AWS Lambda Best Practices"
+    subtitle: "A Practical Guide to AWS Lambda Best Practices"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    tags: [lambda, practices]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+
+  - slug: devsecops-pipeline-security
+    title: "DevSecOps Pipeline Security"
+    subtitle: "A Practical Guide to DevSecOps Pipeline Security"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    tags: [devsecops, pipeline, security]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true
+
+  - slug: kubernetes-cost-optimization
+    title: "Kubernetes Cost Optimization"
+    subtitle: "A Practical Guide to Kubernetes Cost Optimization"
+    authors:
+      - "Zopdev Team"
+    status: draft
+    tags: [kubernetes, cost, optimization]
+    outputs:
+      html: true
+      pdf: true
+      epub: true
+      landing_page: true
+      linkedin_carousel: true
+      instagram_posts: true
+      og_image: true

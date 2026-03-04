@@ -1,0 +1,47 @@
+---
+subtitle: "A Practical Guide to Kubernetes Cost Optimization"
+---
+
+# Kubernetes Cost Optimization {.unnumbered}
+
+## Preface {.unnumbered}
+
+Kubernetes Cost Optimization has become a critical discipline for modern engineering organizations.
+
+The landscape is evolving rapidly. 80% average resource overprovisioning across Kubernetes pods. Meanwhile, $15,000+ monthly waste per cluster on average. These numbers underscore a clear mandate: organizations that master these practices gain a measurable competitive edge.
+
+Every chapter delivers actionable strategies, production-ready code, and real-world patterns you can apply immediately. This is not an academic survey — it is a practitioner's playbook built on battle-tested implementations and quantifiable results.
+
+Whether you are building your first production workload or optimizing systems that serve millions of requests, this book provides a structured path from foundational concepts to advanced implementation patterns.
+
+## Who This Book Is For {.unnumbered}
+
+- **Engineering leaders** who need to make informed technical decisions and drive organizational outcomes
+- **DevOps and platform engineers** responsible for infrastructure, tooling, and operational excellence
+- **Finance and FinOps teams** who need to understand, forecast, and optimize technology spending
+- **Practitioners** looking for hands-on strategies, production-ready code, and actionable frameworks
+- **Technical decision-makers** evaluating approaches, tools, and architectural trade-offs
+
+## How to Read This Book {.unnumbered}
+
+Each chapter is designed to be self-contained. You can read cover-to-cover or jump to the topics most relevant to your role:
+
+
+## What You Will Learn {.unnumbered}
+
+
+## Conventions Used {.unnumbered}
+
+Throughout this book, you will find:
+
+::: {.callout-tip}
+**Tips** highlight best practices and quick wins you can implement today.
+:::
+
+::: {.callout-note}
+**Notes** provide additional context, caveats, or links to further reading.
+:::
+
+::: {.callout-warning}
+**Warnings** flag common mistakes and anti-patterns to avoid in production.
+:::

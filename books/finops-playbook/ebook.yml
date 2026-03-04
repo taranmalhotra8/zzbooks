@@ -1,0 +1,172 @@
+meta:
+  slug: "finops-playbook"
+  title: "The FinOps Playbook"
+  subtitle: "A Practical Guide to Cloud Financial Management"
+  version: "0.1.0"
+  authors: ["zopdev-team"]
+
+chapters:
+  - id: "01-intro"
+    title: "Introduction to FinOps"
+    summary: "Why cloud financial management matters and what FinOps means for modern engineering teams."
+    difficulty: beginner
+    reading_time_minutes: 2
+    learning_objectives:
+      - "Understand what FinOps is and why it matters"
+      - "Learn the three core principles of FinOps"
+      - "Recognize the FinOps lifecycle phases"
+    key_takeaways:
+      - "30%+ of cloud spend is wasted on average"
+      - "FinOps maximizes business value, not just cuts costs"
+      - "The Inform-Optimize-Operate cycle drives continuous improvement"
+    tags: [introduction, fundamentals]
+    prerequisites: []
+
+  - id: "02-cloud-cost-fundamentals"
+    title: "Cloud Cost Fundamentals"
+    summary: "Understanding cloud pricing models, billing structures, and the economics of cloud computing."
+    difficulty: beginner
+    reading_time_minutes: 5
+    learning_objectives:
+      - "Understand how cloud providers structure pricing"
+      - "Identify the key billing dimensions across AWS, Azure, and GCP"
+      - "Recognize common cost drivers and hidden charges"
+    key_takeaways:
+      - "Cloud pricing is multidimensional: compute, storage, network, API calls"
+      - "Data transfer costs are often the most overlooked expense"
+      - "Understanding pricing models is prerequisite to optimization"
+    tags: [fundamentals, cloud-pricing, billing]
+    prerequisites: []
+
+  - id: "03-finops-framework"
+    title: "The FinOps Framework"
+    summary: "The Inform, Optimize, Operate lifecycle and how to implement it in your organization."
+    difficulty: intermediate
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Implement the three phases of the FinOps lifecycle"
+      - "Map organizational roles to FinOps responsibilities"
+      - "Build a maturity model for your FinOps practice"
+    key_takeaways:
+      - "FinOps is a continuous cycle, not a one-time project"
+      - "Every phase requires cross-functional collaboration"
+      - "Maturity progresses from crawl to walk to run"
+    tags: [framework, lifecycle, maturity-model]
+    prerequisites:
+      - "01-intro"
+
+  - id: "04-cost-allocation"
+    title: "Cost Allocation & Tagging"
+    summary: "Strategies for attributing cloud costs to teams, products, and business units."
+    difficulty: intermediate
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Design a tagging strategy for cost allocation"
+      - "Implement showback and chargeback models"
+      - "Handle shared costs and untagged resources"
+    key_takeaways:
+      - "Consistent tagging is the foundation of cost visibility"
+      - "Start with showback before moving to chargeback"
+      - "Automate tag enforcement to prevent drift"
+    tags: [cost-allocation, tagging, showback, chargeback]
+    prerequisites:
+      - "03-finops-framework"
+
+  - id: "05-optimization-strategies"
+    title: "Optimization Strategies"
+    summary: "Right-sizing, reserved instances, spot instances, and architectural cost optimization."
+    difficulty: advanced
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Apply right-sizing techniques to reduce compute waste"
+      - "Choose between reserved instances, savings plans, and spot"
+      - "Design architectures with cost efficiency in mind"
+    key_takeaways:
+      - "Right-sizing alone can reduce compute costs by 30-50%"
+      - "Reserved instances require commitment but save 40-70%"
+      - "Spot instances are ideal for fault-tolerant workloads"
+    tags: [optimization, right-sizing, reserved-instances, spot-instances]
+    prerequisites:
+      - "02-cloud-cost-fundamentals"
+      - "03-finops-framework"
+
+  - id: "06-tooling-automation"
+    title: "Tooling & Automation"
+    summary: "Building automated cost monitoring, alerting, and optimization pipelines."
+    difficulty: advanced
+    reading_time_minutes: 7
+    learning_objectives:
+      - "Build automated cost monitoring and alerting pipelines"
+      - "Evaluate FinOps tooling options (native vs third-party)"
+      - "Implement policy-as-code for cost governance"
+    key_takeaways:
+      - "Automation eliminates manual cost review bottlenecks"
+      - "Start with cloud-native tools, then layer specialized platforms"
+      - "Policy-as-code prevents cost overruns before they happen"
+    tags: [tooling, automation, monitoring, policy-as-code]
+    prerequisites:
+      - "04-cost-allocation"
+      - "05-optimization-strategies"
+
+  - id: "07-culture-adoption"
+    title: "Culture & Adoption"
+    summary: "Building a FinOps culture and driving adoption across engineering and finance teams."
+    difficulty: intermediate
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Build executive sponsorship for FinOps initiatives"
+      - "Drive engineering team adoption through incentives and visibility"
+      - "Measure FinOps maturity and program success"
+    key_takeaways:
+      - "Culture change requires executive sponsorship and grassroots buy-in"
+      - "Gamification and visibility drive engineer engagement"
+      - "Measure success with unit economics, not just total spend"
+    tags: [culture, adoption, organizational-change]
+    prerequisites:
+      - "03-finops-framework"
+
+  - id: "08-case-studies"
+    title: "Case Studies"
+    summary: "Real-world examples of FinOps transformations and their measurable outcomes."
+    difficulty: intermediate
+    reading_time_minutes: 7
+    learning_objectives:
+      - "Analyze real-world FinOps transformation journeys"
+      - "Identify patterns in successful FinOps implementations"
+      - "Apply lessons learned to your own organization"
+    key_takeaways:
+      - "Successful FinOps programs typically see 20-40% savings in year one"
+      - "Cross-functional collaboration is the common thread in success stories"
+      - "Start small, demonstrate value, then scale the practice"
+    tags: [case-studies, real-world, outcomes]
+    prerequisites:
+      - "03-finops-framework"
+
+social:
+  linkedin_carousel:
+    slides:
+      - heading: "The FinOps Playbook"
+        body: "A practical guide to cloud financial management by Zopdev"
+      - heading: "Why FinOps Matters"
+        body: "Organizations waste 30%+ of cloud spend. FinOps helps you take control."
+      - heading: "The FinOps Lifecycle"
+        body: "Inform → Optimize → Operate: A continuous cycle of cloud cost management."
+      - heading: "Right-Size Everything"
+        body: "Match resource allocation to actual usage. Stop paying for idle capacity."
+      - heading: "Automate Savings"
+        body: "Build pipelines that automatically detect waste and optimize spend."
+      - heading: "Get the Full Guide"
+        body: "Download the free FinOps Playbook at zopdev.com"
+
+  instagram_posts:
+    quotes:
+      - text: "The goal of FinOps isn't to cut costs — it's to maximize the business value of every dollar spent in the cloud."
+        attribution: "The FinOps Playbook"
+      - text: "You can't optimize what you can't measure. Start with visibility, then drive accountability."
+        attribution: "The FinOps Playbook"
+      - text: "FinOps is a cultural practice. Technology alone won't fix cloud waste — you need shared ownership."
+        attribution: "The FinOps Playbook"
+
+  og_image:
+    title: "The FinOps Playbook"
+    subtitle: "A Practical Guide to Cloud Financial Management"

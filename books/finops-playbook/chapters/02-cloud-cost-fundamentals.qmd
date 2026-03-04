@@ -1,0 +1,73 @@
+---
+title: "Cloud Cost Fundamentals"
+---
+
+Before you can optimize cloud spending, you need to understand how cloud providers charge for their services. Cloud pricing is notoriously complex, with dozens of dimensions that affect your final bill. This chapter breaks down the core pricing models, explains the anatomy of a cloud bill, and highlights the hidden costs that catch most organizations off guard.
+
+## Cloud Pricing Models
+
+Cloud providers offer several pricing tiers, each with different trade-offs between flexibility and cost savings. Understanding these models is the foundation of any FinOps practice.
+
+### On-Demand Pricing
+
+On-demand (or pay-as-you-go) pricing is the default for most cloud resources. You pay for compute, storage, and networking by the hour or second, with no upfront commitment. This model offers maximum flexibility — you can spin up and tear down resources at will — but it is also the most expensive per unit of consumption.
+
+On-demand pricing is ideal for unpredictable workloads, short-lived development environments, and initial experimentation. However, organizations that run the majority of their production workloads on on-demand pricing are almost certainly overpaying. The key is to identify stable, predictable workloads and shift them to commitment-based pricing.
+
+### Reserved Instances and Savings Plans
+
+Reserved instances (RIs) and savings plans offer significant discounts — typically 30% to 70% off on-demand rates — in exchange for committing to a certain level of usage over one or three years. AWS, Azure, and GCP each have their own variations, but the principle is the same: trade flexibility for lower unit costs.
+
+The challenge with reservations is forecasting. Commit too aggressively and you pay for capacity you don't use. Commit too conservatively and you leave savings on the table. Effective FinOps teams build models that balance coverage and utilization, reviewing commitments quarterly and adjusting as workloads evolve.
+
+### Spot and Preemptible Instances
+
+Spot instances (AWS), preemptible VMs (GCP), and spot VMs (Azure) offer the deepest discounts — often 60% to 90% off on-demand pricing — by utilizing spare cloud capacity. The trade-off is that the provider can reclaim these instances with little notice (typically a two-minute warning).
+
+Spot pricing works well for fault-tolerant, stateless workloads such as batch processing, CI/CD pipelines, and data analytics. Adopting spot requires architectural changes — your applications must handle interruptions gracefully — but the savings can be transformative for the right workloads.
+
+::: {.callout-tip}
+Start with non-production workloads when adopting spot instances. CI/CD runners and batch jobs are excellent first candidates.
+:::
+
+## Understanding Your Cloud Bill
+
+A cloud bill is not a single line item. It is a detailed ledger of every resource consumed across every service, region, and account. Understanding the structure of your bill is essential for cost allocation and optimization.
+
+Most cloud bills break down into several dimensions: service (e.g., EC2, S3, BigQuery), usage type (e.g., compute hours, storage GB-months, data transfer GB), region, account or project, and pricing tier (on-demand, reserved, spot). Each dimension adds complexity, and the interactions between them can be surprising.
+
+One common pitfall is focusing only on compute costs. While compute is often the largest single category, storage, data transfer, and managed services can collectively account for 40% or more of total spend. A comprehensive view of the bill — broken down by service and usage type — is the first step toward informed decision-making.
+
+## The Hidden Costs
+
+Beyond the obvious compute and storage charges, cloud bills contain several categories of cost that are easy to overlook but can add up quickly.
+
+### Data Transfer Costs
+
+Data transfer between regions, between availability zones, and out to the internet is a significant and often underestimated cost. Cloud providers typically charge nothing for data ingress but apply per-GB fees for egress. Cross-region replication, CDN origin fetches, and API responses to external consumers all contribute to data transfer spend.
+
+Architectural decisions have a major impact on data transfer costs. Co-locating services in the same region and availability zone, using private endpoints instead of public internet paths, and compressing data before transfer can all reduce these charges substantially.
+
+### API Call and Request Costs
+
+Many managed services charge per API call or per request in addition to storage or compute fees. Services like AWS S3, Lambda, API Gateway, and GCP Cloud Functions bill for each invocation. At scale, millions of API calls per day can generate meaningful costs that are invisible without granular billing analysis.
+
+### Storage Tier Costs
+
+Cloud storage services offer multiple tiers — hot, warm, cold, and archive — with different price points for storage and retrieval. Organizations that store all data in hot storage tiers are overpaying for data that is rarely accessed. Implementing lifecycle policies that automatically move aging data to cheaper tiers is one of the simplest and most effective cost optimizations available.
+
+## Multi-Cloud Cost Complexity
+
+Organizations increasingly operate across multiple cloud providers, either by strategic choice or through acquisitions and organic growth. Multi-cloud environments compound the cost management challenge.
+
+Each provider has its own billing model, its own discount programs, its own tagging conventions, and its own cost management tools. Comparing costs across providers requires normalization — translating provider-specific metrics into a common framework. This is where third-party FinOps tools become valuable, providing a unified view across AWS, Azure, and GCP.
+
+Multi-cloud also introduces architectural complexity. Data transfer between clouds is expensive, and workload placement decisions must account for both performance and cost. A mature FinOps practice in a multi-cloud environment requires centralized visibility, standardized tagging, and cross-functional governance that spans all providers.
+
+::: {.callout-warning}
+Avoid comparing cloud provider list prices directly. Effective cost comparison requires accounting for discounts, committed usage, data transfer patterns, and the total cost of the architecture — not just individual service prices.
+:::
+
+## Summary
+
+Cloud pricing is multi-dimensional and complex. The four primary pricing models — on-demand, reserved, spot, and savings plans — offer a spectrum of flexibility and discount depth. Understanding your cloud bill requires looking beyond compute to include data transfer, API calls, and storage tiers. Multi-cloud environments add another layer of complexity that demands standardized tooling and governance. With this foundational understanding, you are ready to explore the FinOps framework that brings structure and discipline to cloud cost management.

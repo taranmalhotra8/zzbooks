@@ -1,0 +1,40 @@
+---
+title: "What Comes Next"
+---
+
+## Key Takeaways
+
+
+- **{{title}}**: {{summary}}
+
+
+## Recommended Next Steps
+
+::: {.callout-tip}
+## Start Small, Scale Fast
+
+1. **Audit your current state** — Identify the biggest pain point or cost driver from this book's framework
+2. **Pick one chapter to implement this week** — Don't try to do everything at once
+3. **Measure before and after** — Use the metrics and calculators from this book to quantify your improvement
+4. **Share results with your team** — Build momentum by demonstrating early wins
+:::
+
+## Resources
+
+| Resource | Link |
+|----------|------|
+| Zopdev Documentation | [docs.zopdev.com](https://docs.zopdev.com) |
+| Community Slack | [zopdev.slack.com](https://zopdev.slack.com) |
+| GitHub Examples | [github.com/zopdev](https://github.com/zopdev) |
+
+## About Zopdev
+
+Zopdev builds tools that help engineering teams ship faster, spend less, and operate with confidence.
+
+
+
+---
+
+*Thank you for reading **AWS Lambda Best Practices**. We hope the strategies, code examples, and frameworks in this book help you build better, faster, and more cost-effectively.*
+
+*— The Zopdev Team*

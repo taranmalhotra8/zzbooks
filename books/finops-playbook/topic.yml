@@ -1,0 +1,9 @@
+# Topic configuration for hub discovery and pipeline.
+# finops-playbook was created before the pipeline; topic.yml added retroactively.
+
+topic: "FinOps and Cloud Financial Management"
+audience: "FinOps practitioners, CTOs, and engineering leaders managing $50K-$2M/month in cloud spend"
+chapter_count: "8"
+depth: "practical"
+angle: "framework"
+product: zopnight

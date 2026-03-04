@@ -1,0 +1,8 @@
+# Topic configuration for outline generation.
+# Run: make outline ebook=k8s-cost-guide
+
+topic: "Kubernetes Cost Optimization"
+audience: "DevOps engineers and platform teams managing $10K-$500K/month in Kubernetes spend"
+chapter_count: "3"
+depth: "production-ready"
+angle: "incident-driven"

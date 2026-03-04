@@ -1,0 +1,373 @@
+/* Zopdev EPUB Theme — Premium Editorial Edition
+ *
+ * Branded styling with blue accent, premium heading styles,
+ * and pull-quote/stat-highlight support.
+ * EPUB readers vary in CSS support, so we keep to safe properties.
+ * Light code blocks (dark bg unreliable across e-readers).
+ */
+
+/* ===== BASE TYPOGRAPHY ===== */
+
+body {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.8;
+  color: #111827;
+}
+
+/* ===== HEADINGS ===== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.15;
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+}
+
+h1 {
+  font-size: 2.25em;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 1.6em;
+  padding-bottom: 0.4em;
+  border-bottom: 2px solid #0891b2;
+}
+
+h3 {
+  font-size: 1.3em;
+  padding-left: 0.6em;
+  border-left: 3px solid #0891b2;
+}
+
+h4 {
+  font-size: 1.125em;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 0.875em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4b5563;
+}
+
+/* ===== CODE BLOCKS ===== */
+
+code {
+  font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+  font-size: 0.875em;
+  color: inherit;
+  background: #ecfeff;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
+
+pre {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-left: 3px solid #0891b2;
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.65;
+  margin: 2em 0;
+}
+
+pre code {
+  color: inherit;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ===== BLOCKQUOTES ===== */
+
+blockquote {
+  border-left: 2px solid #0891b2;
+  margin: 2em 0;
+  padding: 0 0 0 1.25em;
+  color: #4b5563;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== PULL QUOTES ===== */
+
+.pull-quote {
+  text-align: center;
+  margin: 2.5em auto;
+  padding: 1.5em 1em;
+}
+
+.pull-quote p {
+  font-size: 1.3em;
+  font-style: italic;
+  font-weight: 500;
+  color: #111827;
+  line-height: 1.5;
+}
+
+/* ===== STAT HIGHLIGHTS ===== */
+
+.stat-highlight {
+  margin: 2em 0;
+}
+
+.stat-highlight .stat {
+  background: #ecfeff;
+  border: 1px solid #cffafe;
+  padding: 1em;
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+.stat-highlight .stat strong {
+  display: block;
+  font-size: 1.75em;
+  font-weight: 800;
+  color: #0891b2;
+}
+
+/* ===== TABLES ===== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  font-size: 0.9375em;
+}
+
+thead {
+  border-bottom: 2px solid #cffafe;
+  background: #ecfeff;
+}
+
+th {
+  padding: 0.75em;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #111827;
+}
+
+tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+td {
+  padding: 0.75em;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* ===== CALLOUT BOXES ===== */
+
+.callout {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1em;
+  margin: 2em 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+
+/* Note (blue) */
+.callout-note {
+  border-left-color: #0891b2;
+  background: #ecfeff;
+}
+
+/* Tip (green) */
+.callout-tip {
+  border-left-color: #16a34a;
+  background: #ECFDF5;
+}
+
+/* Warning (amber) */
+.callout-warning {
+  border-left-color: #fbbf24;
+  background: #FFFBEB;
+}
+
+/* Important (red) */
+.callout-important {
+  border-left-color: #EF4444;
+  background: #FEF2F2;
+}
+
+.callout-title {
+  font-weight: 700;
+  font-size: 0.9em;
+  margin-bottom: 0.5em;
+}
+
+.callout-note .callout-title { color: #0891b2; }
+.callout-tip .callout-title { color: #16a34a; }
+.callout-warning .callout-title { color: #fbbf24; }
+.callout-important .callout-title { color: #EF4444; }
+
+/* ===== LINKS ===== */
+
+a {
+  color: #0891b2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== IMAGES ===== */
+
+img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+figcaption {
+  font-size: 0.875em;
+  color: #6b7280;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+/* ===== LISTS ===== */
+
+ul, ol {
+  margin: 1em 0;
+  padding-left: 1.5em;
+}
+
+li {
+  margin: 0.4em 0;
+  line-height: 1.8;
+}
+
+/* ===== CALCULATOR FALLBACK STYLING ===== */
+
+.ojs-calculator {
+  margin: 2em 0;
+}
+
+.ojs-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.9em;
+}
+
+.ojs-results-table thead {
+  border-bottom: 2px solid #cffafe;
+  background: #ecfeff;
+}
+
+.ojs-results-table th {
+  padding: 0.6em;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875em;
+  color: #111827;
+}
+
+.ojs-results-table td {
+  padding: 0.6em;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.ojs-total-row {
+  font-weight: 700;
+  border-top: 2px solid #cffafe;
+}
+
+.ojs-summary-grid {
+  margin: 1em 0;
+}
+
+.ojs-metric {
+  background: #ecfeff;
+  border: 1px solid #cffafe;
+  padding: 1em;
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+.ojs-metric-value {
+  display: block;
+  font-size: 1.5em;
+  font-weight: 800;
+  color: #0891b2;
+}
+
+.ojs-metric-label {
+  display: block;
+  font-size: 0.8em;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.ojs-recommendation {
+  border: 1px solid #0891b2;
+  padding: 1em;
+  margin: 1em 0;
+  background: #ecfeff;
+}
+
+.ojs-recommendation-badge {
+  display: inline-block;
+  background: #0891b2;
+  color: #FFFFFF;
+  font-size: 0.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.2em 0.6em;
+}
+
+.ojs-positive {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.ojs-negative {
+  color: #EF4444;
+  font-weight: 700;
+}
+
+.ojs-badge {
+  display: inline-block;
+  background: #0891b2;
+  color: #FFFFFF;
+  font-size: 0.7em;
+  font-weight: 700;
+  padding: 0.1em 0.4em;
+}
+
+.ojs-savings {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.ojs-note {
+  font-size: 0.85em;
+  color: #9ca3af;
+}
+
+/* ===== HORIZONTAL RULES ===== */
+
+hr {
+  border: none;
+  border-top: 2px solid #cffafe;
+  margin: 3em auto;
+  width: 30%;
+}

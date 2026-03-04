@@ -1,0 +1,46 @@
+---
+subtitle: "A Practical Guide to GitOps with ArgoCD"
+---
+
+# GitOps with ArgoCD {.unnumbered}
+
+## Preface {.unnumbered}
+
+Kubernetes adoption has reached critical mass. But with growth comes complexity: configuration drift across clusters, deployment failures that cascade silently, and operational overhead that scales linearly with every new environment. ArgoCD, used by 60% of Kubernetes teams (CNCF 2025), offers a proven path through this complexity.
+
+This guide is written for **engineering leaders and platform teams** who need to move beyond experimental GitOps adoption toward production-grade patterns.
+
+### What Your Team Will Gain
+
+**Operational Efficiency** — Replace manual kubectl workflows with automated, self-healing deployments. Teams typically see deployment frequency increase 2-5x within 90 days, while configuration drift incidents drop to near-zero.
+
+**Multi-Cluster Governance** — Manage staging, production, and disaster recovery from a single control plane. ApplicationSets reduce deployment configuration by 70-80%, eliminating copy-paste errors across environments.
+
+**Security Posture** — Shift from push-based CI/CD (where pipelines hold cluster credentials) to pull-based GitOps where the cluster pulls its own state from Git. Every change is auditable, versioned, and reversible.
+
+**Developer Velocity** — Give developers a self-service deployment model. Git commit triggers deployment. Rollback means reverting a commit. No tickets, no waiting, no tribal knowledge.
+
+### How This Book Is Organized
+
+Each chapter delivers a specific operational capability:
+
+| Chapter | Capability | Business Outcome |
+|---------|-----------|-----------------|
+| 1 | GitOps fundamentals and ArgoCD architecture | Understand the technical foundation for all subsequent patterns |
+| 2 | Application CRD and sync lifecycle | Deploy your first GitOps-managed application with health monitoring |
+| 3 | Automated sync and self-healing | Eliminate manual reconciliation and configuration drift |
+| 4 | Multi-cluster management | Centralize control across all environments |
+| 5 | ApplicationSets at scale | Template-based deployments for hundreds of targets |
+| 6 | App of Apps and progressive delivery | Safe production rollouts with canary analysis |
+| 7 | Secrets management and production hardening | Enterprise security and observability patterns |
+
+### Who This Book Is For
+
+- **Platform engineers** building internal developer platforms on Kubernetes
+- **DevOps/SRE teams** responsible for deployment reliability and cluster operations
+- **Engineering managers and CTOs** evaluating GitOps as an organizational standard
+- **Developers** who want to understand how their code reaches production
+
+Every chapter includes production-ready YAML configurations, real metrics from ArgoCD deployments, and actionable implementation steps. No theory without practice.
+
+*— The Zopdev Team*

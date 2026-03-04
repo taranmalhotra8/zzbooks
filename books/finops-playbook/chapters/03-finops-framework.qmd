@@ -1,0 +1,99 @@
+---
+title: "The FinOps Framework"
+---
+
+The FinOps Framework, maintained by the FinOps Foundation, provides a structured approach to cloud financial management. It defines a continuous lifecycle of three phases — Inform, Optimize, and Operate — along with a maturity model that helps organizations assess their progress and set realistic goals. This chapter walks through each phase in detail and shows how they fit together.
+
+## The Inform Phase
+
+The Inform phase is about gaining visibility into cloud costs and usage. You cannot optimize what you cannot see, and most organizations begin their FinOps journey by discovering that they have significant blind spots in their cloud spending.
+
+### Visibility
+
+The first step is establishing comprehensive visibility into cloud costs. This means aggregating billing data from all cloud accounts and providers into a single, queryable dataset. Cloud-native tools like AWS Cost Explorer, GCP Billing Reports, and Azure Cost Management provide account-level visibility, but most organizations need to supplement these with centralized dashboards that span their entire cloud estate.
+
+Effective visibility goes beyond total spend. Teams need to see costs broken down by service, region, environment (production vs. development), team, and product. Time-series views that show spending trends — daily, weekly, and monthly — are essential for identifying anomalies and understanding growth patterns.
+
+### Allocation
+
+Cost allocation is the practice of attributing cloud spending to the teams, products, and business units that consume it. Accurate allocation transforms cloud costs from an opaque IT expense into actionable business data. It enables showback (informing teams of their costs) and chargeback (billing teams for their consumption).
+
+Allocation depends heavily on tagging and account structure, which we cover in depth in Chapter 4. At the Inform phase, the goal is to achieve at least 80% allocation coverage — meaning that 80% of cloud spend can be attributed to a specific owner.
+
+### Benchmarking
+
+Benchmarking compares your cloud spending and efficiency against internal targets, historical trends, and industry peers. Common benchmarks include cost per customer, cost per transaction, infrastructure cost as a percentage of revenue, and unit economics for specific services.
+
+Benchmarks give context to raw spending numbers. A 20% increase in cloud costs might be alarming in isolation, but entirely appropriate if revenue grew 40% in the same period. FinOps teams should establish and track benchmarks that connect cloud spending to business outcomes.
+
+## The Optimize Phase
+
+With visibility established, the Optimize phase focuses on identifying and implementing cost reduction opportunities. Optimization happens at three levels: rate, usage, and architecture.
+
+### Rate Optimization
+
+Rate optimization means paying less for the same resources. The primary levers are commitment-based discounts (reserved instances, savings plans) and negotiated enterprise agreements. A well-managed commitment portfolio can reduce compute costs by 30% to 50% compared to on-demand pricing.
+
+Effective rate optimization requires accurate forecasting of future usage, regular review of commitment utilization, and a process for adjusting commitments as workloads change. Many organizations benefit from centralizing commitment purchases in a dedicated FinOps or cloud platform team that has visibility across all accounts and workloads.
+
+### Usage Optimization
+
+Usage optimization means eliminating waste — resources that are provisioned but not fully utilized. Common targets include oversized instances, idle resources, unattached storage volumes, and forgotten development environments.
+
+Right-sizing is the most impactful usage optimization. Cloud providers offer recommendations based on historical utilization data, and third-party tools can automate the analysis. The key is establishing a regular cadence of right-sizing reviews and making it easy for engineering teams to act on recommendations.
+
+::: {.callout-tip}
+Schedule monthly right-sizing reviews for your top 20 most expensive services. This focused approach delivers the most savings with the least effort.
+:::
+
+### Architectural Optimization
+
+Architectural optimization involves redesigning systems to be inherently more cost-efficient. This includes adopting serverless architectures for variable workloads, using managed services instead of self-hosted alternatives, implementing caching layers to reduce downstream costs, and designing for spot instance compatibility.
+
+Architectural changes typically require more effort than rate or usage optimization, but they often deliver the largest and most sustainable savings. A system redesigned for cost efficiency will continue to save money as it scales, while rate and usage optimizations require ongoing attention.
+
+## The Operate Phase
+
+The Operate phase is about sustaining and improving FinOps practices over time. It encompasses governance, continuous improvement, and automation.
+
+### Governance
+
+FinOps governance establishes the policies, processes, and organizational structures that ensure cloud financial management is consistent and effective. This includes defining roles and responsibilities, setting budget thresholds and approval workflows, establishing tagging standards, and creating escalation paths for cost anomalies.
+
+Governance should be enabling, not restrictive. The goal is to give teams the guardrails they need to make cost-effective decisions without slowing them down. Automated policy enforcement — such as blocking untagged resource creation or flagging oversized instances — is more effective than manual review processes.
+
+### Continuous Improvement
+
+FinOps is a continuous practice, not a one-time project. The Operate phase includes regular reviews of FinOps metrics, retrospectives on optimization initiatives, and updates to policies and processes based on what the organization has learned.
+
+Quarterly business reviews (QBRs) that include cloud cost metrics are an effective mechanism for continuous improvement. These reviews bring engineering, finance, and business leadership together to assess progress, celebrate wins, and identify the next set of optimization opportunities.
+
+### Automation
+
+Automation is the force multiplier for FinOps at scale. Manual cost reviews and optimization actions do not scale beyond a certain point. Mature FinOps organizations automate cost anomaly detection, right-sizing recommendations, commitment management, and policy enforcement.
+
+Automation also includes infrastructure-as-code practices that embed cost constraints into the provisioning process. By defining resource limits, instance type allowlists, and tagging requirements in Terraform or Pulumi configurations, teams prevent cost issues before they occur rather than remediating them after the fact.
+
+## Maturity Models
+
+The FinOps Foundation defines a "Crawl, Walk, Run" maturity model that helps organizations assess where they are and plan where they want to go.
+
+### Crawl
+
+At the Crawl stage, an organization has basic visibility into cloud costs and has started allocating spending to teams. Optimization is reactive — the team investigates cost spikes after they occur. There may be some reserved instances, but coverage is low and management is ad hoc. This is where most organizations begin, and the primary goal is to establish the foundational practices of visibility and allocation.
+
+### Walk
+
+At the Walk stage, cost allocation covers the majority of cloud spend, and optimization is proactive. The organization has a regular cadence of right-sizing reviews, a managed commitment portfolio, and automated alerts for cost anomalies. FinOps is recognized as a function, with dedicated personnel or at least dedicated time from existing team members.
+
+### Run
+
+At the Run stage, FinOps is deeply embedded in the organization's culture and processes. Cost optimization is automated and continuous. Engineering teams proactively consider cost in architectural decisions. Unit economics are tracked and tied to business outcomes. The FinOps team operates as a center of excellence, driving best practices across the organization and continuously pushing the frontier of efficiency.
+
+::: {.callout-note}
+Most organizations do not need to reach "Run" maturity across every FinOps capability. Focus on reaching "Run" for the capabilities that matter most to your business — typically visibility, commitment management, and the optimization areas with the highest dollar impact.
+:::
+
+## Summary
+
+The FinOps Framework provides a structured, iterative approach to cloud financial management through three phases: Inform (visibility and allocation), Optimize (rate, usage, and architectural improvements), and Operate (governance, continuous improvement, and automation). The Crawl/Walk/Run maturity model helps organizations set realistic goals and measure progress. In the next chapter, we dive deep into one of the most critical foundations of FinOps: cost allocation and tagging.

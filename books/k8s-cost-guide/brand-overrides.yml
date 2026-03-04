@@ -1,0 +1,32 @@
+# Brand overrides for Kubernetes Cost Guide
+# Targets DevOps Engineers with container-focused tone.
+
+target_icps:
+  - "devops-engineer"
+
+colors:
+  primary: "#0e7490"  # Cobalt blue for K8s audience (brand default: #0891b2)
+
+tone:
+  voice: "Hands-on, container-native, cost-aware"
+  depth: "production Kubernetes configurations"
+
+featured_products:
+  - "zopnight"
+  - "zopcloud"
+
+ctas:
+  primary:
+    text: "Download the K8s Cost Guide"
+    style: "prominent"
+  secondary:
+    text: "Try ZopNight Free"
+    url: "https://zopnight.com"
+    style: "outline"
+
+landing:
+  form_fields:
+    - "name"
+    - "email"
+    - "company"
+    - "cluster_count"

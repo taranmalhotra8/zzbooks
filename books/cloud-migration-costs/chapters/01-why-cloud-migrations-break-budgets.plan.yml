@@ -1,0 +1,139 @@
+chapter_id: 01-why-cloud-migrations-break-budgets
+density_level: light
+word_target:
+  - 800
+  - 1200
+sections:
+  - id: opening
+    heading: ""
+    word_target: 120
+    visual:
+      type: callout
+      purpose: Highlight the startling statistic that 75% of migrations exceed budgets
+      style: warning
+    notes: "Open with the core statistic: 75% of cloud migrations exceed their
+      budgets, with over a quarter experiencing cost overruns surpassing 20%
+      (Future Processing). Frame this as a systemic industry problem, not
+      individual failure. Mention the $100B+ in unplanned expenditures globally
+      over three years. Set up the chapter's purpose: understanding WHY this
+      happens and how to avoid becoming another statistic. Avoid fictional
+      stories—use real industry data."
+  - id: tco_blind_spots
+    heading: The Hidden Costs That Derail Migration Budgets
+    word_target: 180
+    visual:
+      type: table
+      template: comparison
+      purpose: Compare expected vs. actual migration costs across categories
+      style: comparison
+    notes: "Explain Total Cost of Ownership (TCO) blind spots specific to
+      migrations: (1) Underestimated data transfer fees, (2) Ignored application
+      refactoring needs, (3) Missed licensing compatibility costs, (4)
+      Overlooked security/compliance requirements, (5) Undervalued operational
+      overhead. Include a comparison table showing 'planned' vs 'actual' costs
+      for typical migration categories. Reference the $723.4B public cloud
+      spending context (Flosum, 2024) to show scale. Emphasize that initial
+      migration cost is only 30-40% of total TCO."
+  - id: finops_maturity
+    heading: FinOps Maturity Model for Migrations
+    word_target: 150
+    visual:
+      type: d2
+      template: finops-workflow
+      purpose: Visualize the FinOps maturity progression for migration cost management
+      image_style: flowchart
+    notes: "Present a four-stage FinOps maturity model specifically adapted for
+      migrations: (1) Initial/Fallback—reactive cost tracking after overspend,
+      (2) Developing—basic budget forecasting with spreadsheets, (3)
+      Defined—automated cost modeling with baseline comparisons, (4)
+      Optimized—real-time spend tracking with predictive analytics. Explain each
+      stage with specific characteristics and outcomes. This framework helps
+      readers self-assess where their organization stands."
+  - id: cost_optimization_patterns
+    heading: Cost Optimization Patterns That Actually Work
+    word_target: 200
+    visual:
+      type: table
+      template: comparison
+      purpose: Present six optimization patterns with savings, effort level, and timing
+      style: data
+    notes: "Present the six patterns as a decision framework table with columns:
+      Pattern, Potential Savings, Implementation Effort, When to Apply. Cover:
+      (1) Non-Production Environment Scheduling (70% reduction, low effort), (2)
+      ARM-Based Instance Migration/Graviton (20-40%, low effort), (3) Reserved
+      Instance & Savings Plan Optimization (30-60% discount, medium effort), (4)
+      Kubernetes Right-Sizing (30-50%, medium effort), (5) Lift-and-Shift to
+      Cloud-Native Refactoring (40-60% operational reduction over 2-3 years,
+      high effort), (6) Automated Data Tiering (60-80% storage reduction, low
+      effort). Explain WHEN each applies—don't treat as a checklist."
+  - id: cost_modeling
+    heading: Building a Migration Cost Model
+    word_target: 150
+    visual:
+      type: code
+      language: spreadsheet
+      purpose: Show spreadsheet formula structure for migration cost estimation
+      style: formula
+    notes: "Provide a practical cost modeling framework—not a 100+ line code script.
+      Show the key formula structure for TCO calculation: Migration Cost = (Lift
+      Costs + Refactor Costs + Data Transfer + Licensing + Training) + (Monthly
+      Ops × 36 months). Include a simple spreadsheet structure with categories
+      and multipliers. Explain why naive estimates fail (they use linear
+      extrapolation rather than modeling category-specific drivers). Reference
+      how zopcloud automates this modeling process as context, without being
+      promotional."
+  - id: summary
+    heading: "Summary: From Budget Crisis to Budget Confidence"
+    word_target: 100
+    visual:
+      type: callout
+      purpose: Recap the key takeaways and path forward
+      style: success
+    notes: "Synthesize the chapter's core message: migration budget overruns are the
+      norm, not the exception—but they're preventable. Recap the three key
+      pillars: (1) Understand TCO blind spots before migrating, (2) Assess your
+      FinOps maturity and plan to advance, (3) Apply cost optimization patterns
+      strategically based on workload characteristics. End with an empowering
+      statement that informed planning changes outcomes—no organization should
+      accept being part of the 75% statistic."
+content_seeds:
+  opening_hook: 75% of cloud migrations exceed their budgets. That's not a
+    prediction—it's an industry-wide failure rate that costs enterprises over
+    $100 billion in unplanned expenditures globally over a three-year span. Your
+    migration budget is likely already doomed. But it doesn't have to be.
+  key_claims:
+    - 75% of cloud migrations exceed their budgets (Future Processing)
+    - Over $100B in unplanned migration expenditures globally over 3 years
+      (Future Processing)
+    - 13% of migrations extend 3+ quarters beyond timeline (Future Processing)
+    - Public cloud spending reached $723.4B in 2024 with 21.5% YoY growth
+      (Flosum)
+  patterns:
+    - "Non-Production Environment Scheduling: up to 70% reduction in
+      non-production compute costs"
+    - "ARM-Based Instance Migration (Graviton): 20-40% compute cost reduction"
+    - "Reserved Instance and Savings Plan Optimization: 30-60% discount vs
+      on-demand pricing"
+    - "Kubernetes Right-Sizing: 30-50% reduction in Kubernetes cluster costs"
+    - "Lift-and-Shift to Cloud-Native Refactoring: 40-60% operational cost
+      reduction over 2-3 years"
+    - "Automated Data Tiering: 60-80% storage cost reduction for qualifying data"
+  configs:
+    - Spreadsheet-based TCO calculation formula structure
+    - FinOps maturity assessment criteria across 4 stages
+  product_tie_in: zopcloud provides migration planning tools with automated cost
+    modeling, workload assessment, and spend tracking across source and target
+    environments during migration—mentioned as context for how modern cost
+    modeling works, not as a primary focus
+heal_augmentation: >-
+  CRITICAL: Every claim MUST include a specific number (dollar amount,
+  percentage, or quantity). Replace ALL vague phrases like 'significant
+  savings', 'many organizations', 'should consider' with concrete data. Example:
+  instead of 'significant cost reduction' → '$18,400/month savings (67%
+  reduction)'.
+
+
+  IMPORTANT: Include at least 2 production-ready code blocks in this chapter.
+  Use proper language tags (```python, ```yaml, ```hcl, etc.). Code must be
+  copy-pasteable with real imports and error handling.
+heal_iteration: 3

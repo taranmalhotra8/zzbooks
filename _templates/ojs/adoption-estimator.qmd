@@ -1,0 +1,116 @@
+---
+title: "Adoption Estimator"
+format:
+  html:
+    code-fold: true
+  pdf:
+    keep-tex: false
+  epub: default
+---
+
+<!-- Adoption Estimator Template
+     Estimate productivity gains and adoption metrics for any tool/platform.
+
+     Usage: Copy this template into your chapter .qmd file, then customize
+     the team size, hourly rate, and time savings per activity.
+
+     HTML: Interactive sliders with reactive summary cards.
+     PDF/EPUB: Static fallback table showing default scenario.
+-->
+
+::: {.callout-note}
+## Adoption Impact Estimator
+Model the productivity impact of adoption by adjusting your team's parameters.
+:::
+
+```{ojs}
+//| echo: false
+
+// --- Team Inputs ---
+viewof teamSize = Inputs.range([5, 500], {
+  value: 50,
+  step: 5,
+  label: "Team size (engineers)"
+})
+
+viewof avgHourlyRate = Inputs.range([50, 250], {
+  value: 120,
+  step: 10,
+  label: "Average hourly cost ($)"
+})
+
+viewof hoursPerWeekSaved = Inputs.range([1, 20], {
+  value: 6,
+  step: 1,
+  label: "Hours saved per engineer per week"
+})
+
+viewof adoptionRate = Inputs.range([20, 100], {
+  value: 75,
+  step: 5,
+  label: "Expected adoption rate (%)"
+})
+```
+
+```{ojs}
+//| echo: false
+
+// --- Calculations ---
+effectiveTeam = Math.round(teamSize * adoptionRate / 100)
+weeklyHoursSaved = effectiveTeam * hoursPerWeekSaved
+monthlySavings = weeklyHoursSaved * 4.33 * avgHourlyRate
+annualSavings = monthlySavings * 12
+fteEquivalent = (weeklyHoursSaved / 40).toFixed(1)
+```
+
+```{ojs}
+//| echo: false
+
+// --- Summary Cards ---
+fmt = d3.format("$,.0f")
+html`<div class="ojs-summary-grid">
+  <div class="ojs-metric">
+    <span class="ojs-metric-value">${fmt(monthlySavings)}</span>
+    <span class="ojs-metric-label">Monthly Savings</span>
+  </div>
+  <div class="ojs-metric">
+    <span class="ojs-metric-value">${fmt(annualSavings)}</span>
+    <span class="ojs-metric-label">Annual Savings</span>
+  </div>
+  <div class="ojs-metric">
+    <span class="ojs-metric-value">${fteEquivalent}</span>
+    <span class="ojs-metric-label">FTE Equivalent Saved</span>
+  </div>
+  <div class="ojs-metric">
+    <span class="ojs-metric-value">${effectiveTeam}</span>
+    <span class="ojs-metric-label">Engineers Adopting</span>
+  </div>
+</div>`
+```
+
+::: {.content-visible when-format="pdf"}
+**Adoption Impact (Default Scenario)**
+
+| Metric | Value |
+|--------|-------|
+| Team size | 50 engineers |
+| Adoption rate | 75% (38 engineers) |
+| Hours saved per engineer/week | 6 hours |
+| Monthly savings | $118,404 |
+| Annual savings | $1,420,848 |
+| FTE equivalent saved | 5.7 |
+
+*Interactive calculator available in the HTML version.*
+:::
+
+::: {.content-visible when-format="epub"}
+**Adoption Impact (Default Scenario)**
+
+Based on 50 engineers at 75% adoption, saving 6 hours per week at $120/hour:
+
+- Monthly savings: **$118,404**
+- Annual savings: **$1,420,848**
+- FTE equivalent saved: **5.7**
+
+*Interactive calculator available in the HTML version.*
+:::

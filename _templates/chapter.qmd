@@ -1,0 +1,31 @@
+---
+title: "{{title}}"
+---
+
+<!-- Do NOT add a body-level H1 heading here.
+     The YAML 'title:' above generates the chapter heading in Quarto books.
+     Adding '# {{title}}' would create a duplicate and break section numbering. -->
+
+<!-- TODO: Write chapter content -->
+
+## Learning Objectives
+
+By the end of this chapter, you will:
+
+- Objective 1
+- Objective 2
+- Objective 3
+
+## Overview
+
+Placeholder content for this chapter. Replace with actual content.
+
+## Key Concepts
+
+- Concept 1
+- Concept 2
+- Concept 3
+
+## Summary
+
+This chapter covered the fundamentals of {{title}}.

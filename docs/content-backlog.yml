@@ -1,0 +1,97 @@
+# Content Backlog — Prioritized Topic Queue
+# Maintained by content strategy; consumed by the pipeline.
+#
+# Priority rationale:
+#   P1 = fills a product coverage gap (ZopCloud has 0 ebooks)
+#   P2 = bridges two products (cross-sell opportunity)
+#   P3-P5 = deepens existing product coverage
+#   P6-P8 = broadens SEO footprint
+
+backlog:
+  - priority: 1
+    slug: cloud-migration-costs
+    topic: "Cloud Migration Cost Planning"
+    product: zopcloud
+    icps: [cto, finops-practitioner]
+    buyer_stage: awareness
+    chapter_count: "4-5"
+    depth: production-ready
+    angle: incident-driven
+    rationale: "ZopCloud has zero ebook coverage; migration cost planning is high-SEO, high-intent"
+
+  - priority: 2
+    slug: k8s-observability-cost
+    topic: "Kubernetes Observability Cost Control"
+    product: [zopnight, zopday]
+    icps: [devops-engineer, finops-practitioner]
+    buyer_stage: consideration
+    chapter_count: "3-4"
+    depth: practical
+    angle: case-study
+    rationale: "Bridges ZopNight (cost) + ZopDay (K8s); observability spend is fastest-growing cloud line item"
+
+  - priority: 3
+    slug: golden-path-adoption
+    topic: "Golden Path Adoption for Platform Teams"
+    product: zopday
+    icps: [devops-engineer, cto]
+    buyer_stage: consideration
+    chapter_count: "4-5"
+    depth: practical
+    angle: tutorial
+    rationale: "ZopDay's core value prop; 'golden path' is trending keyword in platform engineering"
+
+  - priority: 4
+    slug: multicloud-cost-strategy
+    topic: "Multi-Cloud Cost Governance Strategy"
+    product: zopnight
+    icps: [cto, finops-practitioner]
+    buyer_stage: awareness
+    chapter_count: "4-5"
+    depth: production-ready
+    angle: reference
+    rationale: "Deepens ZopNight positioning; multi-cloud governance is underserved in content"
+
+  - priority: 5
+    slug: finops-team-handbook
+    topic: "The FinOps Team Handbook"
+    product: zopnight
+    icps: [finops-practitioner]
+    buyer_stage: awareness
+    chapter_count: "5-6"
+    depth: conceptual
+    angle: reference
+    rationale: "Broadens FinOps audience; handbook format is evergreen SEO content"
+
+  - priority: 6
+    slug: spot-instance-playbook
+    topic: "Spot Instance Cost Optimization Playbook"
+    product: zopcloud
+    icps: [devops-engineer]
+    buyer_stage: consideration
+    chapter_count: "3-4"
+    depth: production-ready
+    angle: incident-driven
+    rationale: "Tactical content for ZopCloud; spot pricing is high-intent search topic"
+
+  - priority: 7
+    slug: developer-self-service
+    topic: "Developer Self-Service Infrastructure Portal"
+    product: zopday
+    icps: [devops-engineer, cto]
+    buyer_stage: consideration
+    chapter_count: "4-5"
+    depth: practical
+    angle: tutorial
+    rationale: "Self-service portals are hot topic; positions ZopDay as IDP solution"
+
+  - priority: 8
+    slug: cloud-tagging-strategy
+    topic: "Cloud Resource Tagging Strategy"
+    product: zopnight
+    icps: [finops-practitioner, devops-engineer]
+    buyer_stage: awareness
+    chapter_count: "3"
+    depth: practical
+    angle: reference
+    rationale: "Foundational FinOps content; tagging is prerequisite for cost attribution"

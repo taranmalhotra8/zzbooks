@@ -1,0 +1,95 @@
+# Platform Engineering Maturity Stages
+# Purpose: Show the 4-stage maturity model from manual ops to self-service IDP
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #fbbf24 warning, #ef4444 danger)
+
+direction: right
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 24
+  }
+}
+
+stage1: Stage 1\nManual {
+  shape: rectangle
+  style.fill: "#fef2f2"
+  style.stroke: "#ef4444"
+  style.stroke-width: 2
+  style.border-radius: 8
+
+  desc: |md
+    Tickets to ops team
+    Days to get infrastructure
+    No self-service
+  |
+}
+
+stage2: Stage 2\nScripted {
+  shape: rectangle
+  style.fill: "#fffbeb"
+  style.stroke: "#fbbf24"
+  style.stroke-width: 2
+  style.border-radius: 8
+
+  desc: |md
+    Runbooks + scripts
+    Hours to provision
+    Dev-ops collaboration
+  |
+}
+
+stage3: Stage 3\nPlatform {
+  shape: rectangle
+  style.fill: "#ecfeff"
+  style.stroke: "#0891b2"
+  style.stroke-width: 3
+  style.border-radius: 8
+
+  desc: |md
+    Golden paths available
+    Minutes to self-serve
+    Internal portal (Backstage)
+  |
+}
+
+stage4: Stage 4\nProduct {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 3
+  style.border-radius: 8
+
+  desc: |md
+    SLOs + cost attribution
+    Seconds via automation
+    Platform as a product
+  |
+}
+
+impact: Developer Productivity {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.border-radius: 8
+
+  label: |md
+    30-50% faster feature delivery
+    60% fewer infra tickets
+    90%+ developer satisfaction
+  |
+}
+
+stage1 -> stage2: Automate runbooks {
+  style.stroke: "#fbbf24"
+}
+stage2 -> stage3: Build golden paths {
+  style.stroke: "#0891b2"
+}
+stage3 -> stage4: Treat platform as product {
+  style.stroke: "#16a34a"
+}
+stage4 -> impact: Compound gains {
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+}

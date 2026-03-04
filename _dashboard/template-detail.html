@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} — {{company_name}} Dashboard</title>
+  <meta name="description" content="{{title}} — Browse chapters, download PDF, read blog posts, and preview social assets.">
+  <meta name="theme-color" content="#0891b2">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      {{#css_vars}}
+      {{name}}: {{value}};
+      {{/css_vars}}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Floating Pill Nav ═══ -->
+  <nav class="dash-nav">
+    <div class="dash-nav-pill">
+      <a href="{{{home_url}}}" class="dash-nav-logo">{{company_name}}</a>
+      <div class="dash-nav-center">
+        <a href="{{{home_url}}}" class="dash-nav-link">Home</a>
+        <a href="{{{dashboard_url}}}" class="dash-nav-link active">Ebooks</a>
+      </div>
+      <button class="dash-theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="theme-icon--light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-icon--dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ Header ═══ -->
+  <header class="detail-header">
+    <div class="dash-container">
+      <nav class="detail-nav">
+        <a href="{{{dashboard_url}}}" class="detail-back">&larr; Back to Dashboard</a>
+        <span class="dash-brand" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dash-accent);">{{company_name}}</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ Hero ═══ -->
+  <section class="detail-hero">
+    <div class="dash-container">
+      <h1 class="detail-title">{{title}}</h1>
+      {{#subtitle}}
+      <p class="detail-subtitle">{{subtitle}}</p>
+      {{/subtitle}}
+
+      <div class="detail-meta">
+        <div class="detail-meta-item">
+          &#128218; <span class="detail-meta-value">{{chapter_count}}</span> chapters
+        </div>
+        {{#total_reading_time}}
+        <div class="detail-meta-item">
+          &#9201; <span class="detail-meta-value">{{total_reading_time}}</span> min total
+        </div>
+        {{/total_reading_time}}
+        <div class="detail-meta-item">
+          &#127919; {{audience}}
+        </div>
+      </div>
+
+      <div class="detail-actions">
+        {{#has_html}}
+        <a href="{{{html_url}}}" class="detail-action detail-action--primary">&#128214; Read Ebook</a>
+        {{/has_html}}
+        {{#has_pdf}}
+        <a href="{{{pdf_url}}}" class="detail-action detail-action--download" target="_blank">&#128229; Download Ebook</a>
+        {{/has_pdf}}
+        {{^has_pdf}}
+        <span class="detail-action detail-action--disabled">&#128196; PDF Not Generated</span>
+        {{/has_pdf}}
+        <button class="detail-action detail-action--danger" onclick="deleteEbook('{{slug}}', '{{title}}')" title="Delete this ebook">&#128465; Delete</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Tabs ═══ -->
+  <div class="detail-tabs" role="tablist">
+    <button class="detail-tab active" data-tab="chapters" role="tab">
+      &#128218; Chapters <span class="detail-tab-count">{{chapter_count}}</span>
+    </button>
+    <button class="detail-tab" data-tab="blog" role="tab">
+      &#128221; Blog <span class="detail-tab-count">{{blog_posts.length}}</span>
+    </button>
+    <button class="detail-tab" data-tab="social" role="tab" id="social">
+      &#128247; Social Assets
+    </button>
+  </div>
+
+  <!-- ═══ Tab Panels ═══ -->
+  <main class="dash-container">
+
+    <!-- ─── Chapters Tab ─── -->
+    <div class="tab-panel active" data-panel="chapters">
+      {{#has_chapters}}
+      <div class="chapter-list">
+        {{#chapters}}
+        <div class="chapter-card">
+          <div class="chapter-number">{{number}}</div>
+          <div class="chapter-info">
+            <h3 class="chapter-title">{{title}}</h3>
+            {{#summary}}
+            <p class="chapter-summary">{{summary}}</p>
+            {{/summary}}
+            <div class="chapter-meta">
+              {{#is_beginner}}<span class="chapter-badge chapter-badge--beginner">Beginner</span>{{/is_beginner}}
+              {{#is_intermediate}}<span class="chapter-badge chapter-badge--intermediate">Intermediate</span>{{/is_intermediate}}
+              {{#is_advanced}}<span class="chapter-badge chapter-badge--advanced">Advanced</span>{{/is_advanced}}
+              <span class="chapter-time">&#9201; {{reading_time}} min</span>
+            </div>
+          </div>
+          <div class="chapter-links">
+            {{#has_reader}}
+            <a href="{{{reader_url}}}" class="chapter-link chapter-link--read">Read</a>
+            {{/has_reader}}
+            {{#has_blog}}
+            <a href="{{{blog_url}}}" class="chapter-link chapter-link--article">Blog</a>
+            {{/has_blog}}
+          </div>
+        </div>
+        {{/chapters}}
+      </div>
+      {{/has_chapters}}
+      {{^has_chapters}}
+      <div class="dash-empty">
+        <div class="dash-empty-icon">&#128218;</div>
+        <p>No chapters found. Run <code>ebook pipeline {{slug}}</code> to generate content.</p>
+      </div>
+      {{/has_chapters}}
+    </div>
+
+    <!-- ─── Blog Tab ─── -->
+    <div class="tab-panel" data-panel="blog">
+      {{#has_blog_posts}}
+      {{#blog_index_url}}
+      <p style="margin-bottom: 1rem;">
+        <a href="{{{blog_index_url}}}" class="detail-action detail-action--secondary" style="display: inline-flex;">&#128214; View Blog Index</a>
+      </p>
+      {{/blog_index_url}}
+      <div class="blog-list">
+        {{#blog_posts}}
+        <div class="blog-card-wrapper">
+          <a href="{{{url}}}" class="blog-card">
+            <h3 class="blog-card-title">{{title}}</h3>
+            <div class="blog-card-meta">Blog post &middot; Click to read</div>
+          </a>
+          <a href="{{{url}}}" download class="blog-card-download" title="Download blog post">&#8595; Download</a>
+        </div>
+        {{/blog_posts}}
+      </div>
+      {{/has_blog_posts}}
+      {{^has_blog_posts}}
+      <div class="dash-empty">
+        <div class="dash-empty-icon">&#128221;</div>
+        <p>No blog posts generated yet. Run <code>ebook blog {{slug}}</code> to generate.</p>
+      </div>
+      {{/has_blog_posts}}
+    </div>
+
+    <!-- ─── Social Tab ─── -->
+    <div class="tab-panel" data-panel="social">
+      {{#has_social}}
+
+      {{#has_linkedin}}
+      <div class="social-section">
+        <h3 class="social-section-title">
+          LinkedIn Carousel Slides
+          <span class="social-section-count">{{linkedin_slides.length}}</span>
+        </h3>
+        <div class="social-grid">
+          {{#linkedin_slides}}
+          <div class="social-card">
+            <img src="{{{url}}}" alt="{{label}}" loading="lazy">
+            <div class="social-card-footer">
+              <span class="social-card-label">{{label}}</span>
+              <div class="social-card-actions">
+                <a href="{{{url}}}" target="_blank" class="social-card-view">&#128065; View</a>
+                <a href="{{{url}}}" download class="social-card-download">&#8595; Save</a>
+              </div>
+            </div>
+          </div>
+          {{/linkedin_slides}}
+        </div>
+        {{#has_carousel_pdf}}
+        <a href="{{{carousel_pdf_url}}}" download class="social-download-all">&#128196; Download Carousel PDF</a>
+        {{/has_carousel_pdf}}
+      </div>
+      {{/has_linkedin}}
+
+      {{#has_instagram}}
+      <div class="social-section">
+        <h3 class="social-section-title">
+          Instagram Posts
+          <span class="social-section-count">{{instagram_posts.length}}</span>
+        </h3>
+        <div class="social-grid">
+          {{#instagram_posts}}
+          <div class="social-card">
+            <img src="{{{url}}}" alt="{{label}}" loading="lazy">
+            <div class="social-card-footer">
+              <span class="social-card-label">{{label}}</span>
+              <div class="social-card-actions">
+                <a href="{{{url}}}" target="_blank" class="social-card-view">&#128065; View</a>
+                <a href="{{{url}}}" download class="social-card-download">&#8595; Save</a>
+              </div>
+            </div>
+          </div>
+          {{/instagram_posts}}
+        </div>
+      </div>
+      {{/has_instagram}}
+
+      {{#has_og}}
+      <div class="social-section">
+        <h3 class="social-section-title">
+          Open Graph Images
+          <span class="social-section-count">{{og_images.length}}</span>
+        </h3>
+        <div class="social-grid">
+          {{#og_images}}
+          <div class="social-card">
+            <img src="{{{url}}}" alt="{{label}}" loading="lazy">
+            <div class="social-card-footer">
+              <span class="social-card-label">{{label}}</span>
+              <div class="social-card-actions">
+                <a href="{{{url}}}" target="_blank" class="social-card-view">&#128065; View</a>
+                <a href="{{{url}}}" download class="social-card-download">&#8595; Save</a>
+              </div>
+            </div>
+          </div>
+          {{/og_images}}
+        </div>
+      </div>
+      {{/has_og}}
+
+      {{/has_social}}
+      {{^has_social}}
+      <div class="dash-empty">
+        <div class="dash-empty-icon">&#128247;</div>
+        <p>No social assets generated yet. Run <code>ebook social {{slug}}</code> to generate.</p>
+      </div>
+      {{/has_social}}
+    </div>
+
+  </main>
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="dash-footer">
+    <div class="dash-container">
+      <p>&copy; {{year}} {{company_name}} &mdash; Built with the Zopdev Ebook Engine</p>
+    </div>
+  </footer>
+
+  <!-- ═══ Delete Confirmation Modal ═══ -->
+  <div class="delete-modal-overlay" id="delete-modal" style="display: none;">
+    <div class="delete-modal">
+      <div class="delete-modal-icon">&#128465;</div>
+      <h3 class="delete-modal-title">Delete Ebook</h3>
+      <p class="delete-modal-text">Are you sure you want to delete <strong id="delete-ebook-name"></strong>?</p>
+      <p class="delete-modal-hint">Run this command in Terminal to delete:</p>
+      <code class="delete-modal-command" id="delete-command"></code>
+      <div class="delete-modal-actions">
+        <button class="delete-modal-btn delete-modal-btn--cancel" onclick="closeDeleteModal()">Cancel</button>
+        <button class="delete-modal-btn delete-modal-btn--copy" onclick="copyDeleteCommand()">&#128203; Copy Command</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script>
+    /* ── Theme Toggle ── */
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+
+    const savedTheme = localStorage.getItem('zopdev-dash-theme');
+    if (savedTheme) {
+      htmlEl.dataset.theme = savedTheme;
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      htmlEl.dataset.theme = 'light';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const next = htmlEl.dataset.theme === 'dark' ? 'light' : 'dark';
+      htmlEl.dataset.theme = next;
+      localStorage.setItem('zopdev-dash-theme', next);
+    });
+
+    /* ── Tab Switching ── */
+    const tabs = document.querySelectorAll('.detail-tab');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        panels.forEach(p => {
+          p.classList.toggle('active', p.dataset.panel === target);
+        });
+      });
+    });
+
+    // Handle #social hash to auto-open social tab
+    if (window.location.hash === '#social') {
+      const socialTab = document.querySelector('[data-tab="social"]');
+      if (socialTab) socialTab.click();
+    }
+
+    // ── Delete Ebook Functions ──
+    function deleteEbook(slug, title) {
+      document.getElementById('delete-ebook-name').textContent = title;
+      document.getElementById('delete-command').textContent = 'ebook delete ' + slug + ' && ebook dashboard';
+      document.getElementById('delete-modal').style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('delete-modal').style.display = 'none';
+    }
+
+    function copyDeleteCommand() {
+      const cmd = document.getElementById('delete-command').textContent;
+      navigator.clipboard.writeText(cmd).then(() => {
+        const btn = document.querySelector('.delete-modal-btn--copy');
+        btn.textContent = '\u2705 Copied!';
+        setTimeout(() => { btn.innerHTML = '&#128203; Copy Command'; }, 2000);
+      });
+    }
+
+    document.getElementById('delete-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeDeleteModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDeleteModal();
+    });
+
+    // PDF link opens in new tab for preview — no forced download
+  </script>
+
+</body>
+</html>

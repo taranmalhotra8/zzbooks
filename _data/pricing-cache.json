@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-02-01T00:00:00Z",
+  "ttl_hours": 168,
+  "prices": {
+    "aws": {
+      "ec2-m5.large-ondemand": { "service": "EC2", "instance": "m5.large", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.096, "price_monthly": 69.12, "unit": "per hour" },
+      "ec2-m5.xlarge-ondemand": { "service": "EC2", "instance": "m5.xlarge", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.192, "price_monthly": 138.24, "unit": "per hour" },
+      "ec2-m5.2xlarge-ondemand": { "service": "EC2", "instance": "m5.2xlarge", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.384, "price_monthly": 276.48, "unit": "per hour" },
+      "ec2-c5.large-ondemand": { "service": "EC2", "instance": "c5.large", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.085, "price_monthly": 61.2, "unit": "per hour" },
+      "ec2-r5.large-ondemand": { "service": "EC2", "instance": "r5.large", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.126, "price_monthly": 90.72, "unit": "per hour" },
+      "ec2-t3.medium-ondemand": { "service": "EC2", "instance": "t3.medium", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.0416, "price_monthly": 29.95, "unit": "per hour" },
+      "ec2-m6g.large-ondemand": { "service": "EC2", "instance": "m6g.large (Graviton)", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.077, "price_monthly": 55.44, "unit": "per hour" },
+      "eks-cluster": { "service": "EKS", "instance": "cluster", "type": "management-fee", "region": "us-east-1", "price_hourly": 0.10, "price_monthly": 73.00, "unit": "per hour" },
+      "s3-standard": { "service": "S3", "instance": "Standard", "type": "storage", "region": "us-east-1", "price_hourly": null, "price_monthly": 0.023, "unit": "per GB/month" },
+      "rds-db.m5.large": { "service": "RDS", "instance": "db.m5.large", "type": "on-demand", "region": "us-east-1", "price_hourly": 0.171, "price_monthly": 123.12, "unit": "per hour" },
+      "lambda-requests": { "service": "Lambda", "instance": "requests", "type": "invocations", "region": "us-east-1", "price_hourly": null, "price_monthly": 0.20, "unit": "per 1M requests" }
+    },
+    "gcp": {
+      "gke-e2-standard-4": { "service": "GKE", "instance": "e2-standard-4", "type": "on-demand", "region": "us-central1", "price_hourly": 0.134, "price_monthly": 96.48, "unit": "per hour" },
+      "gke-n2-standard-4": { "service": "GKE", "instance": "n2-standard-4", "type": "on-demand", "region": "us-central1", "price_hourly": 0.194, "price_monthly": 139.68, "unit": "per hour" },
+      "gke-autopilot": { "service": "GKE Autopilot", "instance": "vCPU", "type": "autopilot", "region": "us-central1", "price_hourly": 0.0445, "price_monthly": 32.04, "unit": "per vCPU/hour" },
+      "gke-cluster": { "service": "GKE", "instance": "cluster", "type": "management-fee", "region": "us-central1", "price_hourly": 0.10, "price_monthly": 73.00, "unit": "per hour" },
+      "gcs-standard": { "service": "Cloud Storage", "instance": "Standard", "type": "storage", "region": "us-central1", "price_hourly": null, "price_monthly": 0.020, "unit": "per GB/month" }
+    },
+    "azure": {
+      "aks-d4s-v3": { "service": "AKS", "instance": "D4s_v3", "type": "on-demand", "region": "eastus", "price_hourly": 0.192, "price_monthly": 138.24, "unit": "per hour" },
+      "aks-b4ms": { "service": "AKS", "instance": "B4ms", "type": "on-demand", "region": "eastus", "price_hourly": 0.166, "price_monthly": 119.52, "unit": "per hour" },
+      "aks-cluster": { "service": "AKS", "instance": "cluster", "type": "management-fee", "region": "eastus", "price_hourly": 0.00, "price_monthly": 0.00, "unit": "free tier" },
+      "blob-hot": { "service": "Blob Storage", "instance": "Hot", "type": "storage", "region": "eastus", "price_hourly": null, "price_monthly": 0.018, "unit": "per GB/month" }
+    }
+  }
+}

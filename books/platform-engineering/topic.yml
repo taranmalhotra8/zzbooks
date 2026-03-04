@@ -1,0 +1,12 @@
+# Topic configuration for the LLM content pipeline.
+# Run: make pipeline ebook=platform-engineering
+
+topic: "Platform Engineering and Internal Developer Platforms"
+audience: "Platform engineers, DevOps leads, and engineering managers building IDPs for 50-2000 engineer organizations"
+chapter_count: "5"
+depth: "production-ready"
+angle: "incident-driven"
+
+pipeline:
+  density: standard
+  code_policy: full

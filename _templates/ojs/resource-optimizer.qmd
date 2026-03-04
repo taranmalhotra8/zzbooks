@@ -1,0 +1,237 @@
+---
+title: "Resource Optimizer"
+format:
+  html:
+    code-fold: true
+  pdf:
+    keep-tex: false
+  epub: default
+---
+
+<!-- Resource Optimizer Template
+     Find the optimal resource size/tier based on usage patterns.
+
+     Usage: Copy this template into your chapter .qmd file, then customize
+     the tier definitions, scoring weights, and usage inputs.
+
+     HTML: Interactive inputs with reactive recommendation engine.
+     PDF/EPUB: Static fallback table showing tier recommendations.
+-->
+
+::: {.callout-note}
+## Resource Optimizer
+Find the best resource tier for your workload. Adjust the sliders to match
+your usage pattern and see which option provides the best fit.
+:::
+
+```{ojs}
+//| echo: false
+
+// --- Workload Inputs ---
+
+viewof peakCPU = Inputs.range([10, 100], {
+  value: 65,
+  step: 5,
+  label: "Peak CPU utilization (%)"
+})
+
+viewof avgMemoryGB = Inputs.range([1, 128], {
+  value: 16,
+  step: 1,
+  label: "Average memory usage (GB)"
+})
+
+viewof dailyRequests = Inputs.range([1000, 10000000], {
+  value: 500000,
+  step: 10000,
+  label: "Daily requests"
+})
+
+viewof storageNeedGB = Inputs.range([10, 2000], {
+  value: 200,
+  step: 10,
+  label: "Storage needed (GB)"
+})
+
+viewof priority = Inputs.select(
+  ["cost", "performance", "balanced"],
+  { value: "balanced", label: "Optimization priority" }
+)
+```
+
+```{ojs}
+//| echo: false
+
+// --- Tier Definitions ---
+// Customize these for your infrastructure scenario.
+
+tiers = [
+  {
+    name: "Small",
+    cpu: 2, memory: 4, maxRequests: 100000, storage: 50,
+    monthlyPrice: 75,
+    description: "Dev/test workloads"
+  },
+  {
+    name: "Medium",
+    cpu: 4, memory: 16, maxRequests: 1000000, storage: 200,
+    monthlyPrice: 250,
+    description: "Standard production"
+  },
+  {
+    name: "Large",
+    cpu: 8, memory: 32, maxRequests: 5000000, storage: 500,
+    monthlyPrice: 600,
+    description: "High-traffic production"
+  },
+  {
+    name: "X-Large",
+    cpu: 16, memory: 64, maxRequests: 10000000, storage: 1000,
+    monthlyPrice: 1100,
+    description: "Enterprise / heavy compute"
+  },
+  {
+    name: "2X-Large",
+    cpu: 32, memory: 128, maxRequests: 25000000, storage: 2000,
+    monthlyPrice: 2000,
+    description: "Maximum throughput"
+  }
+]
+```
+
+```{ojs}
+//| echo: false
+
+// --- Scoring Engine ---
+
+weights = ({
+  cost: { fit: 0.2, headroom: 0.1, cost: 0.7 },
+  performance: { fit: 0.5, headroom: 0.4, cost: 0.1 },
+  balanced: { fit: 0.4, headroom: 0.3, cost: 0.3 }
+})[priority]
+
+scoredTiers = {
+  const requiredCPU = peakCPU / 100 * 4;  // normalize to vCPUs needed
+  const maxPrice = Math.max(...tiers.map(t => t.monthlyPrice));
+
+  return tiers.map(tier => {
+    // Fit score: how well does the tier match requirements (1 = perfect)
+    const cpuFit = Math.min(1, tier.cpu / Math.max(requiredCPU, 1));
+    const memFit = Math.min(1, tier.memory / Math.max(avgMemoryGB, 1));
+    const reqFit = Math.min(1, tier.maxRequests / Math.max(dailyRequests, 1));
+    const stoFit = Math.min(1, tier.storage / Math.max(storageNeedGB, 1));
+    const fitScore = (cpuFit + memFit + reqFit + stoFit) / 4;
+
+    // Headroom: penalize under-provisioned, prefer moderate headroom
+    const cpuHeadroom = tier.cpu / Math.max(requiredCPU, 1);
+    const memHeadroom = tier.memory / Math.max(avgMemoryGB, 1);
+    const headroomScore = Math.min(1, (cpuHeadroom + memHeadroom) / 4);
+
+    // Cost efficiency: lower is better
+    const costScore = 1 - (tier.monthlyPrice / maxPrice);
+
+    // Check if tier meets minimum requirements
+    const meetsMinimum = tier.memory >= avgMemoryGB && tier.maxRequests >= dailyRequests && tier.storage >= storageNeedGB;
+
+    const weighted = fitScore * weights.fit + headroomScore * weights.headroom + costScore * weights.cost;
+    const finalScore = meetsMinimum ? weighted : weighted * 0.3;
+
+    return {
+      ...tier,
+      fitScore: Math.round(fitScore * 100),
+      headroomScore: Math.round(headroomScore * 100),
+      costScore: Math.round(costScore * 100),
+      totalScore: Math.round(finalScore * 100),
+      meetsMinimum,
+      recommended: false
+    };
+  }).sort((a, b) => b.totalScore - a.totalScore).map((t, i) => ({
+    ...t,
+    recommended: i === 0
+  }));
+}
+
+recommended = scoredTiers[0]
+```
+
+```{ojs}
+//| echo: false
+
+// --- Recommendation Output ---
+
+fmt = d3.format("$,.0f")
+
+html`<div class="ojs-calculator">
+  <div class="ojs-recommendation">
+    <div class="ojs-recommendation-badge">Recommended</div>
+    <h4>${recommended.name}</h4>
+    <p>${recommended.description}</p>
+    <p class="ojs-recommendation-price">${fmt(recommended.monthlyPrice)}/month</p>
+    <p class="ojs-recommendation-detail">
+      ${recommended.cpu} vCPU | ${recommended.memory} GB RAM |
+      ${d3.format(",")(recommended.maxRequests)} req/day | ${recommended.storage} GB storage
+    </p>
+  </div>
+
+  <table class="ojs-results-table">
+    <thead>
+      <tr>
+        <th>Tier</th>
+        <th>Specs</th>
+        <th>Price</th>
+        <th>Fit</th>
+        <th>Headroom</th>
+        <th>Cost Eff.</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${scoredTiers.map(t => html`<tr class="${t.recommended ? 'ojs-highlight-row' : ''} ${!t.meetsMinimum ? 'ojs-insufficient-row' : ''}">
+        <td><strong>${t.name}</strong>${t.recommended ? html` <span class="ojs-badge">Best</span>` : ''}</td>
+        <td>${t.cpu} vCPU / ${t.memory} GB</td>
+        <td>${fmt(t.monthlyPrice)}</td>
+        <td>${t.fitScore}%</td>
+        <td>${t.headroomScore}%</td>
+        <td>${t.costScore}%</td>
+        <td><strong>${t.totalScore}%</strong></td>
+      </tr>`)}
+    </tbody>
+  </table>
+  <p class="ojs-note">${scoredTiers.filter(t => !t.meetsMinimum).length > 0 ?
+    "Grayed-out tiers do not meet minimum resource requirements." : ""}</p>
+</div>`
+```
+
+::: {.content-visible when-format="pdf"}
+**Resource Recommendation (Default: Balanced Priority)**
+
+Workload: 65% peak CPU, 16 GB memory, 500K daily requests, 200 GB storage.
+
+| Tier | vCPU | Memory | Requests/day | Storage | Price | Score |
+|------|------|--------|-------------|---------|-------|-------|
+| **Medium** | 4 | 16 GB | 1M | 200 GB | $250/mo | **Best** |
+| Large | 8 | 32 GB | 5M | 500 GB | $600/mo | Good |
+| X-Large | 16 | 64 GB | 10M | 1 TB | $1,100/mo | Over-provisioned |
+| Small | 2 | 4 GB | 100K | 50 GB | $75/mo | Under-provisioned |
+
+**Recommendation: Medium tier** at $250/month provides the best balance of
+fit, headroom, and cost for this workload. Adjust values in the interactive
+HTML version.
+:::
+
+::: {.content-visible when-format="epub"}
+**Resource Recommendation (Default: Balanced Priority)**
+
+Workload: 65% peak CPU, 16 GB memory, 500K daily requests, 200 GB storage.
+
+| Tier | vCPU | Memory | Requests/day | Storage | Price | Score |
+|------|------|--------|-------------|---------|-------|-------|
+| **Medium** | 4 | 16 GB | 1M | 200 GB | $250/mo | **Best** |
+| Large | 8 | 32 GB | 5M | 500 GB | $600/mo | Good |
+| X-Large | 16 | 64 GB | 10M | 1 TB | $1,100/mo | Over-provisioned |
+| Small | 2 | 4 GB | 100K | 50 GB | $75/mo | Under-provisioned |
+
+**Recommendation: Medium tier** at $250/month provides the best balance of
+fit, headroom, and cost for this workload. Adjust values in the interactive
+HTML version.
+:::

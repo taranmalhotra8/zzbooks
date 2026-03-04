@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <rect width="200" height="50" rx="8" fill="#FFFFFF"/>
+  <text x="100" y="32" text-anchor="middle" fill="#0052FF" font-family="Inter, sans-serif" font-size="24" font-weight="700">zopdev</text>
+</svg>

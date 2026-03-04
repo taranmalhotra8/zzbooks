@@ -1,0 +1,91 @@
+# Per-ebook metadata for Cloud Migration Cost Planning
+# Supplements calendar.yml with ebook-specific detail.
+
+meta:
+  slug: "cloud-migration-costs"
+  title: "Cloud Migration Cost Catastrophe"
+  subtitle: "How to Plan, Budget, and Control Cloud Migration Costs Before Your CFO Fires You"
+  version: "0.1.0"
+  authors: ["zopdev-team"]
+
+chapters:
+  - id: "01-why-cloud-migrations-break-budgets"
+    title: "Why Your Cloud Migration Budget Is Already Doomed"
+    summary: "Expose the brutal reality of cloud migration cost overruns using industry data and introduce the incident-driven framework for cost control."
+    difficulty: beginner
+    reading_time_minutes: 5
+    learning_objectives:
+      - "Understand why 75% of cloud migrations exceed budget"
+      - "Identify the hidden costs that break migration plans"
+      - "Learn the FinOps maturity model for migrations"
+    key_takeaways:
+      - "Cloud migration budgets fail because TCO is misunderstood"
+      - "Environment waste and over-provisioning are the top cost drivers"
+    tags: [cost-overrun, finops, migration-strategy, budget-planning]
+    prerequisites: []
+
+  - id: "02-stop-weekend-waste"
+    title: "Stop the Weekend Bleeding: Environment Scheduling That Pays for Itself in 30 Days"
+    summary: "Automate non-production environment shutdown to capture the fastest cost win in any migration."
+    difficulty: intermediate
+    reading_time_minutes: 8
+    learning_objectives:
+      - "Quantify waste from idle dev/staging/test environments"
+      - "Implement environment scheduling across AWS, GCP, and Azure"
+      - "Model Reserved Instance and Savings Plan optimization"
+    key_takeaways:
+      - "Non-production environments running 24/7 waste 60+ hours of compute weekly"
+      - "Environment scheduling delivers ROI within 30 days"
+    tags: [environment-scheduling, savings-plans, devops-automation, compute-optimization]
+    prerequisites: ["01-why-cloud-migrations-break-budgets"]
+
+  - id: "03-graviton-kubernetes-savings"
+    title: "Graviton and Kubernetes Right-Sizing: The 40% Infrastructure Margin"
+    summary: "Migrate x86 workloads to ARM-based instances and eliminate Kubernetes over-provisioning for massive compute efficiency gains."
+    difficulty: advanced
+    reading_time_minutes: 12
+    learning_objectives:
+      - "Assess workload compatibility for ARM migration"
+      - "Analyze Kubernetes resource requests vs actual utilization"
+      - "Implement container right-sizing methodologies"
+    key_takeaways:
+      - "ARM-based instances deliver 20-40% cost savings with comparable performance"
+      - "Most Kubernetes clusters are over-provisioned by 50-70%"
+    tags: [graviton, kubernetes, container-optimization, arm-migration]
+    prerequisites: ["01-why-cloud-migrations-break-budgets", "02-stop-weekend-waste"]
+
+  - id: "04-architectural-cost-control"
+    title: "Build to Scale: Data Tiering and Cloud-Native Patterns That Lock In Savings"
+    summary: "Automate data lifecycle policies and refactor beyond lift-and-shift to leverage managed services for long-term cost governance."
+    difficulty: advanced
+    reading_time_minutes: 8
+    learning_objectives:
+      - "Implement automated data tiering and lifecycle policies"
+      - "Evaluate managed services for cost-benefit tradeoffs"
+      - "Build a long-term architectural cost governance framework"
+    key_takeaways:
+      - "Data tiering can reduce storage costs by 60-80%"
+      - "Cloud-native refactoring unlocks savings lift-and-shift cannot"
+    tags: [data-tiering, cloud-native, managed-services, architecture]
+    prerequisites: ["01-why-cloud-migrations-break-budgets", "02-stop-weekend-waste", "03-graviton-kubernetes-savings"]
+
+social:
+  linkedin_carousel:
+    slides:
+      - heading: "Cloud Migration Cost Catastrophe"
+        body: "75% of cloud migrations exceed budget. Here's how to be in the 25%."
+      - heading: "Stop the Weekend Bleeding"
+        body: "Non-production environments running 24/7 waste 60+ hours of compute weekly. Scheduling pays for itself in 30 days."
+      - heading: "The 40% Infrastructure Margin"
+        body: "ARM-based instances + Kubernetes right-sizing can cut infrastructure costs by 40%."
+      - heading: "Get the Full Guide"
+        body: "Download the free ebook at zopdev.com"
+
+  instagram_posts:
+    quotes:
+      - text: "75% of cloud migrations exceed their original budget by 14-25%. The problem isn't the cloud — it's the plan."
+        attribution: "Zopdev Team"
+
+  og_image:
+    title: "Cloud Migration Cost Catastrophe"
+    subtitle: "How to Plan, Budget, and Control Cloud Migration Costs Before Your CFO Fires You"

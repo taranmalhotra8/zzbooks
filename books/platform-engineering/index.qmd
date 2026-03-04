@@ -1,0 +1,21 @@
+---
+subtitle: "Building Internal Developer Platforms That Actually Ship"
+---
+
+# The Platform Engineering Playbook {.unnumbered}
+
+## Preface {.unnumbered}
+
+In 2023, a Gartner survey found that 80% of software engineering organizations will establish platform engineering teams by 2026 — yet fewer than 20% of those platforms achieve widespread voluntary adoption. The gap between building a platform and building a platform engineers actually use is where most investments stall.
+
+This playbook is for the teams navigating that gap.
+
+We wrote it for platform engineers who are tired of hearing "just use Backstage" without a roadmap for what comes before and after. For engineering managers who need to justify platform headcount to a CFO who wants to know the ROI. For DevOps practitioners transitioning into platform roles who understand pipelines but haven't yet built a product with internal customers, SLOs, and a genuine adoption strategy.
+
+The five chapters cover the complete arc of platform engineering: why it emerged from the wreckage of DevOps-at-scale (Chapter 1), how to design golden paths developers choose voluntarily (Chapter 2), how to build the self-service infrastructure layer that makes those paths real (Chapter 3), how to make security and compliance invisible to developers by default (Chapter 4), and how to measure whether any of it is working in terms a CFO will respect (Chapter 5).
+
+Throughout, we use Zopnight — Zopdev's cost visibility and observability platform — to illustrate how platform teams gain the feedback loops they need to continuously improve. Not as marketing, but as a worked example of what platform telemetry looks like in production.
+
+The goal is a playbook you can execute, not a vision you can only admire.
+
+— *The Zopdev Team*

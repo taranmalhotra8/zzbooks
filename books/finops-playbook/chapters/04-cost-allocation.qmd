@@ -1,0 +1,101 @@
+---
+title: "Cost Allocation & Tagging"
+---
+
+Cost allocation is the backbone of FinOps. Without the ability to attribute cloud spending to specific teams, products, and business units, optimization efforts lack direction and accountability has no foundation. This chapter covers why allocation matters, how to design and implement a tagging strategy, and the practical differences between showback and chargeback models.
+
+## Why Allocation Matters
+
+Imagine receiving your household electricity bill with no breakdown — just a single total. You would have no way to know whether the spike came from air conditioning, the washing machine, or a space heater left running in the garage. Cloud spending without allocation is the same problem at a much larger scale.
+
+Allocation enables accountability. When teams can see exactly how much they are spending, they are motivated to optimize. It enables forecasting — historical allocation data makes it possible to project future costs by team and product. And it enables business decisions — leadership can evaluate the unit economics of different products and make informed investment choices.
+
+Organizations without cost allocation typically operate in a mode where cloud costs are treated as a general IT overhead. This creates a tragedy-of-the-commons dynamic: individual teams have no incentive to optimize because the costs are borne collectively. Allocation breaks this dynamic by making costs visible and attributable.
+
+## Designing a Tagging Strategy
+
+A tagging strategy defines the metadata labels that will be applied to every cloud resource. Tags are key-value pairs (e.g., `team:payments`, `environment:production`, `product:checkout`) that enable cost attribution, filtering, and reporting.
+
+### Core Tags
+
+Most organizations need a minimum set of core tags to support cost allocation:
+
+- **team** or **owner**: The team responsible for the resource
+- **environment**: Production, staging, development, or test
+- **product** or **service**: The product or service the resource supports
+- **cost-center**: The financial cost center for chargeback purposes
+- **project**: The project or initiative that created the resource
+
+These core tags should be mandatory for all resources. Optional tags for additional context — such as `managed-by`, `created-by`, or `expiry-date` — add value but should not block resource creation if missing.
+
+### Naming Conventions
+
+Consistency is critical. Tags must follow strict naming conventions to be useful for reporting. Define and document conventions for case (lowercase with hyphens is common), allowed characters, and controlled vocabularies for tag values. A tag value of "Payments" in one account and "payments-team" in another creates reporting gaps that are surprisingly difficult to resolve retroactively.
+
+::: {.callout-tip}
+Publish your tagging conventions in an internal wiki or developer portal and include them in your infrastructure-as-code templates. Make it easier to tag correctly than to tag incorrectly.
+:::
+
+### Tag Governance
+
+A tagging strategy is only as good as its enforcement. Without governance, tag compliance will degrade over time as new teams onboard, new services are adopted, and engineers under deadline pressure skip tagging steps.
+
+Governance mechanisms include automated policy enforcement (e.g., AWS Service Control Policies, Azure Policy, or GCP Organization Policies that block untagged resource creation), regular compliance reports that highlight untagged resources, and integration of tagging into infrastructure-as-code templates and CI/CD pipelines.
+
+## Implementing Tags at Scale
+
+Implementing a tagging strategy across a large cloud estate is a significant undertaking. Legacy resources may have no tags at all, and retroactively tagging thousands of resources requires both tooling and organizational effort.
+
+### Infrastructure as Code
+
+The most effective approach is to embed tagging into infrastructure-as-code (IaC) templates. When resources are defined in Terraform, CloudFormation, or Pulumi, required tags can be included in the templates and validated in CI/CD pipelines before deployment. This shifts tagging left in the development process, preventing untagged resources from being created in the first place.
+
+For existing resources, bulk tagging tools can apply tags to resources based on account, region, or naming patterns. AWS Tag Editor, for example, allows you to search for and tag resources across multiple accounts and regions. Similar capabilities exist in Azure and GCP.
+
+### Automation and Enforcement
+
+Automated enforcement is essential for maintaining tag compliance at scale. Policy-as-code tools like Open Policy Agent (OPA), HashiCorp Sentinel, or cloud-native policy services can validate that all resources include required tags before they are provisioned. Resources that fail validation are blocked, and the deploying team receives a clear error message explaining the missing tags.
+
+Complementing preventive controls with detective controls — automated scans that identify and report untagged resources — provides a safety net for resources created through the console or other channels that bypass IaC pipelines.
+
+## Showback vs Chargeback
+
+Allocation data can be used in two models: showback and chargeback. Both have their place, and the right choice depends on organizational culture and maturity.
+
+### Showback
+
+Showback means making cost data visible to teams without financially charging them. Teams see dashboards and reports showing their cloud spending, trends, and comparisons to budgets, but the costs remain on a centralized budget. Showback is lower friction to implement and is a good starting point for organizations building FinOps culture. It raises awareness and drives behavioral change through transparency rather than financial penalties.
+
+### Chargeback
+
+Chargeback goes a step further by actually billing teams or business units for their cloud consumption. Costs are transferred from a central IT budget to individual team or product budgets. This creates stronger financial accountability but requires higher confidence in allocation accuracy — teams will dispute charges if they believe the attribution is wrong.
+
+Most organizations start with showback and evolve to chargeback as their allocation accuracy improves and their FinOps culture matures. Some organizations adopt a hybrid model, using chargeback for direct costs (resources clearly owned by a team) and showback for shared costs.
+
+::: {.callout-note}
+Chargeback requires accurate allocation. If your tagging coverage is below 80%, focus on improving coverage before implementing chargeback. Inaccurate chargebacks erode trust and undermine the FinOps program.
+:::
+
+## Handling Shared Costs
+
+Not all cloud costs can be cleanly attributed to a single team or product. Shared services — such as networking infrastructure, security tools, monitoring platforms, and shared databases — benefit multiple consumers and must be allocated fairly.
+
+### Allocation Methods
+
+Several methods exist for distributing shared costs:
+
+- **Proportional allocation**: Distribute shared costs in proportion to each team's direct spend. If Team A accounts for 30% of direct costs, they receive 30% of shared costs. This is simple but may not reflect actual usage of shared services.
+- **Usage-based allocation**: Distribute shared costs based on actual consumption metrics — API calls, data transferred, queries executed. This is more accurate but requires instrumentation to capture usage data.
+- **Fixed allocation**: Distribute shared costs evenly across all teams or based on headcount. This is the simplest approach but the least accurate.
+
+The best approach depends on the nature of the shared service and the data available. Many organizations use a blend of methods, applying usage-based allocation where instrumentation exists and proportional allocation as a default.
+
+### Platform and Support Costs
+
+Platform teams that provide shared infrastructure (Kubernetes clusters, CI/CD pipelines, observability stacks) present a particular allocation challenge. These teams generate significant cloud costs that benefit the entire engineering organization. Allocating platform costs requires either instrumenting the platform to track per-team consumption or using a proportional model based on team size or workload count.
+
+Regardless of the method chosen, transparency is key. Teams should understand how shared costs are allocated, have the opportunity to provide feedback, and see the methodology documented clearly.
+
+## Summary
+
+Cost allocation and tagging form the foundation of FinOps practice. A well-designed tagging strategy with consistent naming conventions, automated enforcement, and broad coverage enables accurate cost attribution. Showback and chargeback models translate allocation data into accountability, with most organizations starting with showback and evolving toward chargeback. Shared costs require thoughtful allocation methods that balance accuracy with practicality. With a strong allocation foundation, organizations are ready to tackle the optimization strategies covered in the next chapter.

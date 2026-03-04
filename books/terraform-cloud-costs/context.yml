@@ -1,0 +1,41 @@
+# Author-provided context for Terraform Cloud Cost Control
+# Product-specific information and editorial direction
+
+product_relevance:
+  product: zopnight
+  how_it_helps: "Provides Terraform state-aware cost analysis, drift detection on resource sizing, and automated tagging enforcement across multi-cloud deployments"
+  key_features:
+    - "Terraform plan cost estimation before apply"
+    - "State-based resource inventory with cost attribution"
+    - "Drift detection between declared and actual resource sizes"
+    - "Tag policy enforcement across AWS, GCP, and Azure modules"
+  differentiators:
+    - "Reads Terraform state directly — no agent installation needed"
+    - "Pre-apply cost diff shows exact dollar impact of every plan"
+    - "Cross-provider normalization for apples-to-apples comparison"
+
+customer_stories:
+  - industry: "media-streaming"
+    cluster_size: "1,200 resources across AWS and GCP"
+    before: "$142,000/month"
+    after: "$89,000/month"
+    timeline: "8 weeks"
+  - industry: "healthcare-saas"
+    cluster_size: "380 resources, single AWS account"
+    before: "$67,000/month"
+    after: "$41,000/month"
+    timeline: "5 weeks"
+
+editorial_direction:
+  tone: "authoritative guide, not tutorial"
+  avoid:
+    - "Fictional stories with made-up characters"
+    - "Long code scripts (100+ lines)"
+    - "Generic advice without specific numbers"
+    - "Marketing language or product pitches"
+  emphasize:
+    - "Industry benchmarks with citations"
+    - "Decision frameworks (when to use what)"
+    - "Short HCL/YAML config examples readers can copy"
+    - "Tables for comparison and data presentation"
+  code_policy: "config-only"

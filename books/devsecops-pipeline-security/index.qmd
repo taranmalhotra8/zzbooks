@@ -1,0 +1,56 @@
+---
+subtitle: "Step-by-step strategies to embed security into CI/CD workflows, prevent supply chain attacks, and shift vulnerabilities left"
+---
+
+# Pipeline Zero: A Practitioner's Guide to DevSecOps Implementation {.unnumbered}
+
+## Preface {.unnumbered}
+
+From understanding the urgent security crisis in modern software delivery to implementing automated, policy-driven pipeline defenses that catch vulnerabilities before production.
+
+The landscape is evolving rapidly. DevSecOps market was valued at $5.9 billion in 2024 and is projected to reach $24.2 billion by 2032 at 19.4% CAGR. Meanwhile, 97% of commercial codebases contain open-source components, and 81% of those have at least one high- or critical-risk vulnerability. These numbers underscore a clear mandate: organizations that master these practices gain a measurable competitive edge.
+
+This book takes you from the $24 billion wake-up call: why your pipeline is the new attack surface through to supply chain defense: sbom drift detection and ephemeral build environments. Every chapter delivers actionable strategies, production-ready code, and real-world patterns you can apply immediately — no theory without practice, no recommendations without evidence.
+
+Whether you are building your first production workload or optimizing systems that serve millions of requests, this book provides a structured path from foundational concepts to advanced implementation patterns.
+
+## Who This Book Is For {.unnumbered}
+
+- **Engineering leaders** who need to make informed technical decisions and drive organizational outcomes
+- **Security engineers and architects** responsible for protecting infrastructure and ensuring compliance
+- **Practitioners** looking for hands-on strategies, production-ready code, and actionable frameworks
+- **Technical decision-makers** evaluating approaches, tools, and architectural trade-offs
+
+## How to Read This Book {.unnumbered}
+
+Each chapter is designed to be self-contained. You can read cover-to-cover or jump to the topics most relevant to your role:
+
+| Chapters | Best For |
+|----------|----------|
+| 1 | Everyone — foundational concepts |
+| 2–4 | Practitioners and technical teams |
+| 5 | Advanced users and decision-makers |
+
+## What You Will Learn {.unnumbered}
+
+1. **The $24 Billion Wake-Up Call: Why Your Pipeline Is the New Attack Surface** — This chapter establishes the urgent business and security case for DevSecOps. Readers learn why traditional security approaches fail in rapid release cycles, the real cost of unpatched vulnerabilities (87% of organizations have exploitable flaws in production), and how shifting to DevSecOps reduces remediation costs by up to 90%.
+2. **Catching Vulnerabilities Before They Hatch: A Shift-Left Security Playbook** — This chapter provides the foundational shift-left framework. Readers learn how to integrate security activities into the planning and coding phases—threat modeling during design, IDE-based security plugins, and pre-commit hooks—before code ever reaches the CI pipeline.
+3. **Automated Security at Speed: Embedding SAST, DAST, SCA, and IaC Scanning in Your Pipeline** — This hands-on chapter walks through implementing automated security testing at each pipeline stage. Readers learn to integrate SAST for static analysis, DAST for dynamic testing, SCA for dependency vulnerability scanning, and IaC scanning for misconfigured infrastructure—ensuring every commit gets screened.
+4. **Policy-as-Code with OPA and Secrets Management: Codifying Security at Scale** — This chapter covers two critical defensive layers: codifying security policies with Open Policy Agent and securing credentials with HashiCorp Vault. Readers learn to write OPA rego policies that enforce organizational standards before code merges, and implement runtime secrets injection that eliminates hardcoded credentials entirely.
+5. **Supply Chain Defense: SBOM Drift Detection and Ephemeral Build Environments** — This advanced chapter addresses modern software supply chain attacks. Readers learn to implement continuous SBOM monitoring to detect component drift between environments, and design ephemeral build environments that eliminate persistent threats by ensuring each build runs in an immutable, isolated container.
+
+## Conventions Used {.unnumbered}
+
+Throughout this book, you will find:
+
+::: {.callout-tip}
+**Tips** highlight best practices and quick wins you can implement today.
+:::
+
+::: {.callout-note}
+**Notes** provide additional context, caveats, or links to further reading.
+:::
+
+::: {.callout-warning}
+**Warnings** flag common mistakes and anti-patterns to avoid in production.
+:::

@@ -1,0 +1,171 @@
+# Data Pipeline / ETL Workflow
+# Purpose: Show ETL/analytics data flows with cost awareness
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #fbbf24 warning)
+
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+# Data Sources
+sources: Data Sources {
+  style.fill: "#ecfeff"
+  style.stroke: "#0891b2"
+  style.stroke-width: 2
+
+  cloud_billing: Cloud Billing APIs {
+    style.fill: "#ffffff"
+    style.stroke: "#0891b2"
+
+    details: |md
+      - AWS Cost Explorer
+      - GCP Billing Export
+      - Azure Cost Management
+    |
+  }
+
+  metrics: Infrastructure Metrics {
+    style.fill: "#ffffff"
+    style.stroke: "#0891b2"
+
+    details: |md
+      - CloudWatch / Stackdriver
+      - Prometheus
+      - Custom collectors
+    |
+  }
+
+  tags: Resource Tags & Metadata {
+    style.fill: "#ffffff"
+    style.stroke: "#0891b2"
+
+    details: |md
+      - Tag compliance data
+      - Org hierarchy
+      - Project mappings
+    |
+  }
+}
+
+# Ingestion Layer
+ingestion: Ingestion Layer {
+  style.fill: "#fffbeb"
+  style.stroke: "#fbbf24"
+  style.stroke-width: 2
+
+  scheduler: Airflow Scheduler {
+    style.fill: "#ffffff"
+    cost: \$180/mo
+  }
+
+  streaming: Kafka / Pub-Sub {
+    style.fill: "#ffffff"
+    cost: \$340/mo
+  }
+
+  batch: Batch Loader {
+    style.fill: "#ffffff"
+    cost: \$95/mo
+  }
+
+  scheduler -> streaming
+  scheduler -> batch
+}
+
+# Processing Layer
+processing: Processing & Transformation {
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+
+  normalize: Normalize & Deduplicate {
+    style.fill: "#ffffff"
+  }
+
+  enrich: Enrich with Tags {
+    style.fill: "#ffffff"
+  }
+
+  aggregate: Aggregate by Team/Service {
+    style.fill: "#ffffff"
+  }
+
+  anomaly: Anomaly Detection\n(ML Model) {
+    style.fill: "#0891b2"
+    style.font-color: "#ffffff"
+    cost: \$420/mo
+  }
+
+  normalize -> enrich -> aggregate -> anomaly
+}
+
+# Storage Layer
+storage: Analytical Storage {
+  style.fill: "#ecfeff"
+  style.stroke: "#0891b2"
+  style.stroke-width: 2
+
+  warehouse: BigQuery / Redshift {
+    style.fill: "#0891b2"
+    style.font-color: "#ffffff"
+    cost: \$850/mo
+  }
+
+  cache: Redis Cache\n(Hot queries) {
+    style.fill: "#ffffff"
+    cost: \$120/mo
+  }
+
+  warehouse -> cache
+}
+
+# Output Layer
+outputs: Outputs & Actions {
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+
+  dashboards: Cost Dashboards {
+    style.fill: "#ffffff"
+  }
+
+  alerts: Budget Alerts {
+    style.fill: "#fbbf24"
+    style.font-color: "#ffffff"
+  }
+
+  reports: Showback Reports {
+    style.fill: "#ffffff"
+  }
+
+  automation: Auto-Remediation {
+    style.fill: "#16a34a"
+    style.font-color: "#ffffff"
+  }
+}
+
+# Connections
+sources.cloud_billing -> ingestion.scheduler: Daily sync
+sources.metrics -> ingestion.streaming: Real-time
+sources.tags -> ingestion.batch: Hourly
+
+ingestion -> processing: Raw data
+
+processing -> storage: Processed data
+
+storage -> outputs.dashboards: Query
+storage -> outputs.alerts: Threshold check
+storage -> outputs.reports: Weekly
+storage.cache -> outputs.automation: Fast lookup
+
+# Total cost annotation
+total_cost: Pipeline Cost: \$2,005/month\nCost per \$1M managed: \$40 {
+  shape: text
+  style.font-size: 14
+  style.bold: true
+  style.font-color: "#0891b2"
+}

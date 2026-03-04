@@ -1,0 +1,43 @@
+# Author-provided context for Cloud Migration Cost Planning
+# Product-specific information and editorial direction
+
+product_relevance:
+  product: zopcloud
+  how_it_helps: "Provides migration planning tools with automated cost modeling, workload assessment, and spend tracking across source and target environments during migration"
+  key_features:
+    - "Pre-migration cost modeling with workload-level estimates"
+    - "Dual-environment spend tracking during migration windows"
+    - "Automated dependency mapping for migration wave planning"
+    - "Post-migration cost validation against baseline projections"
+  differentiators:
+    - "Models costs at workload level, not just VM-to-VM mapping"
+    - "Tracks dual-run costs automatically during migration overlap"
+    - "Integrates with Terraform for infrastructure-as-code migration"
+
+customer_stories:
+  - industry: "financial-services"
+    cluster_size: "340 workloads migrated from on-prem to AWS"
+    before: "$890,000/year on-prem TCO"
+    after: "$612,000/year cloud spend"
+    timeline: "14 weeks"
+  - industry: "retail-ecommerce"
+    cluster_size: "180 workloads from co-lo to GCP"
+    before: "$45,000/month co-location"
+    after: "$31,000/month cloud"
+    timeline: "9 weeks"
+
+editorial_direction:
+  tone: "authoritative guide, not tutorial"
+  avoid:
+    - "Fictional stories with made-up characters"
+    - "Long code scripts (100+ lines)"
+    - "Generic advice without specific numbers"
+    - "Marketing language or product pitches"
+    - "Oversimplifying migration complexity"
+  emphasize:
+    - "Industry benchmarks with citations"
+    - "Decision frameworks (when to use what)"
+    - "Cost modeling examples and spreadsheet formulas"
+    - "Tables for comparison and data presentation"
+    - "Hidden costs that blow migration budgets"
+  code_policy: "config-only"

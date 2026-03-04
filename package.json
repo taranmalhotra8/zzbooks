@@ -1,0 +1,32 @@
+{
+  "name": "@zopdev/ebooks",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "ebook": "./scripts/cli.ts"
+  },
+  "scripts": {
+    "validate": "npx tsx scripts/validate.ts",
+    "landing": "npx tsx _landing/generate.ts",
+    "social": "npx tsx _social/generate.ts",
+    "serve": "npx tsx _server/server.ts",
+    "generate": "npx tsx scripts/generate-ebook.ts",
+    "test": "bun test scripts/tests/",
+    "test:watch": "bun test scripts/tests/ --watch"
+  },
+  "dependencies": {
+    "@types/react": "^19.2.14",
+    "mustache": "^4.2",
+    "pdf-lib": "^1.17",
+    "react": "^19.2.4",
+    "satori": "^0.12",
+    "sharp": "^0.33",
+    "yaml": "^2.7"
+  },
+  "devDependencies": {
+    "@types/mustache": "^4.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7"
+  }
+}

@@ -1,0 +1,44 @@
+# Per-ebook metadata for DevSecOps Pipeline Security
+# Supplements calendar.yml with ebook-specific detail.
+
+meta:
+  slug: "devsecops-pipeline-security"
+  title: "DevSecOps Pipeline Security"
+  subtitle: "A Practical Guide to DevSecOps Pipeline Security"
+  version: "0.1.0"
+  authors: ["zopdev-team"]       # References author IDs from _brand-extended.yml
+
+chapters:
+  - id: "01-intro"
+    title: "Introduction"
+    summary: ""
+    # difficulty: beginner        # beginner | intermediate | advanced
+    # reading_time_minutes: 5     # Estimated reading time
+    # learning_objectives:        # What the reader will learn
+    #   - "Understand the core concepts"
+    #   - "Learn the key terminology"
+    # key_takeaways:              # Key points to remember
+    #   - "Main insight from this chapter"
+    # tags: [introduction]        # Topic tags
+    # prerequisites: []           # Chapter IDs that should be read first
+
+social:
+  linkedin_carousel:
+    slides:
+      - heading: "DevSecOps Pipeline Security"
+        body: "A comprehensive guide by Zopdev"
+      - heading: "Key Takeaway #1"
+        body: "Replace with actual takeaway"
+      - heading: "Key Takeaway #2"
+        body: "Replace with actual takeaway"
+      - heading: "Get the Full Guide"
+        body: "Download now at zopdev.com"
+
+  instagram_posts:
+    quotes:
+      - text: "Replace with a key quote from the ebook."
+        attribution: "Zopdev Team"
+
+  og_image:
+    title: "DevSecOps Pipeline Security"
+    subtitle: "A Practical Guide to DevSecOps Pipeline Security"

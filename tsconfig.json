@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": ".build",
+    "rootDir": ".",
+    "types": ["bun-types"]
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "_output", ".build"]
+}

@@ -1,0 +1,170 @@
+---
+title: "Cost Comparison Calculator"
+format:
+  html:
+    code-fold: true
+  pdf:
+    keep-tex: false
+  epub: default
+---
+
+<!-- Cost Comparison Calculator Template
+     Compare 2+ options side-by-side with interactive controls.
+
+     Usage: Copy this template into your chapter .qmd file, then customize
+     the option names, default values, and cost formulas for your scenario.
+
+     HTML: Interactive sliders and dropdowns with reactive output.
+     PDF/EPUB: Static fallback table showing default comparison values.
+-->
+
+::: {.callout-note}
+## Interactive Calculator
+This calculator lets you compare costs across different options.
+Adjust the inputs below to see how costs change for your specific scenario.
+:::
+
+```{ojs}
+//| echo: false
+
+// --- Input Controls ---
+
+viewof monthlyHours = Inputs.range([100, 10000], {
+  value: 2000,
+  step: 100,
+  label: "Monthly compute hours"
+})
+
+viewof storageGB = Inputs.range([50, 5000], {
+  value: 500,
+  step: 50,
+  label: "Storage (GB)"
+})
+
+viewof transferGB = Inputs.range([10, 2000], {
+  value: 200,
+  step: 10,
+  label: "Data transfer (GB/month)"
+})
+
+viewof region = Inputs.select(
+  ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+  { value: "us-east-1", label: "Region" }
+)
+```
+
+```{ojs}
+//| echo: false
+
+// --- Cost Models ---
+// Customize these rate tables for your comparison scenario.
+
+regionMultiplier = ({
+  "us-east-1": 1.0,
+  "us-west-2": 1.02,
+  "eu-west-1": 1.10,
+  "ap-southeast-1": 1.15
+})[region]
+
+optionA = {
+  const compute = monthlyHours * 0.085 * regionMultiplier;
+  const storage = storageGB * 0.023;
+  const transfer = transferGB * 0.09;
+  const total = compute + storage + transfer;
+  return { name: "Option A: On-Demand", compute, storage, transfer, total };
+}
+
+optionB = {
+  const compute = monthlyHours * 0.053 * regionMultiplier;
+  const storage = storageGB * 0.021;
+  const transfer = transferGB * 0.085;
+  const total = compute + storage + transfer;
+  return { name: "Option B: Reserved (1yr)", compute, storage, transfer, total };
+}
+
+optionC = {
+  const compute = monthlyHours * 0.035 * regionMultiplier;
+  const storage = storageGB * 0.018;
+  const transfer = transferGB * 0.08;
+  const total = compute + storage + transfer;
+  return { name: "Option C: Reserved (3yr)", compute, storage, transfer, total };
+}
+```
+
+```{ojs}
+//| echo: false
+
+// --- Results Table ---
+
+fmt = d3.format("$,.2f")
+
+comparison = [optionA, optionB, optionC]
+
+html`<div class="ojs-calculator">
+  <table class="ojs-results-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        ${comparison.map(o => html`<th>${o.name}</th>`)}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Compute</td>
+        ${comparison.map(o => html`<td>${fmt(o.compute)}</td>`)}
+      </tr>
+      <tr>
+        <td>Storage</td>
+        ${comparison.map(o => html`<td>${fmt(o.storage)}</td>`)}
+      </tr>
+      <tr>
+        <td>Transfer</td>
+        ${comparison.map(o => html`<td>${fmt(o.transfer)}</td>`)}
+      </tr>
+      <tr class="ojs-total-row">
+        <td><strong>Monthly Total</strong></td>
+        ${comparison.map(o => html`<td><strong>${fmt(o.total)}</strong></td>`)}
+      </tr>
+      <tr class="ojs-total-row">
+        <td><strong>Annual Total</strong></td>
+        ${comparison.map(o => html`<td><strong>${fmt(o.total * 12)}</strong></td>`)}
+      </tr>
+    </tbody>
+  </table>
+  <p class="ojs-savings">
+    <strong>Best option:</strong> ${comparison.reduce((a, b) => a.total < b.total ? a : b).name}
+    — saves ${fmt((comparison.reduce((a, b) => a.total > b.total ? a : b).total - comparison.reduce((a, b) => a.total < b.total ? a : b).total) * 12)}/year
+    vs. the most expensive option.
+  </p>
+</div>`
+```
+
+::: {.content-visible when-format="pdf"}
+**Cost Comparison (Default Scenario)**
+
+| Category | On-Demand | Reserved 1yr | Reserved 3yr |
+|----------|-----------|-------------|-------------|
+| Compute  | $170.00   | $106.00     | $70.00      |
+| Storage  | $11.50    | $10.50      | $9.00       |
+| Transfer | $18.00    | $17.00      | $16.00      |
+| **Monthly Total** | **$199.50** | **$133.50** | **$95.00** |
+| **Annual Total**  | **$2,394**  | **$1,602**  | **$1,140** |
+
+*Based on 2,000 compute hours, 500 GB storage, 200 GB transfer in us-east-1.
+Adjust values in the interactive HTML version.*
+:::
+
+::: {.content-visible when-format="epub"}
+**Cost Comparison (Default Scenario)**
+
+| Category | On-Demand | Reserved 1yr | Reserved 3yr |
+|----------|-----------|-------------|-------------|
+| Compute  | $170.00   | $106.00     | $70.00      |
+| Storage  | $11.50    | $10.50      | $9.00       |
+| Transfer | $18.00    | $17.00      | $16.00      |
+| **Monthly Total** | **$199.50** | **$133.50** | **$95.00** |
+| **Annual Total**  | **$2,394**  | **$1,602**  | **$1,140** |
+
+*Based on 2,000 compute hours, 500 GB storage, 200 GB transfer in us-east-1.
+Adjust values in the interactive HTML version.*
+:::

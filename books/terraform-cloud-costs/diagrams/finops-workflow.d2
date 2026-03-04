@@ -1,0 +1,188 @@
+# FinOps Workflow / Process Flow
+# Purpose: Show the FinOps lifecycle — Inform -> Optimize -> Operate
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #fbbf24 warning)
+
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+# Phase 1: Inform
+inform_phase: INFORM PHASE {
+  shape: rectangle
+  style.fill: "#ecfeff"
+  style.stroke: "#0891b2"
+  style.stroke-width: 3
+
+  visibility: 1. Visibility {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Connect cloud accounts
+      - Aggregate billing data
+      - Build cost dashboards
+      **Target: 100% account coverage**
+    |
+  }
+
+  allocation: 2. Allocation {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Implement tagging strategy
+      - Attribute costs to teams
+      - Generate showback reports
+      **Target: 80%+ tag coverage**
+    |
+  }
+
+  benchmarking: 3. Benchmarking {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Track unit economics
+      - Compare to industry peers
+      - Set efficiency targets
+      **Target: Cost per customer metric**
+    |
+  }
+
+  visibility -> allocation -> benchmarking
+}
+
+# Phase 2: Optimize
+optimize_phase: OPTIMIZE PHASE {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 3
+
+  rate: 4. Rate Optimization {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Purchase reserved instances
+      - Negotiate enterprise agreements
+      - Optimize commitment portfolio
+      **Target: 70% RI coverage, 85% utilization**
+    |
+  }
+
+  usage: 5. Usage Optimization {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Right-size over-provisioned resources
+      - Shut down idle resources
+      - Implement scheduling
+      **Target: 30% waste reduction**
+    |
+  }
+
+  architecture: 6. Architecture {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Serverless for variable loads
+      - Spot instances for batch
+      - Caching layers
+      **Target: 50% cost per transaction**
+    |
+  }
+
+  rate -> usage -> architecture
+}
+
+# Phase 3: Operate
+operate_phase: OPERATE PHASE {
+  shape: rectangle
+  style.fill: "#fffbeb"
+  style.stroke: "#fbbf24"
+  style.stroke-width: 3
+
+  governance: 7. Governance {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Enforce tagging policies
+      - Set budget alerts
+      - Define approval workflows
+      **Target: Policy-as-code for all**
+    |
+  }
+
+  automation: 8. Automation {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Anomaly detection
+      - Auto-remediation
+      - Continuous right-sizing
+      **Target: 90% automated actions**
+    |
+  }
+
+  improvement: 9. Continuous Improvement {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    tasks: |md
+      - Quarterly reviews
+      - Maturity assessments
+      - Team training
+      **Target: Walk to Run maturity**
+    |
+  }
+
+  governance -> automation -> improvement
+}
+
+# Flow between phases
+inform_phase -> optimize_phase: Data-Driven Actions {
+  style.stroke: "#0891b2"
+  style.stroke-width: 2
+}
+
+optimize_phase -> operate_phase: Sustained Savings {
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+}
+
+operate_phase -> inform_phase: Feedback Loop {
+  style.stroke: "#fbbf24"
+  style.stroke-width: 2
+  style.stroke-dash: 5
+}
+
+# Maturity indicator
+crawl: Crawl\n(Basic visibility) {
+  shape: circle
+  style.fill: "#ef4444"
+  style.font-color: "#ffffff"
+}
+
+walk: Walk\n(Proactive optimization) {
+  shape: circle
+  style.fill: "#fbbf24"
+  style.font-color: "#ffffff"
+}
+
+run: Run\n(Automated excellence) {
+  shape: circle
+  style.fill: "#16a34a"
+  style.font-color: "#ffffff"
+}
+
+crawl -> walk -> run

@@ -1,0 +1,73 @@
+# Per-ebook metadata for Kubernetes Cost Guide
+# Supplements calendar.yml with ebook-specific detail.
+
+meta:
+  slug: "k8s-cost-guide"
+  title: "Kubernetes Cost Guide"
+  subtitle: "Optimizing Container Spending"
+  version: "0.1.0"
+  authors: ["zopdev-team"]
+
+chapters:
+  - id: "01-why-kubernetes-cost-optimizati"
+    title: "Why Kubernetes Cost Optimization Matters"
+    summary: "The core problem — why Kubernetes cost optimization is critical and what happens without it."
+    difficulty: beginner
+    reading_time_minutes: 3
+    learning_objectives:
+      - "Understand why Kubernetes costs are harder to track than VM costs"
+      - "Learn the scale of overprovisioning (20-35% industry average)"
+    key_takeaways:
+      - "65% of organizations lack pod-level cost attribution"
+      - "Average K8s clusters run at 11-18% CPU utilization"
+    tags: [introduction, kubernetes, cost-visibility]
+
+  - id: "02-understanding-the-kubernetes-c"
+    title: "Understanding the Kubernetes Cost Optimization Model"
+    summary: "How costs flow from cloud bills through nodes to pods via requests and limits."
+    difficulty: intermediate
+    reading_time_minutes: 5
+    learning_objectives:
+      - "Map cloud costs to Kubernetes resources via requests and limits"
+      - "Use ResourceQuotas and LimitRanges for cost boundaries"
+    key_takeaways:
+      - "VPA right-sizing delivers 20-40% savings on compute costs"
+      - "Namespace cost boundaries improve bin-packing by 15-25%"
+    tags: [cost-model, requests, limits, namespaces, right-sizing]
+    prerequisites: ["01-why-kubernetes-cost-optimizati"]
+
+  - id: "03-kubernetes-cost-optimization-s"
+    title: "Kubernetes Cost Optimization Strategies"
+    summary: "Production-tested optimization techniques with real implementations."
+    difficulty: advanced
+    reading_time_minutes: 6
+    learning_objectives:
+      - "Apply VPA right-sizing to pod resource requests"
+      - "Leverage spot/preemptible nodes with disruption budgets"
+      - "Implement HPA cost-aware autoscaling"
+    key_takeaways:
+      - "Spot instances reduce compute costs by 60-90% for fault-tolerant workloads"
+      - "Combining VPA + spot + HPA yields cumulative 40-70% savings"
+    tags: [optimization, right-sizing, autoscaling, spot-instances]
+    prerequisites: ["01-why-kubernetes-cost-optimizati", "02-understanding-the-kubernetes-c"]
+
+social:
+  linkedin_carousel:
+    slides:
+      - heading: "Kubernetes Cost Guide"
+        body: "A practical guide to optimizing container spending by Zopdev"
+      - heading: "The Hidden Cost Problem"
+        body: "Kubernetes abstracts infrastructure, making costs invisible without proper tooling"
+      - heading: "Right-Size Everything"
+        body: "VPA recommendations can cut resource waste by 40-60%"
+      - heading: "Get the Full Guide"
+        body: "Download now at zopdev.com"
+
+  instagram_posts:
+    quotes:
+      - text: "Kubernetes doesn't have a cost problem. It has a visibility problem."
+        attribution: "Zopdev Team"
+
+  og_image:
+    title: "Kubernetes Cost Guide"
+    subtitle: "Optimizing Container Spending"

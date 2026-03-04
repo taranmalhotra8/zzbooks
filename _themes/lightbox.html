@@ -1,0 +1,65 @@
+<script>
+// Zopdev Lightbox — Click-to-expand for D2 diagrams
+// Vanilla JS, no dependencies. Injected via include-after-body.
+(function() {
+  'use strict';
+
+  // Create overlay element
+  var overlay = document.createElement('div');
+  overlay.id = 'zopdev-lightbox';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-label', 'Expanded diagram');
+
+  // Inject styles
+  var style = document.createElement('style');
+  style.textContent = '#zopdev-lightbox{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,22,40,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:99999;display:none;align-items:center;justify-content:center;padding:2rem;cursor:zoom-out;opacity:0;transition:opacity 200ms ease}#zopdev-lightbox.active{display:flex;opacity:1}#zopdev-lightbox img{max-width:95vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);cursor:default}#zopdev-lightbox .lb-close{position:absolute;top:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1.25rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 150ms ease}#zopdev-lightbox .lb-close:hover{background:rgba(255,255,255,.2)}';
+  document.head.appendChild(style);
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'lb-close';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = '&times;';
+  overlay.appendChild(closeBtn);
+  document.body.appendChild(overlay);
+
+  var currentImg = null;
+
+  function open(src) {
+    if (currentImg) currentImg.remove();
+    currentImg = document.createElement('img');
+    currentImg.src = src;
+    currentImg.alt = 'Expanded diagram';
+    overlay.appendChild(currentImg);
+    overlay.style.display = 'flex';
+    requestAnimationFrame(function() { overlay.classList.add('active'); });
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(function() {
+      overlay.style.display = 'none';
+      if (currentImg) { currentImg.remove(); currentImg = null; }
+    }, 200);
+  }
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay || e.target === closeBtn) close();
+  });
+  closeBtn.addEventListener('click', close);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) close();
+  });
+
+  // Attach to D2 diagram images
+  document.querySelectorAll('.cell[data-engine="d2"] img').forEach(function(el) {
+    el.style.cursor = 'zoom-in';
+    el.title = 'Click to expand';
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      open(el.src);
+    });
+  });
+})();
+</script>

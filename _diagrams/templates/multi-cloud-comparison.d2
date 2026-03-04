@@ -1,0 +1,161 @@
+# Multi-Cloud Comparison
+# Purpose: Compare costs/features across AWS, GCP, Azure
+# Brand: Zopdev (#0891b2 primary, #16a34a success)
+
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+workload: Workload Requirements {
+  shape: rectangle
+  style.fill: "#F8FAFC"
+  style.stroke: "#64748B"
+
+  specs: |md
+    **Compute:** 100 vCPUs, 400GB RAM
+    **Storage:** 10TB block, 50TB object
+    **Database:** PostgreSQL, 2TB, Multi-AZ
+    **Traffic:** 50TB egress/month
+  |
+}
+
+aws: AWS Solution {
+  shape: rectangle
+  style.fill: "#FF9900"
+  style.opacity: 0.1
+  style.stroke: "#FF9900"
+
+  compute: EC2: m5.4xlarge x 6\n(3-year RI) {
+    style.fill: "#ffffff"
+    cost: \$2,847/mo
+  }
+
+  storage_block: EBS: 10TB gp3 {
+    style.fill: "#ffffff"
+    cost: \$800/mo
+  }
+
+  storage_object: S3: 50TB Standard-IA {
+    style.fill: "#ffffff"
+    cost: \$625/mo
+  }
+
+  database: RDS: db.r5.2xlarge Multi-AZ {
+    style.fill: "#ffffff"
+    cost: \$1,248/mo
+  }
+
+  egress: Data Transfer Out {
+    style.fill: "#ffffff"
+    cost: \$4,300/mo
+  }
+
+  total_aws: Total: \$9,820/month {
+    shape: text
+    style.bold: true
+    style.font-size: 16
+    style.font-color: "#FF9900"
+  }
+
+  compute -> storage_block -> storage_object -> database -> egress -> total_aws
+}
+
+gcp: GCP Solution {
+  shape: rectangle
+  style.fill: "#4285F4"
+  style.opacity: 0.1
+  style.stroke: "#4285F4"
+
+  compute: Compute Engine: n2-highmem-16 x 4\n(3-year CUD) {
+    style.fill: "#ffffff"
+    cost: \$2,124/mo
+  }
+
+  storage_block: Persistent Disk: 10TB SSD {
+    style.fill: "#ffffff"
+    cost: \$1,700/mo
+  }
+
+  storage_object: Cloud Storage: 50TB Nearline {
+    style.fill: "#ffffff"
+    cost: \$500/mo
+  }
+
+  database: Cloud SQL: db-highmem-16 HA {
+    style.fill: "#ffffff"
+    cost: \$987/mo
+  }
+
+  egress: Network Egress {
+    style.fill: "#ffffff"
+    cost: \$4,100/mo
+  }
+
+  total_gcp: Total: \$9,411/month {
+    shape: text
+    style.bold: true
+    style.font-size: 16
+    style.font-color: "#4285F4"
+  }
+
+  compute -> storage_block -> storage_object -> database -> egress -> total_gcp
+}
+
+azure: Azure Solution {
+  shape: rectangle
+  style.fill: "#0078D4"
+  style.opacity: 0.1
+  style.stroke: "#0078D4"
+
+  compute: VMs: E16s v5 x 4\n(3-year RI) {
+    style.fill: "#ffffff"
+    cost: \$2,456/mo
+  }
+
+  storage_block: Managed Disks: 10TB Premium SSD {
+    style.fill: "#ffffff"
+    cost: \$1,228/mo
+  }
+
+  storage_object: Blob Storage: 50TB Cool {
+    style.fill: "#ffffff"
+    cost: \$512/mo
+  }
+
+  database: PostgreSQL: 16 vCore, Zone Redundant {
+    style.fill: "#ffffff"
+    cost: \$1,106/mo
+  }
+
+  egress: Bandwidth {
+    style.fill: "#ffffff"
+    cost: \$4,250/mo
+  }
+
+  total_azure: Total: \$9,552/month {
+    shape: text
+    style.bold: true
+    style.font-size: 16
+    style.font-color: "#0078D4"
+  }
+
+  compute -> storage_block -> storage_object -> database -> egress -> total_azure
+}
+
+workload -> aws: Deploy Option 1
+workload -> gcp: Deploy Option 2
+workload -> azure: Deploy Option 3
+
+winner: Best Value: GCP\nSavings: \$409/mo vs AWS {
+  shape: circle
+  style.fill: "#16a34a"
+  style.font-color: "#ffffff"
+  style.shadow: true
+}
+
+gcp -> winner

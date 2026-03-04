@@ -1,0 +1,550 @@
+---
+title: "Chapter Title: Concrete Problem Statement"
+---
+
+<!-- SOTA CHAPTER TEMPLATE
+     This template demonstrates state-of-the-art content quality patterns:
+     1. Incident-driven opening with specific numbers
+     2. Production-ready code examples
+     3. Professional diagrams (D2 or Mermaid)
+     4. Interactive calculators (Observable JS)
+     5. Quantified outcomes
+
+     USAGE:
+     1. Copy this template to your book's chapters/ directory
+     2. Replace placeholders with your content
+     3. Customize the incident, code, diagram, and calculator for your scenario
+     4. Test: make render ebook=<slug>
+
+     SEE ALSO:
+     - docs/D2_DIAGRAM_GUIDE.md — How to create diagrams
+     - docs/OBSERVABLE_JS_PATTERNS.md — How to add calculators
+     - docs/CONTENT_QUALITY.md — SOTA content standards
+-->
+
+<!-- IMPORTANT: Do NOT add a body-level H1 heading (e.g., # Chapter Title).
+     The YAML 'title:' field above already generates the chapter heading in Quarto books.
+     Adding a duplicate H1 causes broken section numbering. -->
+
+<!-- SECTION 1: INCIDENT-DRIVEN OPENING
+     Start with a specific incident that sets up the "why" for this chapter.
+     Requirements:
+     - Real numbers ($X/month, N instances, X% utilization)
+     - Specific organization (anonymized is fine)
+     - Quantified problem or pain point
+     - 1-2 paragraphs max
+-->
+
+When [Persona/Role] at [Company] [specific action], they discovered [shocking/surprising finding with specific numbers]. The [specific resource type] that [engineering/ops team] had [provisioned/configured/deployed] were [specific problem with quantification]. This was costing the company **[$X,XXX/month]** in [type of waste/unnecessary spend].
+
+The problem [wasn't visible in standard tools / required X steps to diagnose / was politically sensitive]. [Specific challenge or barrier to solving it]. This incident became the catalyst for [specific solution or change].
+
+<!-- EXAMPLE:
+When Sarah, the FinOps lead at Acme Corp, ran her first right-sizing audit, she was shocked: **143 EC2 instances were overprovisioned**, running at an average of 18% CPU utilization. The m5.2xlarge instances that engineering had provisioned "to be safe" were costing the company **$22,300/month** in unnecessary spend.
+
+The problem wasn't visible in CloudWatch alone — it required analyzing CPU, memory, network, and disk I/O together. And even when she identified the overprovisioned instances, getting engineering buy-in to downsize was a political minefield. This incident became the catalyst for implementing ZopNight's automated right-sizing recommendations.
+-->
+
+<!-- SECTION 2: BACKGROUND CONTEXT
+     Explain why this problem is common and provide industry context.
+     Requirements:
+     - 2-3 paragraphs
+     - Cite industry data or benchmarks if available
+     - Explain root causes
+     - Set up the solution that follows
+-->
+
+## Why [Problem] Happens
+
+[Explanation of why this problem is common across organizations...]
+
+According to [source, e.g., FinOps Foundation State of FinOps 2024], [relevant statistic with specific percentage or dollar amount]. [Additional context on industry norms, common anti-patterns, or contributing factors].
+
+[Root causes: technical, organizational, process-related...]
+
+<!-- SECTION 3: ARCHITECTURE DIAGRAM
+     Show the "before" state visually.
+     Requirements:
+     - D2 or Mermaid diagram
+     - Include cost annotations ($/month)
+     - Use Zopdev brand colors (#0052FF, #00C48C, #FFB020, #FF6B6B)
+     - Add fig-cap with descriptive caption
+-->
+
+## Current State
+
+The diagram below shows the infrastructure before optimization. Notice the [specific elements to call out, e.g., overprovisioned instances, idle resources, etc.].
+
+<!-- D2 DIAGRAM SYNTAX:
+     Use {.d2} (with dot) NOT {d2}. The D2 Quarto extension is a Lua filter, not a built-in engine.
+     - #| cell options are NOT supported — use inline attributes instead
+     - For external files: {.d2 file="path/to/file.d2" width="100%"}
+     - For inline code: {.d2 width="80%"}
+     - ESCAPE dollar signs: use \$ not $ (D2 treats $ as variable substitution)
+     - Path is relative to the QMD file, NOT the project root
+-->
+
+```{.d2 width="100%"}
+direction: right
+
+before: Current State {
+  style.fill: "#ffebee"
+  style.stroke: "#FF6B6B"
+  style.stroke-width: 2
+
+  cost: 45K dollars per month {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+    style.font-color: "#FF6B6B"
+  }
+
+  resources: Overprovisioned Resources {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    details: |md
+      - 12 m5.2xlarge instances
+      - 18% avg CPU utilization
+      - No scheduling
+      - 100% on-demand pricing
+    |
+  }
+}
+
+problem_indicator: High Cost / Low Utilization {
+  shape: circle
+  style.fill: "#FFB020"
+  style.font-color: "#000000"
+}
+
+before -> problem_indicator
+```
+
+*[Architecture/workflow] before optimization*
+
+The key issues visible in this architecture:
+
+- [Bullet list of specific problems shown in diagram]
+- [Quantify each issue: $X/month, N resources, X%]
+- [Total impact: $X,XXX/month wasted]
+
+<!-- SECTION 4: SOLUTION DEEP DIVE
+     Explain the solution with production-ready code.
+     Requirements:
+     - Real, runnable code (not pseudocode)
+     - Include imports and error handling
+     - Add comments for non-obvious logic
+     - Show sample output
+     - Use language tag in code fence
+-->
+
+## The [Solution Name] Framework
+
+Here's how we [solved the problem / implemented the solution]:
+
+### Step 1: [First Step — e.g., Identify Overprovisioned Resources]
+
+[Explanation of this step...]
+
+```python
+#!/usr/bin/env python3
+"""
+[Brief description of what this script does]
+
+Requirements:
+    pip install boto3 pandas numpy
+
+Usage:
+    python script.py --region us-east-1
+"""
+
+import boto3
+from datetime import datetime, timedelta
+from typing import List, Dict
+
+def analyze_resource_utilization(resource_id: str, region: str = 'us-east-1') -> Dict:
+    """
+    Analyze resource utilization over the last 30 days.
+
+    Args:
+        resource_id: The resource identifier (e.g., instance ID)
+        region: AWS region
+
+    Returns:
+        Dictionary with utilization metrics and recommendations
+    """
+    # PLACEHOLDER: Replace with your actual implementation
+    # This is a skeleton showing the structure
+
+    cw = boto3.client('cloudwatch', region_name=region)
+
+    # Get 30-day metrics
+    end_time = datetime.now()
+    start_time = end_time - timedelta(days=30)
+
+    metrics = {}
+    for metric_name in ['CPUUtilization', 'MemoryUtilization', 'NetworkIn']:
+        response = cw.get_metric_statistics(
+            Namespace='AWS/EC2',
+            MetricName=metric_name,
+            Dimensions=[{'Name': 'InstanceId', 'Value': resource_id}],
+            StartTime=start_time,
+            EndTime=end_time,
+            Period=3600,  # 1-hour intervals
+            Statistics=['Average', 'Maximum']
+        )
+
+        if response['Datapoints']:
+            metrics[metric_name] = {
+                'avg': sum(d['Average'] for d in response['Datapoints']) / len(response['Datapoints']),
+                'max': max(d['Maximum'] for d in response['Datapoints']),
+                'min': min(d['Average'] for d in response['Datapoints'])
+            }
+
+    # Recommendation logic
+    cpu_avg = metrics.get('CPUUtilization', {}).get('avg', 0)
+
+    if cpu_avg < 20:
+        recommendation = "Downsize 2 tiers or terminate if idle"
+        potential_savings = 280  # $/month for m5.2xlarge → m5.large
+    elif cpu_avg < 40:
+        recommendation = "Downsize 1 tier"
+        potential_savings = 140  # $/month for m5.2xlarge → m5.xlarge
+    else:
+        recommendation = "Current size is optimal"
+        potential_savings = 0
+
+    return {
+        'resource_id': resource_id,
+        'metrics': metrics,
+        'recommendation': recommendation,
+        'potential_savings_per_month': potential_savings
+    }
+
+if __name__ == '__main__':
+    # Example usage
+    result = analyze_resource_utilization('i-0abc123def456')
+
+    print(f"Resource: {result['resource_id']}")
+    print(f"CPU Avg: {result['metrics']['CPUUtilization']['avg']:.1f}%")
+    print(f"Recommendation: {result['recommendation']}")
+    print(f"Potential Savings: ${result['potential_savings_per_month']}/month")
+```
+
+**Sample output:**
+
+```
+Resource: i-0abc123def456
+CPU Avg: 18.3%
+Recommendation: Downsize 2 tiers or terminate if idle
+Potential Savings: $280/month
+```
+
+### Step 2: [Second Step — e.g., Implement Automated Policy]
+
+[Explanation...]
+
+```terraform
+# PLACEHOLDER: Terraform or other IaC code
+# See docs/CONTENT_QUALITY.md for examples
+
+resource "aws_lambda_function" "right_sizing_enforcer" {
+  function_name = "right-sizing-enforcer"
+  role          = aws_iam_role.lambda_exec.arn
+  handler       = "index.handler"
+  runtime       = "python3.11"
+
+  environment {
+    variables = {
+      THRESHOLD_CPU = "40"
+      ALERT_SNS_ARN = aws_sns_topic.alerts.arn
+    }
+  }
+}
+
+# Add CloudWatch Event rule to trigger daily
+resource "aws_cloudwatch_event_rule" "daily_audit" {
+  name                = "daily-right-sizing-audit"
+  schedule_expression = "cron(0 9 * * ? *)"  # 9 AM daily
+}
+
+resource "aws_cloudwatch_event_target" "lambda" {
+  rule = aws_cloudwatch_event_rule.daily_audit.name
+  arn  = aws_lambda_function.right_sizing_enforcer.arn
+}
+```
+
+<!-- SECTION 5: INTERACTIVE CALCULATOR
+     Add an OJS calculator to let readers model their scenario.
+     Requirements:
+     - Use Observable Inputs for user controls
+     - Show reactive calculations
+     - Style with Zopdev brand (.ojs-calculator, .ojs-metric)
+     - Include static fallback for PDF/EPUB
+-->
+
+## ROI Calculator
+
+Use this calculator to estimate potential savings for your environment.
+
+::: {.callout-note}
+## How to Use
+Adjust the inputs below to match your resource counts and utilization patterns.
+The calculator will estimate your potential monthly and annual savings.
+:::
+
+```{ojs}
+//| echo: false
+
+// --- Input Controls ---
+
+viewof instanceCount = Inputs.range([10, 1000], {
+  value: 100,
+  step: 10,
+  label: "Number of instances"
+})
+
+viewof avgCpuUtilization = Inputs.range([0, 100], {
+  value: 25,
+  step: 5,
+  label: "Average CPU utilization (%)"
+})
+
+viewof currentInstanceType = Inputs.select(
+  ["m5.2xlarge", "m5.xlarge", "m5.large", "m5.medium"],
+  {
+    value: "m5.xlarge",
+    label: "Current instance type"
+  }
+)
+
+// --- Cost Model ---
+
+instanceCosts = {
+  "m5.2xlarge": 280,
+  "m5.xlarge": 140,
+  "m5.large": 70,
+  "m5.medium": 35
+}
+
+recommendation = {
+  if (avgCpuUtilization < 20) {
+    return { type: "m5.large", action: "Downsize 2 tiers" };
+  } else if (avgCpuUtilization < 40) {
+    return { type: "m5.xlarge", action: "Downsize 1 tier" };
+  } else if (avgCpuUtilization < 60) {
+    return { type: "m5.xlarge", action: "Current size OK" };
+  } else {
+    return { type: currentInstanceType, action: "Current size OK" };
+  }
+}
+
+monthlySavingsPerInstance = instanceCosts[currentInstanceType] - instanceCosts[recommendation.type]
+totalMonthlySavings = monthlySavingsPerInstance * instanceCount
+totalAnnualSavings = totalMonthlySavings * 12
+
+// --- Output ---
+
+fmt = d3.format("$,.0f")
+
+html`<div class="ojs-calculator">
+  <div class="ojs-summary-grid">
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(monthlySavingsPerInstance)}</span>
+      <span class="ojs-metric-label">Savings per instance/month</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(totalMonthlySavings)}</span>
+      <span class="ojs-metric-label">Total monthly savings</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(totalAnnualSavings)}</span>
+      <span class="ojs-metric-label">Total annual savings</span>
+    </div>
+  </div>
+
+  <div class="ojs-recommendation" style="margin-top: 1.5rem;">
+    <span class="ojs-badge">Recommendation</span>
+    <strong>${recommendation.action}:</strong> Migrate ${instanceCount} instances from
+    ${currentInstanceType} to ${recommendation.type}
+  </div>
+</div>`
+```
+
+::: {.content-visible when-format="pdf"}
+**ROI Calculator (Default Scenario)**
+
+Based on 100 m5.xlarge instances at 25% average CPU utilization:
+
+| Metric | Value |
+|--------|-------|
+| Savings per instance/month | $70 |
+| Total monthly savings | $7,000 |
+| Total annual savings | $84,000 |
+
+**Recommendation:** Downsize 1 tier — Migrate 100 instances from m5.xlarge to m5.large.
+
+*Adjust values in the interactive HTML version for your scenario.*
+:::
+
+::: {.content-visible when-format="epub"}
+**ROI Calculator (Default Scenario)**
+
+Based on 100 m5.xlarge instances at 25% average CPU utilization:
+
+| Metric | Value |
+|--------|-------|
+| Savings per instance/month | $70 |
+| Total monthly savings | $7,000 |
+| Total annual savings | $84,000 |
+
+**Recommendation:** Downsize 1 tier — Migrate 100 instances from m5.xlarge to m5.large.
+
+*Adjust values in the interactive HTML version for your scenario.*
+:::
+
+<!-- SECTION 6: AFTER STATE DIAGRAM
+     Show the "after" state visually.
+     Requirements:
+     - D2 or Mermaid diagram
+     - Include NEW cost annotations (showing savings)
+     - Use green (#00C48C) for success/savings
+     - Show before → after transformation
+-->
+
+## Optimized Architecture
+
+After implementing [solution name], the architecture looks like this:
+
+```{.d2 width="100%"}
+direction: right
+
+after: Optimized State {
+  style.fill: "#e8f5e9"
+  style.stroke: "#00C48C"
+  style.stroke-width: 2
+
+  cost: 27K dollars per month {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+    style.font-color: "#00C48C"
+  }
+
+  resources: Right-Sized Resources {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    details: |md
+      - 8 m5.xlarge instances (right-sized)
+      - 45% avg CPU utilization
+      - Scheduled stop/start (nights + weekends)
+      - 70% reserved, 30% spot
+    |
+  }
+}
+
+savings_badge: Savings 18K dollars per month (40%) {
+  shape: circle
+  style.fill: "#00C48C"
+  style.font-color: "#ffffff"
+  style.font-size: 14
+  style.shadow: true
+}
+
+after -> savings_badge {
+  style.stroke: "#00C48C"
+  style.stroke-dash: 3
+}
+```
+
+*[Architecture/workflow] after optimization*
+
+Key improvements:
+
+- [Bullet list of changes made]
+- [Quantify each improvement: $X saved, N% reduction, etc.]
+- [Total impact: $X,XXX/month savings]
+
+<!-- SECTION 7: RESULTS & OUTCOMES
+     Quantify the results with specific numbers.
+     Requirements:
+     - Dollar savings ($/month or $/year)
+     - Percentage improvement
+     - Timeline (X days/months to achieve)
+     - Non-cost metrics (uptime, satisfaction, time saved)
+-->
+
+## Results After [Time Period]
+
+After implementing [solution name] at [Company], the team achieved:
+
+- **[$X,XXX/month in sustained savings]** ([X]% reduction from baseline)
+- **[Zero/X]** [incidents/SLA breaches/performance issues] from [the changes]
+- **[X minutes/hours]** average time to [key process improvement]
+- **[X]%** [stakeholder] satisfaction with [the new process]
+- **Break-even in [X] months** (initial implementation cost recovered)
+
+**Key lessons learned:**
+
+1. [First lesson with specific example]
+2. [Second lesson with specific example]
+3. [Third lesson with specific example]
+
+<!-- SECTION 8: FIELD NOTES (Optional)
+     Add practitioner insights or war stories.
+-->
+
+::: {.callout-tip}
+## Field Notes
+
+**[Specific insight or tip from implementation]**
+
+[Brief story or example illustrating the insight. Include specific numbers or outcomes.]
+
+For example: "We discovered that [specific finding]. By [specific action], we [specific improvement with numbers]."
+:::
+
+<!-- SECTION 9: CALL TO ACTION
+     End with clear next steps for the reader.
+-->
+
+## Next Steps
+
+To implement [solution name] in your organization:
+
+1. **[First step]** — Use the [tool/script] above to [specific action]
+2. **[Second step]** — Identify [specific resources/opportunities]
+3. **[Third step]** — Start with [specific pilot or test]
+4. **[Fourth step]** — Scale to [broader implementation]
+
+**Timeline:** Most organizations achieve [specific outcome] within [X days/months].
+
+**Resources:**
+
+- [Tool/script name]: [Link or path]
+- [Documentation]: [Link]
+- [Support channel]: [Link or email]
+
+---
+
+<!-- SECTION 10: RELATED CHAPTERS (Optional)
+     Link to related content in other chapters.
+-->
+
+::: {.callout-note}
+## Related Chapters
+
+- **Chapter [X]: [Title]** — [Brief description of how it relates]
+- **Chapter [Y]: [Title]** — [Brief description of how it relates]
+:::
+
+<!-- END OF TEMPLATE
+     Remember to:
+     1. Replace ALL placeholders with actual content
+     2. Test rendering: make render ebook=<slug>
+     3. Validate quality: make audit ebook=<slug>
+     4. Check diagrams render in HTML, PDF, EPUB
+     5. Verify calculator works interactively (HTML) and has fallback (PDF/EPUB)
+-->

@@ -1,0 +1,109 @@
+# VPA Right-Sizing Workflow
+# Purpose: Show how VPA observes actual usage and recommends new resource requests
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #fbbf24 warning, #ef4444 danger)
+
+direction: right
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+metrics: Metrics Server {
+  shape: rectangle
+  style.fill: "#ecfeff"
+  style.stroke: "#0891b2"
+  style.stroke-width: 2
+  style.border-radius: 8
+
+  desc: |md
+    Collects actual CPU + memory
+    usage per container every 30s
+  |
+}
+
+vpa: Vertical Pod Autoscaler {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 3
+  style.border-radius: 8
+
+  recommender: Recommender {
+    shape: rectangle
+    style.fill: "#ffffff"
+    desc: |md
+      Analyzes 7-day p95 usage
+      Generates new request targets
+    |
+  }
+
+  updater: Updater {
+    shape: rectangle
+    style.fill: "#ffffff"
+    desc: |md
+      Evicts pods when drift
+      exceeds 20% threshold
+    |
+  }
+
+  recommender -> updater: Apply recommendations {
+    style.stroke: "#16a34a"
+  }
+}
+
+pod_before: Pod (before) {
+  shape: rectangle
+  style.fill: "#fef2f2"
+  style.stroke: "#ef4444"
+  style.border-radius: 8
+
+  req: |md
+    requests.cpu: 2 cores
+    requests.mem: 4Gi
+    **actual: 250m / 600Mi**
+  |
+}
+
+pod_after: Pod (after VPA) {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.border-radius: 8
+
+  req: |md
+    requests.cpu: 300m
+    requests.mem: 700Mi
+    **savings: 85% CPU waste**
+  |
+}
+
+savings: Monthly Savings {
+  shape: rectangle
+  style.fill: "#fffbeb"
+  style.stroke: "#fbbf24"
+  style.stroke-width: 2
+  style.border-radius: 8
+
+  label: |md
+    20–40% compute cost reduction
+    $52K/mo → $31K/mo (example)
+  |
+}
+
+metrics -> vpa.recommender: Usage data {
+  style.stroke: "#0891b2"
+}
+pod_before -> vpa.recommender: Current requests {
+  style.stroke: "#ef4444"
+  style.stroke-dash: 3
+}
+vpa.updater -> pod_after: Restart with new requests {
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+}
+pod_after -> savings: Lower reservations {
+  style.stroke: "#fbbf24"
+}

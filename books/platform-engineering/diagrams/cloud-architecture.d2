@@ -1,0 +1,145 @@
+# Cloud Architecture with Cost Annotations
+# Purpose: Show infrastructure layout with cost breakdowns
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #fbbf24 warning, #ef4444 danger)
+
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+aws_cloud: AWS Cloud {
+  style.fill: "#FF9900"
+  style.opacity: 0.1
+  style.stroke: "#FF9900"
+
+  vpc: Production VPC\nus-east-1 {
+    style.fill: "#ffffff"
+    style.stroke: "#0891b2"
+    style.stroke-width: 2
+
+    cost_annotation: \$45K/month {
+      shape: text
+      style.font-size: 12
+      style.font-color: "#0891b2"
+      style.bold: true
+    }
+
+    alb: Application Load Balancer {
+      style.fill: "#FF9900"
+      style.font-color: "#ffffff"
+
+      cost: \$250/mo {
+        shape: text
+        style.font-size: 10
+      }
+    }
+
+    eks_cluster: EKS Cluster\n(v1.28) {
+      style.fill: "#ecfeff"
+      style.stroke: "#0891b2"
+
+      cluster_cost: Control Plane: \$73/mo {
+        shape: text
+        style.font-size: 10
+      }
+
+      node_group_1: Node Group: Production\n(m5.2xlarge x 12) {
+        style.fill: "#0891b2"
+        style.font-color: "#ffffff"
+
+        node_cost: \$3,317/mo {
+          shape: text
+          style.font-size: 10
+        }
+      }
+
+      node_group_2: Node Group: Batch\n(c5.large x 8) {
+        style.fill: "#16a34a"
+        style.font-color: "#ffffff"
+
+        batch_cost: \$561/mo {
+          shape: text
+          style.font-size: 10
+        }
+      }
+    }
+
+    rds: RDS PostgreSQL\ndb.r5.2xlarge (Multi-AZ) {
+      style.fill: "#67e8f9"
+      style.font-color: "#ffffff"
+
+      db_cost: \$1,248/mo {
+        shape: text
+        style.font-size: 10
+      }
+    }
+
+    s3: S3 Buckets\n24TB Standard + IA {
+      style.fill: "#569A31"
+      style.font-color: "#ffffff"
+
+      storage_cost: \$428/mo {
+        shape: text
+        style.font-size: 10
+      }
+    }
+  }
+
+  cloudwatch: CloudWatch\nLogs + Metrics {
+    style.fill: "#fbbf24"
+
+    monitoring_cost: \$892/mo {
+      shape: text
+      style.font-size: 10
+    }
+  }
+}
+
+zopnight: ZopNight {
+  shape: rectangle
+  style.fill: "#0891b2"
+  style.stroke: "#0e7490"
+  style.font-color: "#ffffff"
+  style.shadow: true
+
+  capabilities: |md
+    - Resource Scheduling
+    - Right-Sizing Analysis
+    - Cost Anomaly Detection
+    - Policy Enforcement
+  |
+}
+
+# Connections
+aws_cloud.vpc.alb -> aws_cloud.vpc.eks_cluster: Routes Traffic
+aws_cloud.vpc.eks_cluster -> aws_cloud.vpc.rds: Database Queries
+aws_cloud.vpc.eks_cluster -> aws_cloud.vpc.s3: Object Storage
+aws_cloud.vpc -> aws_cloud.cloudwatch: Metrics & Logs
+
+zopnight -> aws_cloud.vpc.eks_cluster: Schedule Actions {
+  style.stroke: "#0891b2"
+  style.stroke-dash: 5
+}
+
+zopnight -> aws_cloud.cloudwatch: Read Metrics {
+  style.stroke: "#0891b2"
+  style.stroke-dash: 5
+}
+
+# Savings annotation
+savings_badge: Potential Savings:\n\$18K/month (40%) {
+  shape: circle
+  style.fill: "#16a34a"
+  style.font-color: "#ffffff"
+  style.font-size: 16
+  style.shadow: true
+}
+
+zopnight -> savings_badge {
+  style.stroke: "#16a34a"
+  style.stroke-dash: 3
+}

@@ -1,0 +1,123 @@
+# Right-Sizing Before/After Comparison
+# Purpose: Show cost impact of right-sizing overprovisioned instances
+# Brand: Zopdev (#0891b2 primary, #16a34a success, #fbbf24 warning, #ef4444 danger)
+
+direction: right
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+# BEFORE: Overprovisioned
+before: BEFORE {
+  shape: rectangle
+  style.fill: "#fef2f2"
+  style.stroke: "#ef4444"
+  style.stroke-width: 3
+
+  title: Overprovisioned Fleet {
+    shape: text
+    style.font-size: 18
+    style.bold: true
+    style.font-color: "#ef4444"
+  }
+
+  cost: 22300 dollars per month {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+    style.font-color: "#ef4444"
+  }
+
+  instances: 143 m5.2xlarge instances {
+    shape: rectangle
+    style.fill: "#ffffff"
+    style.stroke: "#ef4444"
+
+    stats: |md
+      - Average CPU: 18% utilization
+      - Memory: 35% utilization
+      - Cost: 156 dollars/instance/month
+      - Status: Significantly oversized
+    |
+  }
+}
+
+# AFTER: Right-Sized
+after: AFTER {
+  shape: rectangle
+  style.fill: "#f0fdf4"
+  style.stroke: "#16a34a"
+  style.stroke-width: 3
+
+  title: Right-Sized Fleet {
+    shape: text
+    style.font-size: 18
+    style.bold: true
+    style.font-color: "#16a34a"
+  }
+
+  cost: 3900 dollars per month {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+    style.font-color: "#16a34a"
+  }
+
+  instances: 143 m5.large instances {
+    shape: rectangle
+    style.fill: "#ffffff"
+    style.stroke: "#16a34a"
+
+    stats: |md
+      - Average CPU: 45% utilization
+      - Memory: 52% utilization
+      - Cost: 27 dollars/instance/month
+      - Status: Appropriately sized
+    |
+  }
+}
+
+# Flow
+before -> after: Right-Sizing Campaign {
+  style.stroke: "#0891b2"
+  style.stroke-width: 2
+}
+
+# Savings badge
+savings: Savings 18400 dollars per month 83 percent reduction {
+  shape: circle
+  style.fill: "#16a34a"
+  style.font-color: "#ffffff"
+  style.font-size: 16
+  style.shadow: true
+  style.bold: true
+}
+
+after -> savings {
+  style.stroke: "#16a34a"
+  style.stroke-dash: 3
+  style.stroke-width: 2
+}
+
+# Timeline
+timeline: Implementation Timeline {
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748B"
+
+  phases: |md
+    Week 1-2: Analysis and recommendations
+    Week 3-4: Staging environment testing
+    Week 5-6: Production rollout (10 instances per day)
+    Week 7: Monitoring and validation
+  |
+}
+
+before -> timeline {
+  style.stroke: "#64748B"
+  style.stroke-dash: 5
+}

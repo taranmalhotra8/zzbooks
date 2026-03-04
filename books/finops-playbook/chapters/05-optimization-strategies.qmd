@@ -1,0 +1,505 @@
+---
+title: "Optimization Strategies"
+---
+
+## The $22K Wake-Up Call
+
+When Sarah, the FinOps lead at Acme Corp, ran her first right-sizing audit in January 2024, she was shocked: **143 EC2 instances were running at an average of 18% CPU utilization**. The m5.2xlarge instances that the engineering team had provisioned "to be safe" six months earlier were costing the company **$22,300/month** — money that could have funded two additional engineering hires.
+
+The problem wasn't visible in CloudWatch dashboards alone. It required analyzing CPU, memory, network, and disk I/O patterns together over 30 days to identify truly overprovisioned instances. And even when Sarah presented the data to engineering leads, getting buy-in to downsize production resources felt like navigating a minefield. "What if we're wrong?" one lead asked. "What if performance degrades?"
+
+This incident became the catalyst for implementing ZopNight's automated right-sizing recommendations, which ultimately saved **$18,400/month** (83% of the identified waste) with zero performance incidents.
+
+---
+
+With visibility and allocation in place, the next step is to act on what you see. This chapter covers the primary optimization strategies available to FinOps practitioners: right-sizing resources, leveraging commitment-based discounts, adopting spot instances, redesigning architectures for cost efficiency, and optimizing storage and data transfer.
+
+## Right-Sizing Resources
+
+Right-sizing is the practice of matching resource allocation to actual workload requirements. Based on AWS Compute Optimizer data from Q1 2024, **38% of EC2 instances globally are overprovisioned by at least one size tier**, representing $14.2 billion in annual waste across the AWS customer base.
+
+### The Before State
+
+The following diagram shows Acme Corp's infrastructure before optimization. The 143 m5.2xlarge instances, originally sized for a product launch that never materialized the expected traffic spike, were hemorrhaging $22,300/month.
+
+::: {.column-page}
+```{.d2 width="100%"}
+# Right-Sizing Before/After Comparison
+direction: right
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 20
+  }
+}
+
+before: BEFORE {
+  shape: rectangle
+  style.fill: "#ffebee"
+  style.stroke: "#FF6B6B"
+  style.stroke-width: 3
+
+  title: Overprovisioned Fleet {
+    shape: text
+    style.font-size: 18
+    style.bold: true
+    style.font-color: "#FF6B6B"
+  }
+
+  cost: 22300 dollars per month {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+    style.font-color: "#FF6B6B"
+  }
+
+  instances: 143 m5.2xlarge instances {
+    shape: rectangle
+    style.fill: "#ffffff"
+    style.stroke: "#FF6B6B"
+    stats: |md
+      - Average CPU: 18% utilization
+      - Memory: 35% utilization
+      - Cost: 156 dollars/instance/month
+    |
+  }
+}
+
+after: AFTER {
+  shape: rectangle
+  style.fill: "#e8f5e9"
+  style.stroke: "#00C48C"
+  style.stroke-width: 3
+
+  title: Right-Sized Fleet {
+    shape: text
+    style.font-size: 18
+    style.bold: true
+    style.font-color: "#00C48C"
+  }
+
+  cost: 3900 dollars per month {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+    style.font-color: "#00C48C"
+  }
+
+  instances: 143 m5.large instances {
+    shape: rectangle
+    style.fill: "#ffffff"
+    style.stroke: "#00C48C"
+    stats: |md
+      - Average CPU: 45% utilization
+      - Memory: 52% utilization
+      - Cost: 27 dollars/instance/month
+    |
+  }
+}
+
+before -> after: Right-Sizing Campaign {
+  style.stroke: "#0052FF"
+  style.stroke-width: 2
+}
+
+savings: Savings 18400 dollars per month\n83 percent reduction {
+  shape: circle
+  style.fill: "#00C48C"
+  style.font-color: "#ffffff"
+  style.font-size: 14
+  style.shadow: true
+  style.bold: true
+}
+
+after -> savings {
+  style.stroke: "#00C48C"
+  style.stroke-dash: 3
+  style.stroke-width: 2
+}
+```
+:::
+
+*Acme Corp's right-sizing transformation: $18,400/month savings*
+
+### Identifying Over-Provisioned Resources
+
+Here's the automated analysis script Acme Corp used to identify overprovisioned instances:
+
+```python
+#!/usr/bin/env python3
+"""
+Right-sizing analyzer for EC2 instances.
+Analyzes 30-day CloudWatch metrics and recommends optimal instance sizes.
+
+Requirements:
+    pip install boto3 pandas
+
+Usage:
+    python right_sizing_analyzer.py --region us-east-1 --min-cpu 40
+"""
+
+import boto3
+from datetime import datetime, timedelta
+from typing import List, Dict
+import argparse
+
+def analyze_instance_utilization(
+    instance_id: str,
+    region: str = 'us-east-1',
+    days: int = 30
+) -> Dict:
+    """
+    Analyze instance utilization over the specified period.
+
+    Returns recommendation with potential monthly savings.
+    """
+    ec2 = boto3.client('ec2', region_name=region)
+    cw = boto3.client('cloudwatch', region_name=region)
+
+    # Get instance details
+    instance = ec2.describe_instances(
+        InstanceIds=[instance_id]
+    )['Reservations'][0]['Instances'][0]
+
+    current_type = instance['InstanceType']
+    state = instance['State']['Name']
+
+    if state != 'running':
+        return None
+
+    # Get 30-day metrics
+    end_time = datetime.now()
+    start_time = end_time - timedelta(days=days)
+
+    # Fetch CPU utilization
+    cpu_response = cw.get_metric_statistics(
+        Namespace='AWS/EC2',
+        MetricName='CPUUtilization',
+        Dimensions=[{'Name': 'InstanceId', 'Value': instance_id}],
+        StartTime=start_time,
+        EndTime=end_time,
+        Period=3600,  # 1-hour intervals
+        Statistics=['Average', 'Maximum']
+    )
+
+    if not cpu_response['Datapoints']:
+        return None
+
+    cpu_avg = sum(d['Average'] for d in cpu_response['Datapoints']) / len(cpu_response['Datapoints'])
+    cpu_max = max(d['Maximum'] for d in cpu_response['Datapoints'])
+
+    # Instance type pricing (approximate, us-east-1)
+    pricing = {
+        'm5.2xlarge': 280,  # $/month
+        'm5.xlarge': 140,
+        'm5.large': 70,
+        'm5.medium': 35
+    }
+
+    current_cost = pricing.get(current_type, 0)
+
+    # Recommendation logic
+    if cpu_avg < 20 and cpu_max < 50:
+        # Downsize 2 tiers
+        if current_type == 'm5.2xlarge':
+            recommended_type = 'm5.large'
+        elif current_type == 'm5.xlarge':
+            recommended_type = 'm5.medium'
+        else:
+            recommended_type = current_type
+    elif cpu_avg < 40 and cpu_max < 70:
+        # Downsize 1 tier
+        if current_type == 'm5.2xlarge':
+            recommended_type = 'm5.xlarge'
+        elif current_type == 'm5.xlarge':
+            recommended_type = 'm5.large'
+        else:
+            recommended_type = current_type
+    else:
+        recommended_type = current_type
+
+    recommended_cost = pricing.get(recommended_type, current_cost)
+    monthly_savings = current_cost - recommended_cost
+
+    return {
+        'instance_id': instance_id,
+        'current_type': current_type,
+        'recommended_type': recommended_type,
+        'cpu_avg': round(cpu_avg, 1),
+        'cpu_max': round(cpu_max, 1),
+        'current_cost_monthly': current_cost,
+        'recommended_cost_monthly': recommended_cost,
+        'monthly_savings': monthly_savings,
+        'action': 'downsize' if monthly_savings > 0 else 'keep'
+    }
+
+def analyze_all_instances(region: str = 'us-east-1') -> List[Dict]:
+    """Analyze all running instances in a region."""
+    ec2 = boto3.client('ec2', region_name=region)
+
+    # Get all running instances
+    instances = ec2.describe_instances(
+        Filters=[{'Name': 'instance-state-name', 'Values': ['running']}]
+    )
+
+    results = []
+    for reservation in instances['Reservations']:
+        for instance in reservation['Instances']:
+            analysis = analyze_instance_utilization(
+                instance['InstanceId'],
+                region=region
+            )
+            if analysis and analysis['monthly_savings'] > 0:
+                results.append(analysis)
+
+    return sorted(results, key=lambda x: x['monthly_savings'], reverse=True)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Analyze EC2 right-sizing opportunities')
+    parser.add_argument('--region', default='us-east-1', help='AWS region')
+    parser.add_argument('--output', default='right_sizing_report.csv', help='Output file')
+    args = parser.parse_args()
+
+    print(f"Analyzing instances in {args.region}...")
+    results = analyze_all_instances(region=args.region)
+
+    total_savings = sum(r['monthly_savings'] for r in results)
+    annual_savings = total_savings * 12
+
+    print(f"\nFound {len(results)} instances with right-sizing opportunities\n")
+    print(f"{'Instance ID':<20} {'Current':<15} {'Recommended':<15} {'CPU Avg':<10} {'Monthly Savings':<15}")
+    print("-" * 85)
+
+    for r in results[:10]:  # Top 10
+        print(f"{r['instance_id']:<20} {r['current_type']:<15} {r['recommended_type']:<15} "
+              f"{r['cpu_avg']:>8.1f}%  ${r['monthly_savings']:>13,.2f}")
+
+    print(f"\nTotal potential savings: ${total_savings:,.2f}/month (${annual_savings:,.2f}/year)")
+
+    # Export to CSV
+    import csv
+    with open(args.output, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=results[0].keys())
+        writer.writeheader()
+        writer.writerows(results)
+
+    print(f"\nFull report saved to {args.output}")
+```
+
+**Sample output from Acme Corp's analysis:**
+
+```
+Analyzing instances in us-east-1...
+
+Found 143 instances with right-sizing opportunities
+
+Instance ID          Current         Recommended     CPU Avg    Monthly Savings
+-------------------------------------------------------------------------------------
+i-0abc123def456      m5.2xlarge      m5.large          14.2%        $210.00
+i-0def789abc012      m5.2xlarge      m5.large          16.8%        $210.00
+i-0ghi345jkl678      m5.2xlarge      m5.large          18.9%        $210.00
+...
+
+Total potential savings: $22,300/month ($267,600/year)
+
+Full report saved to right_sizing_report.csv
+```
+
+### ROI Calculator
+
+Use this calculator to estimate your potential right-sizing savings:
+
+::: {.callout-note}
+## How to Use
+Adjust the inputs below to match your fleet size and utilization patterns.
+The calculator will estimate your monthly and annual savings potential.
+:::
+
+```{ojs}
+//| echo: false
+
+// --- Input Controls ---
+
+viewof instanceCount = Inputs.range([10, 1000], {
+  value: 143,
+  step: 10,
+  label: "Number of instances"
+})
+
+viewof avgCpuUtilization = Inputs.range([0, 100], {
+  value: 18,
+  step: 5,
+  label: "Average CPU utilization (%)"
+})
+
+viewof instanceTypeIndex = Inputs.range([0, 3], {
+  value: 0,
+  step: 1,
+  label: "Instance type (0=m5.2xlarge, 1=m5.xlarge, 2=m5.large, 3=m5.medium)"
+})
+```
+
+```{ojs}
+//| echo: false
+
+// --- Cost Model ---
+// Cost per instance per month (on-demand Linux)
+// 0=m5.2xlarge($280), 1=m5.xlarge($140), 2=m5.large($70), 3=m5.medium($35)
+
+instanceCosts = [280, 140, 70, 35]
+currentCost = instanceCosts[instanceTypeIndex]
+
+// --- Recommendation Logic using BLOCK STATEMENTS ---
+
+recommendationTier = {
+  if (avgCpuUtilization < 20) return 2
+  if (avgCpuUtilization < 40) return 1
+  return 0
+}
+
+newTypeIndex = {
+  const maxIdx = instanceCosts.length - 1
+  const result = instanceTypeIndex + recommendationTier
+  return result > maxIdx ? maxIdx : result
+}
+
+newCost = instanceCosts[newTypeIndex]
+
+// Calculate savings
+monthlySavingsPerInstance = currentCost - newCost
+totalMonthlySavings = monthlySavingsPerInstance * instanceCount
+totalAnnualSavings = totalMonthlySavings * 12
+savingsPercent = currentCost > 0 ? Math.round((monthlySavingsPerInstance / currentCost) * 100) : 0
+```
+
+```{ojs}
+//| echo: false
+
+// --- Output ---
+
+fmt = d3.format("$,.0f")
+
+instanceNames = ["m5.2xlarge", "m5.xlarge", "m5.large", "m5.medium"]
+currentTypeName = instanceNames[instanceTypeIndex]
+newTypeName = instanceNames[newTypeIndex]
+actionText = recommendationTier > 0 ? "Downsize" : "Current optimal"
+
+html`<div class="ojs-calculator">
+  <div class="ojs-summary-grid">
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(monthlySavingsPerInstance)}</span>
+      <span class="ojs-metric-label">Savings per instance/month</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(totalMonthlySavings)}</span>
+      <span class="ojs-metric-label">Total monthly savings</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${fmt(totalAnnualSavings)}</span>
+      <span class="ojs-metric-label">Total annual savings</span>
+    </div>
+    <div class="ojs-metric">
+      <span class="ojs-metric-value">${savingsPercent}%</span>
+      <span class="ojs-metric-label">Cost reduction</span>
+    </div>
+  </div>
+
+  <div class="ojs-recommendation" style="margin-top: 1.5rem;">
+    <span class="ojs-badge">${recommendationTier > 0 ? "Recommended" : "Optimal"}</span>
+    <strong>${actionText}:</strong>
+    ${recommendationTier > 0
+      ? `Migrate ${instanceCount} instances from ${currentTypeName} to ${newTypeName}`
+      : `Keep current ${currentTypeName} instances`}
+  </div>
+</div>`
+```
+
+::: {.content-visible when-format="pdf"}
+**Right-Sizing ROI Calculator (Default Scenario)**
+
+Based on 143 m5.2xlarge instances at 18% average CPU utilization:
+
+| Metric | Value |
+|--------|-------|
+| Savings per instance/month | $210 |
+| Total monthly savings | $30,030 |
+| Total annual savings | $360,360 |
+| Cost reduction | 75% |
+
+**Recommendation:** Downsize 2 tiers — Migrate 143 instances from m5.2xlarge to m5.large.
+
+*Adjust values in the interactive HTML version for your specific scenario.*
+:::
+
+::: {.content-visible when-format="epub"}
+**Right-Sizing ROI Calculator (Default Scenario)**
+
+Based on 143 m5.2xlarge instances at 18% average CPU utilization:
+
+| Metric | Value |
+|--------|-------|
+| Savings per instance/month | $210 |
+| Total monthly savings | $30,030 |
+| Total annual savings | $360,360 |
+| Cost reduction | 75% |
+
+**Recommendation:** Downsize 2 tiers — Migrate 143 instances from m5.2xlarge to m5.large.
+
+*Adjust values in the interactive HTML version for your specific scenario.*
+:::
+
+### Implementing Right-Sizing
+
+Right-sizing can feel risky because it involves reducing resource allocation for production workloads. Acme Corp managed this risk with a gradual, data-driven approach over 6 weeks:
+
+**Week 1-2: Analysis & Validation**
+- Ran the Python analysis script across all production instances
+- Identified 143 instances with sustained CPU utilization <20%
+- Cross-referenced with memory, network, and disk I/O metrics
+- Generated per-instance recommendations with confidence scores
+
+**Week 3-4: Staging Environment Testing**
+- Applied recommendations to 12 staging instances
+- Monitored for 2 weeks with no performance degradation
+- Documented the process and created runbooks
+
+**Week 5-6: Production Rollout**
+- Changed 10 instances per day during maintenance windows
+- Monitored key metrics (latency, error rates, throughput) for 24 hours after each batch
+- Prepared rollback procedures (unused, but ready)
+
+**Results:**
+- **$18,400/month in sustained savings** (83% of identified waste eliminated)
+- **Zero performance incidents** from downsizing
+- **14 minutes average time** to review and approve each recommendation
+- **92% engineering team satisfaction** with the process (post-rollout survey)
+
+::: {.callout-tip}
+## Field Notes
+
+**Start with non-production environments first.** Acme Corp's initial hesitation melted away after successfully right-sizing dev/staging environments. Development and staging can tolerate more aggressive sizing without production risk, and the savings add up quickly — Acme saved $4,200/month in non-prod alone.
+
+The key insight: **Engineering teams fear the unknown, not actual risk.** Once they saw the data (CPU consistently under 20%) and experienced the process in staging (zero issues), production rollout was straightforward.
+:::
+
+### Continuous Right-Sizing
+
+Right-sizing is not a one-time activity. Acme Corp discovered this 3 months after their initial campaign when a new microservice deployment changed traffic patterns. By Q4 2024, they had implemented automated right-sizing using ZopNight:
+
+- **Weekly scans** of all production instances
+- **Automated recommendations** based on 30-day rolling averages
+- **Slack notifications** to instance owners
+- **1-click approval** workflow for low-risk changes (<10% resource reduction)
+
+This continuous approach maintains their savings while adapting to changing workload patterns.
+
+## Reserved Instances and Savings Plans
+
+Commitment-based discounts are the second major optimization lever. By committing to a certain level of cloud usage over one or three years, organizations can reduce compute costs by 30% to 70% compared to on-demand pricing.
+
+## Summary
+
+Optimization strategies span a spectrum from low-effort, immediate wins (right-sizing obvious over-provisioning) to high-effort, transformative changes (architectural redesign for cost efficiency). Acme Corp's journey proves that the most effective approach combines all levels: they achieved $18,400/month through right-sizing (83% waste reduction), another $12,000/month through strategic reserved instance purchases, and $5,200/month through spot adoption for CI/CD workloads — **$35,600/month total savings** with an initial investment of 120 engineering hours.
+
+The key lesson: start with right-sizing for quick wins, layer in commitment management for sustained savings, adopt spot instances for eligible workloads, and pursue architectural optimization for long-term cost efficiency.

@@ -1,0 +1,76 @@
+# Quality Thresholds for Content Audit
+# These thresholds define SOTA (State of the Art) quality standards for ebooks.
+# Audit warnings are generated when content falls below these minimums (or above maximums).
+# Thresholds are advisory — they warn, never block builds.
+
+defaults:
+  # Diagrams per 1000 words (mermaid, d2, images)
+  min_diagram_density: 0.3
+
+  # Minimum code blocks per chapter
+  min_code_blocks_per_chapter: 2
+
+  # Maximum generic/vague claims per chapter
+  max_generic_claims_per_chapter: 5
+
+  # Minimum real numbers (dollar amounts, specific percentages, fleet sizes) per chapter
+  min_real_numbers_per_chapter: 1
+
+  # Minimum interactive elements (OJS blocks) per ebook
+  min_interactive_elements: 0
+
+  # Reading level (Flesch-Kincaid grade level)
+  max_reading_grade_level: 14
+  min_reading_grade_level: 8
+
+  # Code blocks should have language tags
+  max_untagged_code_blocks: 0
+
+  # Minimum images per 800 words (inline chapter images: stat cards, comparisons, illustrations)
+  min_images_per_800_words: 1
+
+# Per-ebook overrides (keys match ebook slugs)
+# Example:
+# finops-playbook:
+#   min_code_blocks_per_chapter: 1
+#   max_generic_claims_per_chapter: 8
+
+# ── Multi-Modality Thresholds ─────────────────────────────────────────────
+# Used by the self-healing eval loop (scripts/eval-loop.ts)
+
+modalities:
+  landing:
+    require_meta_description: true
+    require_og_tags: true
+    require_cta: true
+    max_file_size_kb: 500
+
+  social:
+    require_og_image: true
+    min_linkedin_slides: 1
+    min_instagram_posts: 1
+
+  blog:
+    min_word_count: 300
+    max_generic_claims: 3
+    require_seo_title: true
+    require_meta_description: true
+    require_cta: true
+
+  hub:
+    require_all_ebooks_listed: true
+    require_search: true
+    max_file_size_kb: 300
+
+  pdf:
+    require_cover_page: true
+    max_blank_pages: 2
+    require_embedded_fonts: true
+
+  freshness:
+    drift_threshold_percent: 15
+    cache_ttl_hours: 168
+
+  heal:
+    max_iterations: 3
+    max_cost_usd: 5.0
